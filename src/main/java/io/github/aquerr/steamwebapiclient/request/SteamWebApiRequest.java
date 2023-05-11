@@ -6,6 +6,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Base interface for steam web api request.
+ */
 public interface SteamWebApiRequest
 {
     static Map<String, String> toQueryParams(SteamWebApiRequest steamWebApiRequest)

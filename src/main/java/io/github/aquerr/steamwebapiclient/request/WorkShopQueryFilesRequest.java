@@ -6,38 +6,49 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * The request representing <a href="https://partner.steamgames.com/doc/webapi/IPublishedFileService#QueryFiles">https://partner.steamgames.com/doc/webapi/IPublishedFileService#QueryFiles</a>
+ */
 @Builder
 @Getter
 @Setter
 @ToString
-public class WorkShopQueryFilesRequest implements SteamWebApiRequest {
+public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
 
     @SteamRequestQueryParam(name = "key")
-    private String key;
+    @Builder.Default
+    private String key = "";
     @SteamRequestQueryParam(name = "query_type")
     private int queryType;
+    @Builder.Default
     @SteamRequestQueryParam(name = "page")
-    private String page;
+    private String page = "";
+    @Builder.Default
     @SteamRequestQueryParam(name = "cursor")
-    private String cursor;
+    private String cursor = "";
     @SteamRequestQueryParam(name = "numperpage")
     private int numPerPage;
     @SteamRequestQueryParam(name = "creator_appid")
     private int creatorAppId;
     @SteamRequestQueryParam(name = "appid")
     private int appId;
+    @Builder.Default
     @SteamRequestQueryParam(name = "requiredtags")
-    private String requiredTags;
+    private String requiredTags = "";
+    @Builder.Default
     @SteamRequestQueryParam(name = "excludedtags")
-    private String excludedTags;
+    private String excludedTags = "";
     @SteamRequestQueryParam(name = "match_all_tags")
     private boolean matchAllTags;
+    @Builder.Default
     @SteamRequestQueryParam(name = "required_flags")
-    private String requiredFlags;
+    private String requiredFlags = "";
+    @Builder.Default
     @SteamRequestQueryParam(name = "omitted_flags")
-    private String omittedFlags;
+    private String omittedFlags = "";
+    @Builder.Default
     @SteamRequestQueryParam(name = "search_text")
-    private String searchText;
+    private String searchText = "";
     @SteamRequestQueryParam(name = "filetype")
     private int fileType;
     @SteamRequestQueryParam(name = "child_publishedfileid")
@@ -74,6 +85,18 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRequest {
     private boolean returnMetadata;
     @SteamRequestQueryParam(name = "return_playtime_stats")
     private boolean returnPlaytimeStats;
+
+    @Override
+    public void setApiKey(String apiKey)
+    {
+        this.key = apiKey;
+    }
+
+    @Override
+    public String getApiKey()
+    {
+        return this.key;
+    }
 
 
     public static class WorkShopQueryFilesRequestBuilder {

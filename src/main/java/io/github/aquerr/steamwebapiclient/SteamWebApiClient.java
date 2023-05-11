@@ -1,35 +1,35 @@
 package io.github.aquerr.steamwebapiclient;
 
-import java.net.URI;
-import java.util.Map;
+import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 
+/**
+ * Main Entry point of the API.
+ *
+ * Immutable. It is recommended to only have one instance of this client.
+ */
 public class SteamWebApiClient {
-    public static final URI BASE_WEB_API_URI = URI.create("https://api.steampowered.com");
-    public static final String API_VERSION = "v1";
+    public static final String BASE_WEB_API_URI = "https://api.steampowered.com";
+    public static final String API_VERSION_1 = "v1";
+    public static final String API_VERSION_2 = "v2";
 
-    private final String apiToken;
+    private final SteamWorkshopWebApiClient workshopWebApiClient;
 
+    /**
+     * Creates an instance of {@link SteamWebApiClient}.
+     *
+     * Note: Api token is not required for the client to function.
+     *       However, it is needed by most of the api calls,
+     *       therefore execution of such will result in an exception or an empty result.
+     *
+     * @param apiToken the steam api token, optional.
+     */
     public SteamWebApiClient(String apiToken) {
-        this.apiToken = apiToken;
+        SteamHttpClient steamHttpClient = new SteamHttpClient(BASE_WEB_API_URI, apiToken);
+        this.workshopWebApiClient = new SteamWorkshopWebApiClient(steamHttpClient);
     }
 
-    static URI appendQueryParamsToUri(URI uri, Map<String, String> queryParams) {
-        return uri.resolve(toQueryString(queryParams));
-    }
-
-    static String toQueryString(Map<String, String> queryParams) {
-        if (queryParams.isEmpty())
-            return "";
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("?");
-        queryParams.entrySet().stream()
-                .forEach(stringStringEntry -> stringBuilder.append(stringStringEntry.getKey()).append("=").append(stringStringEntry.getValue())
-                        .append("&"));
-
-        if (stringBuilder.charAt(stringBuilder.length() - 1) == '&') {
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        }
-        return stringBuilder.toString();
+    public SteamWorkshopWebApiClient getWorkshopWebApiClient()
+    {
+        return workshopWebApiClient;
     }
 }
