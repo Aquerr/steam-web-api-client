@@ -37,9 +37,23 @@ publishing {
 
                 licenses {
                     license {
-                        name.set("GNU General Public License v3.0")
+                        name.set("Apache License, Version 2.0")
                         url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
                     }
+                }
+
+                developers {
+                    developer {
+                        id.set("Aquerr")
+                        name.set("Bartłomiej Stępień")
+                        url.set("https://github.com/Aquerr/steam-web-api-client");
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/Aquerr/steam-web-api-client.git")
+                    developerConnection.set("scm:git:ssh://github.com/Aquerr/steam-web-api-client.git")
+                    url.set("https://github.com/Aquerr/steam-web-api-client")
                 }
             }
         }
