@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("io.freefair.lombok") version "8.0.1"
     `maven-publish`
+    id("signing")
 }
 
 group = "io.github.aquerr"
@@ -13,8 +14,13 @@ repositories {
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 dependencies {
-    implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"));
+    implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
     implementation("com.fasterxml.jackson.core:jackson-databind")
 
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
