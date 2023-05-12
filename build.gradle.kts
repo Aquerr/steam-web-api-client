@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    `java-library`
     id("io.freefair.lombok") version "8.0.1"
     `maven-publish`
     id("signing")

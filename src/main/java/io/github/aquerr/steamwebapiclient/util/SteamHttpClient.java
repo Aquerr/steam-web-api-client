@@ -4,19 +4,20 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.aquerr.steamwebapiclient.SteamWebApiInterface;
+import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
-
-import static io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest.toQueryParams;
 
 /**
  * A wrapper around Java {@link HttpClient} to make steam api calls.
@@ -103,5 +104,30 @@ public class SteamHttpClient {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         return stringBuilder.toString();
+    }
+
+    private Map<String, String> toQueryParams(SteamWebApiRequest steamWebApiRequest)
+    {
+        Map<String, String> params = new HashMap<>();
+        Field[] fields = steamWebApiRequest.getClass().getDeclaredFields();
+        for (final Field field : fields)
+        {
+            if (!field.isAnnotationPresent(SteamRequestQueryParam.class))
+                continue;
+
+            try
+            {
+                SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
+                field.setAccessible(true);
+                Object value = field.get(steamWebApiRequest);
+                field.setAccessible(false);
+                params.put(steamRequestQueryParam.name(), String.valueOf(value));
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+        return params;
     }
 }
