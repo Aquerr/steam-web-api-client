@@ -69,7 +69,7 @@ public class SteamHttpClient {
         try {
             HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                ObjectNode responseObjectNode = (ObjectNode) objectMapper.readValue(response.body(), ObjectNode.class).get("response");
+                ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
                 SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
                 return (T)steamWebApiResponse;
             }

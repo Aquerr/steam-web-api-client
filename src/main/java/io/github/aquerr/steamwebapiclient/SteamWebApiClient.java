@@ -13,6 +13,7 @@ public class SteamWebApiClient {
     public static final String API_VERSION_2 = "v2";
 
     private final SteamWorkshopWebApiClient workshopWebApiClient;
+    private final SteamUtilWebApiClient steamUtilWebApiClient;
 
     /**
      * Creates an instance of {@link SteamWebApiClient}.
@@ -26,10 +27,15 @@ public class SteamWebApiClient {
     public SteamWebApiClient(String apiToken) {
         SteamHttpClient steamHttpClient = new SteamHttpClient(BASE_WEB_API_URI, apiToken);
         this.workshopWebApiClient = new SteamWorkshopWebApiClient(steamHttpClient);
+        this.steamUtilWebApiClient = new SteamUtilWebApiClient(steamHttpClient);
     }
 
     public SteamWorkshopWebApiClient getWorkshopWebApiClient()
     {
         return workshopWebApiClient;
+    }
+
+    public SteamUtilWebApiClient getSteamUtilWebApiClient() {
+        return steamUtilWebApiClient;
     }
 }
