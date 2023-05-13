@@ -97,7 +97,8 @@ public class SteamHttpClient {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("?");
         queryParams.entrySet().stream()
-                .forEach(stringStringEntry -> stringBuilder.append(stringStringEntry.getKey()).append("=").append(stringStringEntry.getValue())
+                .filter(queryParam -> queryParam.getValue() != null)
+                .forEach(queryParam -> stringBuilder.append(queryParam.getKey()).append("=").append(queryParam.getValue())
                         .append("&"));
 
         if (stringBuilder.charAt(stringBuilder.length() - 1) == '&') {
@@ -121,7 +122,7 @@ public class SteamHttpClient {
                 field.setAccessible(true);
                 Object value = field.get(steamWebApiRequest);
                 field.setAccessible(false);
-                params.put(steamRequestQueryParam.name(), String.valueOf(value));
+                params.put(steamRequestQueryParam.name(), value != null ? String.valueOf(value) : null);
             }
             catch (Exception e)
             {
