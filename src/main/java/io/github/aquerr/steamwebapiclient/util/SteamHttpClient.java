@@ -31,6 +31,13 @@ public class SteamHttpClient {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * Basic constructor for {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     */
     public SteamHttpClient(String baseUrl, String apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
@@ -42,6 +49,66 @@ public class SteamHttpClient {
         this.objectMapper = new ObjectMapper()
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .findAndRegisterModules();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link ObjectMapper} that will be used for serialization and deserialization of requests and responses.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param objectMapper the object mapper.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, ObjectMapper objectMapper) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
+
+        this.objectMapper = objectMapper.copy();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link HttpClient} that will be used for contacting the Steam Web Api.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param httpClient the http client.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = httpClient;
+
+        this.objectMapper = new ObjectMapper()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .findAndRegisterModules();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link HttpClient} and {@link ObjectMapper} that will be used for
+     * contacting the Steam Web Api and serialization and deserialization of requests and responses.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param httpClient the http client.
+     * @param objectMapper the object mapper.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = httpClient;
+
+        this.objectMapper = objectMapper.copy();
     }
 
     public <T extends SteamWebApiResponse> T get(
