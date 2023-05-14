@@ -3,6 +3,7 @@ package io.github.aquerr.steamwebapiclient.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,7 +16,7 @@ public class SupportedApiListResponse implements SteamWebApiResponse {
     public static class SupportedApiList {
 
         @JsonProperty("interfaces")
-        private List<SupportedInterface> interfaces;
+        private List<SupportedInterface> interfaces = new ArrayList<>();
 
         @Data
         public static class SupportedInterface {
@@ -39,7 +40,7 @@ public class SupportedApiListResponse implements SteamWebApiResponse {
                 private String httpMethod;
 
                 @JsonProperty("parameters")
-                private List<Parameter> parameters;
+                private List<Parameter> parameters = new ArrayList<>();
 
                 @Data
                 public static class Parameter {

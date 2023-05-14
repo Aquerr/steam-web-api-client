@@ -1,0 +1,17 @@
+{
+  "apilist": {
+    "interfaces": [
+      {
+        "name": "my_interface",
+        "methods": [
+          {
+            "name": "my_method",
+            "version": 1,
+            "httpmethod": "GET",
+            "parameters": []
+          }
+        ]
+      }
+    ]
+  }
+}

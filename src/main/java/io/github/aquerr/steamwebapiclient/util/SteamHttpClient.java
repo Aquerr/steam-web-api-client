@@ -117,6 +117,11 @@ public class SteamHttpClient {
             String version,
             SteamWebApiRequest steamWebApiRequest,
             Class<T> responseClass) {
+
+        if (apiInterface == null || apiMethod == null || version == null || responseClass == null) {
+            throw new IllegalArgumentException("apiInterface, apiMethod, version and responseClass cannot be null!");
+        }
+
         StringBuilder uriPathBuilder = new StringBuilder();
         uriPathBuilder.append(this.baseUrl);
         uriPathBuilder.append("/");
@@ -155,6 +160,11 @@ public class SteamHttpClient {
             String version,
             SteamWebApiRestrictedRequest steamWebApiRestrictedRequest,
             Class<T> responseClass) {
+
+        if (apiInterface == null || apiMethod == null || version == null || responseClass == null) {
+            throw new IllegalArgumentException("apiInterface, apiMethod, version and responseClass cannot be null!");
+        }
+
         if (steamWebApiRestrictedRequest != null) {
             steamWebApiRestrictedRequest.setApiKey(apiKey);
         }
@@ -193,7 +203,9 @@ public class SteamHttpClient {
                 field.setAccessible(true);
                 Object value = field.get(steamWebApiRequest);
                 field.setAccessible(false);
-                params.put(steamRequestQueryParam.name(), value != null ? String.valueOf(value) : null);
+                if (value != null) {
+                    params.put(steamRequestQueryParam.name(), String.valueOf(value));
+                }
             }
             catch (Exception e)
             {
