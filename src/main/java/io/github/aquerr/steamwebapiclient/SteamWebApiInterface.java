@@ -18,9 +18,11 @@ public enum SteamWebApiInterface {
             Method.UPDATE_BAN_STATUS,
             Method.UPDATE_INCOMPATIBLE_STATUS,
             Method.UPDATE_TAGS
+    }),
+    I_STEAM_WEB_API_UTIL("ISteamWebAPIUtil", new Method[]{
+            Method.GET_SERVER_INFO,
+            Method.GET_SUPPORTED_API_LIST
     });
-
-
     private final String interfaceName;
     private final Method[] methods;
 
@@ -52,8 +54,9 @@ public enum SteamWebApiInterface {
         UPDATE_APP_UGC_BAN("UpdateAppUGCBan"),
         UPDATE_BAN_STATUS("UpdateBanStatus"),
         UPDATE_INCOMPATIBLE_STATUS("UpdateIncompatibleStatus"),
-        UPDATE_TAGS("UpdateTags")
-        ;
+        UPDATE_TAGS("UpdateTags"),
+        GET_SERVER_INFO("GetServerInfo"),
+        GET_SUPPORTED_API_LIST("GetSupportedAPIList");
 
         private final String methodName;
 

@@ -31,6 +31,13 @@ public class SteamHttpClient {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * Basic constructor for {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     */
     public SteamHttpClient(String baseUrl, String apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
@@ -42,6 +49,66 @@ public class SteamHttpClient {
         this.objectMapper = new ObjectMapper()
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .findAndRegisterModules();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link ObjectMapper} that will be used for serialization and deserialization of requests and responses.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param objectMapper the object mapper.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, ObjectMapper objectMapper) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
+
+        this.objectMapper = objectMapper.copy();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link HttpClient} that will be used for contacting the Steam Web Api.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param httpClient the http client.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = httpClient;
+
+        this.objectMapper = new ObjectMapper()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .findAndRegisterModules();
+    }
+
+    /**
+     * Constructs {@link SteamHttpClient}.
+     * Requires baseUrl and apiKey.
+     * Allows passing custom {@link HttpClient} and {@link ObjectMapper} that will be used for
+     * contacting the Steam Web Api and serialization and deserialization of requests and responses.
+     *
+     * @param baseUrl the base url.
+     * @param apiKey the api key, can be null.
+     * @param httpClient the http client.
+     * @param objectMapper the object mapper.
+     */
+    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        this.httpClient = httpClient;
+
+        this.objectMapper = objectMapper.copy();
     }
 
     public <T extends SteamWebApiResponse> T get(
@@ -58,7 +125,9 @@ public class SteamHttpClient {
         uriPathBuilder.append(apiMethod.getMethodName());
         uriPathBuilder.append("/");
         uriPathBuilder.append(version);
-        uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
+        if (steamWebApiRequest != null) {
+            uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
+        }
 
         URI requestUri = URI.create(uriPathBuilder.toString());
 
@@ -69,7 +138,7 @@ public class SteamHttpClient {
         try {
             HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                ObjectNode responseObjectNode = (ObjectNode) objectMapper.readValue(response.body(), ObjectNode.class).get("response");
+                ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
                 SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
                 return (T)steamWebApiResponse;
             }
@@ -86,7 +155,9 @@ public class SteamHttpClient {
             String version,
             SteamWebApiRestrictedRequest steamWebApiRestrictedRequest,
             Class<T> responseClass) {
-        steamWebApiRestrictedRequest.setApiKey(apiKey);
+        if (steamWebApiRestrictedRequest != null) {
+            steamWebApiRestrictedRequest.setApiKey(apiKey);
+        }
         return get(apiInterface, apiMethod, version, (SteamWebApiRequest) steamWebApiRestrictedRequest, responseClass);
     }
 
@@ -97,7 +168,8 @@ public class SteamHttpClient {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("?");
         queryParams.entrySet().stream()
-                .forEach(stringStringEntry -> stringBuilder.append(stringStringEntry.getKey()).append("=").append(stringStringEntry.getValue())
+                .filter(queryParam -> queryParam.getValue() != null)
+                .forEach(queryParam -> stringBuilder.append(queryParam.getKey()).append("=").append(queryParam.getValue())
                         .append("&"));
 
         if (stringBuilder.charAt(stringBuilder.length() - 1) == '&') {
@@ -121,7 +193,7 @@ public class SteamHttpClient {
                 field.setAccessible(true);
                 Object value = field.get(steamWebApiRequest);
                 field.setAccessible(false);
-                params.put(steamRequestQueryParam.name(), String.valueOf(value));
+                params.put(steamRequestQueryParam.name(), value != null ? String.valueOf(value) : null);
             }
             catch (Exception e)
             {
