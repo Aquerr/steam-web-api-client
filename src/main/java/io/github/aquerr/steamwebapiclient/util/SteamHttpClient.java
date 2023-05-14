@@ -58,7 +58,9 @@ public class SteamHttpClient {
         uriPathBuilder.append(apiMethod.getMethodName());
         uriPathBuilder.append("/");
         uriPathBuilder.append(version);
-        uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
+        if (steamWebApiRequest != null) {
+            uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
+        }
 
         URI requestUri = URI.create(uriPathBuilder.toString());
 
@@ -86,7 +88,9 @@ public class SteamHttpClient {
             String version,
             SteamWebApiRestrictedRequest steamWebApiRestrictedRequest,
             Class<T> responseClass) {
-        steamWebApiRestrictedRequest.setApiKey(apiKey);
+        if (steamWebApiRestrictedRequest != null) {
+            steamWebApiRestrictedRequest.setApiKey(apiKey);
+        }
         return get(apiInterface, apiMethod, version, (SteamWebApiRequest) steamWebApiRestrictedRequest, responseClass);
     }
 
