@@ -15,74 +15,201 @@ import lombok.ToString;
 @ToString
 public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
 
+    /**
+     * Steamworks Web API user authentication key.
+     *
+     * Added automatically by the client library if not added manually.
+     */
     @SteamRequestQueryParam(name = "key")
     @Builder.Default
     private String key = "";
+
+    /**
+     * Query type (or sorting type) to use while searching. See {@link PublishedFileQueryType}
+     */
     @SteamRequestQueryParam(name = "query_type")
     private int queryType;
+
+    /**
+     * Current page. Currently, there is an upper limit of 1000.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "page")
     private String page = "";
+
+    /**
+     * Cursor to paginate through the results (set to '*' for the first request).
+     * Prefer this over using the page parameter, as it will allow you to do deep pagination.
+     * When used, the page parameter will be ignored. Use the "next_cursor" value returned in the response to set up the next query to get the next set of results.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "cursor")
     private String cursor = "";
+
+    /**
+     * (Optional) The number of results, per page to return.
+     */
     @SteamRequestQueryParam(name = "numperpage")
     private int numPerPage;
+
+    /**
+     * App that created the files.
+     */
     @SteamRequestQueryParam(name = "creator_appid")
     private int creatorAppId;
+
+    /**
+     * App that consumes the files.
+     */
     @SteamRequestQueryParam(name = "appid")
     private int appId;
+
+    /**
+     * Tags to match on.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "requiredtags")
     private String requiredTags = "";
+
+    /**
+     * (Optional) Tags that must NOT be present on a published file to satisfy the query.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "excludedtags")
     private String excludedTags = "";
+
+    /**
+     * If true, then items must have all the tags specified, otherwise they must have at least one of the tags.
+     */
     @SteamRequestQueryParam(name = "match_all_tags")
     private boolean matchAllTags;
+
+    /**
+     * Required flags that must be set on any returned items.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "required_flags")
     private String requiredFlags = "";
+
+    /**
+     * Flags that must not be set on any returned items.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "omitted_flags")
     private String omittedFlags = "";
+
+    /**
+     * Text to match in the item's title or description.
+     */
     @Builder.Default
     @SteamRequestQueryParam(name = "search_text")
     private String searchText = "";
+
+    /**
+     * File type to search for. See {@link PublishedFileInfoMatchingFileType}
+     */
     @SteamRequestQueryParam(name = "filetype")
     private int fileType;
+
+    /**
+     * Find all items that reference the given item.
+     */
     @SteamRequestQueryParam(name = "child_publishedfileid")
     private long childPublishedFileId;
+
+    /**
+     * If queryType is {@code PublishedFileQueryType#RANKED_BY_TREND}, then this is the number of days to get votes for [1,7].
+     */
     @SteamRequestQueryParam(name = "days")
     private int days;
+
+    /**
+     * If queryType is {@code PublishedFileQueryType#RANKED_BY_TREND}, then limit result set just to items that have votes within the day range given
+     */
     @SteamRequestQueryParam(name = "include_recent_votes_only")
     private boolean includeRecentVotesOnly;
+
+    /**
+     * Allow stale data to be returned for the specified number of seconds.
+     */
     @SteamRequestQueryParam(name = "cache_max_age_seconds")
     private int cacheMaxAgeSeconds;
+
+    /**
+     * Language to search in and also what gets returned. Defaults to English.
+     */
     @SteamRequestQueryParam(name = "language")
     private int language;
+
+    /**
+     * Required key-value tags to match on.
+     */
     @SteamRequestQueryParam(name = "required_kv_tags")
     private String requiredKvTags;
+
+    /**
+     * (Optional) If true, only return the total number of files that satisfy this query.
+     */
     @SteamRequestQueryParam(name = "totalonly")
     private boolean totalOnly;
+
+    /**
+     * (Optional) If true, only return the published file ids of files that satisfy this query.
+     */
     @SteamRequestQueryParam(name = "ids_only")
     private boolean idsOnly;
+
+    /**
+     * Return vote data.
+     */
     @SteamRequestQueryParam(name = "return_vote_data")
     private boolean returnVoteData;
+
+    /**
+     * Return tags in the file details.
+     */
     @SteamRequestQueryParam(name = "return_tags")
     private boolean returnTags;
+
+    /**
+     * Return key-value tags in the file details.
+     */
     @SteamRequestQueryParam(name = "return_kv_tags")
     private boolean returnKvTags;
+
+    /**
+     * Return preview image and video details in the file details.
+     */
     @SteamRequestQueryParam(name = "return_previews")
     private boolean returnPreviews;
+
+    /**
+     * Return child item ids in the file details.
+     */
     @SteamRequestQueryParam(name = "return_children")
     private boolean returnChildren;
+
+    /**
+     * Populate the short_description field instead of file_description.
+     */
     @SteamRequestQueryParam(name = "return_short_description")
     private boolean returnShortDescription;
+
+    /**
+     * Return pricing information, if applicable.
+     */
     @SteamRequestQueryParam(name = "return_for_sale_data")
     private boolean returnForSaleData;
+
+    /**
+     * Return metadata.
+     */
     @SteamRequestQueryParam(name = "return_metadata")
     private boolean returnMetadata;
+
+    /**
+     * Return playtime stats for the specified number of days before today.
+     */
     @SteamRequestQueryParam(name = "return_playtime_stats")
     private boolean returnPlaytimeStats;
 
