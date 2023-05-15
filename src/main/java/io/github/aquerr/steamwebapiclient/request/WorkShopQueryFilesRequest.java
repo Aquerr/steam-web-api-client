@@ -156,28 +156,110 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
 
     public enum PublishedFileInfoMatchingFileType {
 
-        RANKED_BY_VOTE(0),
-        RANKED_BY_PUBLICATION_DATE(1),
-        ACCEPTED_FOR_GAME_RANKED_BY_ACCEPTANCE_DATE(2),
-        RANKED_BY_TREND(3),
-        FAVORITED_BY_FRIENDS_RANKED_BY_PUBLICATION_DATE(4),
-        CREATED_BY_FRIENDS_RANKED_BY_PUBLICATION_DATE(5),
-        RANKED_BY_NUM_TIMES_REPORTED(6),
-        CREATED_BY_FOLLOWED_USERS_RANKED_BY_PUBLICATION_DATE(7),
-        NOT_YET_RATED(8),
-        RANKED_BY_TOTAL_UNIQUE_SUBSCRIPTIONS(9),
-        RANKED_BY_TOTAL_VOTES_ASC(10),
-        RANKED_BY_VOTES_UP(11),
-        RANKED_BY_TEXT_SEARCH(12),
-        RANKED_BY_PLAYTIME_TREND(13),
-        RANKED_BY_TOTAL_PLAYTIME(14),
-        RANKED_BY_AVERAGE_PLAYTIME_TREND(15),
-        RANKED_BY_LIFETIME_AVERAGE_PLAYTIME_TREND(16),
-        RANKED_BY_PLAYTIME_SESSIONS_TREND(17),
-        RANKED_BY_LIFETIME_PLAYTIME_SESSIONS(18),
-        RANKED_BY_INAPPROPRIATE_CONTENT_RATING(19),
-        RANKED_BY_BAN_CONTENT_CHECK(20),
-        RANKED_BY_LAST_UPDATED_DATE(21)
+        /**
+         * Items
+         */
+        ITEMS(0 ),
+
+        /**
+         * A collection of Workshop items.
+         */
+        COLLECTIONS(1),
+
+        /**
+         * Artwork.
+         */
+        ART(2),
+
+        /**
+         * Videos.
+         */
+        VIDEOS(3),
+
+        /**
+         * Screenshots.
+         */
+        SCREENSHOTS(4),
+
+        /**
+         * Items that can be put inside a collection.
+         */
+        COLLECTION_ELIGIBLE(5),
+
+        /**
+         * Unused.
+         */
+        GAMES(6),
+
+        /**
+         * Unused.
+         */
+        SOFTWARE(7),
+
+        /**
+         * Unused.
+         */
+        CONCEPTS(8),
+
+        /**
+         * Unused.
+         */
+        GREENLIGHT_ITEMS(9),
+
+        /**
+         * Guides.
+         */
+        ALL_GUIDES(10),
+
+        /**
+         * Steam web guide.
+         */
+        WEB_GUIDES(11),
+
+        /**
+         * Application integrated guide.
+         */
+        INTEGRATED_GUIDES(12),
+
+        /**
+         * Unknown.
+         */
+        USABLE_IN_GAME(13),
+
+        /**
+         * Workshop merchandise meant to be voted on for the purpose of being sold.
+         */
+        MERCH(14),
+
+        /**
+         * Steam Controller bindings.
+         */
+        CONTROLLER_BINDINGS(15),
+
+        /**
+         * Used internally.
+         */
+        STEAMWORKS_ACCESS_INVITES(16),
+
+        /**
+         * Workshop items that can be sold in-game.
+         */
+        ITEMS_MTX(17),
+
+        /**
+         * Workshop items that can be used right away by the user.
+         */
+        ITEMS_READY_TO_USE(18),
+
+        /**
+         * Unknown.
+         */
+        WORKSHOP_SHOWCASE(19),
+
+        /**
+         * Managed completely by the game, not the user, and not shown on the web.
+         */
+        GAME_MANAGED_ITEMS(20)
         ;
 
         private final int id;
