@@ -188,30 +188,48 @@ public class SteamHttpClient {
         return stringBuilder.toString();
     }
 
-    private Map<String, String> toQueryParams(SteamWebApiRequest steamWebApiRequest)
-    {
+    private Map<String, String> toQueryParams(SteamWebApiRequest steamWebApiRequest) {
         Map<String, String> params = new HashMap<>();
         Field[] fields = steamWebApiRequest.getClass().getDeclaredFields();
-        for (final Field field : fields)
-        {
-            if (!field.isAnnotationPresent(SteamRequestQueryParam.class))
+        for (final Field field : fields) {
+            if (!field.isAnnotationPresent(SteamRequestQueryParam.class)) {
                 continue;
-
-            try
-            {
-                SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
-                field.setAccessible(true);
-                Object value = field.get(steamWebApiRequest);
-                field.setAccessible(false);
-                if (value != null) {
-                    params.put(steamRequestQueryParam.name(), String.valueOf(value));
-                }
             }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
+
+            String name = getSteamRequestParamNameFromField(field);
+            String fieldValue = getFieldValueAsString(steamWebApiRequest, field);
+            if (fieldValue != null) {
+                params.put(name, fieldValue);
             }
         }
         return params;
+    }
+
+    private String getSteamRequestParamNameFromField(Field field) {
+        try {
+            SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
+            if (steamRequestQueryParam.value() != null && !steamRequestQueryParam.value().trim().equals("")) {
+                return steamRequestQueryParam.value();
+            }
+            return field.getName();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getFieldValueAsString(SteamWebApiRequest steamWebApiRequest, Field field) {
+        try {
+            field.setAccessible(true);
+            Object value = field.get(steamWebApiRequest);
+            field.setAccessible(false);
+            if (value != null) {
+                return String.valueOf(value);
+            }
+            else return null;
+        }
+        catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

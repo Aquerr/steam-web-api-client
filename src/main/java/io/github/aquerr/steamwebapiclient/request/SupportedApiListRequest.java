@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class SupportedApiListRequest implements SteamWebApiRestrictedRequest {
 
-    @SteamRequestQueryParam(name = "key")
+    @SteamRequestQueryParam("key")
     private String key;
 
     @Override
