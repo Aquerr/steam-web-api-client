@@ -17,6 +17,7 @@ public class SteamWebApiClient {
 
     private final SteamWorkshopWebApiClient workshopWebApiClient;
     private final SteamUtilWebApiClient steamUtilWebApiClient;
+    private final SteamPlayerWebApiClient steamPlayerWebApiClient;
 
     /**
      * Creates an instance of {@link SteamWebApiClient}.
@@ -69,6 +70,7 @@ public class SteamWebApiClient {
     private SteamWebApiClient(SteamHttpClient steamHttpClient) {
         this.workshopWebApiClient = new SteamWorkshopWebApiClient(steamHttpClient);
         this.steamUtilWebApiClient = new SteamUtilWebApiClient(steamHttpClient);
+        this.steamPlayerWebApiClient = new SteamPlayerWebApiClient(steamHttpClient);
     }
 
     /**
@@ -87,4 +89,14 @@ public class SteamWebApiClient {
     public SteamUtilWebApiClient getSteamUtilWebApiClient() {
         return steamUtilWebApiClient;
     }
+
+    /**
+     * Gets the {@link SteamPlayerWebApiClient}
+     * @return the {@link SteamPlayerWebApiClient}
+     */
+    public SteamPlayerWebApiClient getPlayerWebApiClient() {
+        return steamPlayerWebApiClient;
+    }
+
+
 }
