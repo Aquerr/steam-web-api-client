@@ -22,6 +22,9 @@ public enum SteamWebApiInterface {
     I_STEAM_WEB_API_UTIL("ISteamWebAPIUtil", new Method[]{
             Method.GET_SERVER_INFO,
             Method.GET_SUPPORTED_API_LIST
+    }),
+    I_PLAYER_SERVICE("IPlayerService", new Method[]{
+            Method.GET_RECENTLY_PLAYED_GAMES
     });
     private final String interfaceName;
     private final Method[] methods;
@@ -56,7 +59,8 @@ public enum SteamWebApiInterface {
         UPDATE_INCOMPATIBLE_STATUS("UpdateIncompatibleStatus"),
         UPDATE_TAGS("UpdateTags"),
         GET_SERVER_INFO("GetServerInfo"),
-        GET_SUPPORTED_API_LIST("GetSupportedAPIList");
+        GET_SUPPORTED_API_LIST("GetSupportedAPIList"),
+        GET_RECENTLY_PLAYED_GAMES("GetRecentlyPlayedGames");
 
         private final String methodName;
 
