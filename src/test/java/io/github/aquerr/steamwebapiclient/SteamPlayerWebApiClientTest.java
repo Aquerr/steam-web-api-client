@@ -1,7 +1,9 @@
 package io.github.aquerr.steamwebapiclient;
 
 
+import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
+import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1;
@@ -61,6 +64,25 @@ class SteamPlayerWebApiClientTest {
         Assertions.assertNotNull(response);
     }
 
+    @Test
+    void shouldGetOwnedGames() {
+        //given
+        OwnedGamesRequest request = prepareOwnedGamesRequest();
+        given(client.getOwnedGames(request)).willReturn(prepareOwnedGamesResponse());
+
+        //when
+        OwnedGamesResponse response = client.getOwnedGames(request);
+
+        //then
+        verify(steamHttpClient).get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_OWNED_GAMES,
+                API_VERSION_1,
+                request,
+                OwnedGamesResponse.class);
+        Assertions.assertNotNull(response);
+    }
+
     private PlayerRecentlyPlayedGamesRequest preparePlayerGetRecentlyPlayedGamesRequest() {
         return PlayerRecentlyPlayedGamesRequest.builder()
                 .key(KEY)
@@ -78,11 +100,11 @@ class SteamPlayerWebApiClientTest {
     private PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse prepareGetRecentlyPlayedGamesResponse() {
         PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse response = new PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse();
         response.setTotalCount(COUNT);
-        response.setGameList(List.of(prepareGameDetails()));
+        response.setGameList(List.of(prepareRecentlyPlayedGamesGameDetails()));
         return response;
     }
 
-    private PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse.GameDetails prepareGameDetails() {
+    private PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse.GameDetails prepareRecentlyPlayedGamesGameDetails() {
         PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse.GameDetails gameDetails = new PlayerRecentlyPlayedGamesResponse.GetRecentlyPlayedGamesResponse.GameDetails();
         gameDetails.setAppId(GAME_DETAIL_APP_ID);
         gameDetails.setName(GAME_DETAIL_NAME);
@@ -92,6 +114,42 @@ class SteamPlayerWebApiClientTest {
         gameDetails.setPlaytimeWindowsForeverMinutes(GAME_DETAIL_PLAYTIME_WINDOWS_FOREVER);
         gameDetails.setPlaytimeMacForeverMinutes(GAME_DETAIL_PLAYTIME_MAC_FOREVER);
         gameDetails.setPlaytimeLinuxForeverMinutes(GAME_DETAIL_LINUX_FOREVER);
+        return gameDetails;
+    }
+
+    private OwnedGamesRequest prepareOwnedGamesRequest() {
+        return OwnedGamesRequest.builder()
+                .key(KEY)
+                .steamId(STEAM_ID)
+                .includeAppInfo(Boolean.TRUE)
+                .includePlayedFreeGames(Boolean.TRUE)
+                .build();
+    }
+
+    private OwnedGamesResponse prepareOwnedGamesResponse() {
+        OwnedGamesResponse response = new OwnedGamesResponse();
+        response.setResponse(prepareGetOwnedGamesResponse());
+        return response;
+    }
+
+    private OwnedGamesResponse.GetOwnedGamesResponse prepareGetOwnedGamesResponse() {
+        OwnedGamesResponse.GetOwnedGamesResponse response = new OwnedGamesResponse.GetOwnedGamesResponse();
+        response.setTotalCount(COUNT);
+        response.setGameList(List.of(prepareRecentlyOwnedGamesGameDetails()));
+        return response;
+    }
+
+    private OwnedGamesResponse.GetOwnedGamesResponse.GameDetails prepareRecentlyOwnedGamesGameDetails() {
+        OwnedGamesResponse.GetOwnedGamesResponse.GameDetails gameDetails = new OwnedGamesResponse.GetOwnedGamesResponse.GameDetails();
+        gameDetails.setAppId(GAME_DETAIL_APP_ID);
+        gameDetails.setName(GAME_DETAIL_NAME);
+        gameDetails.setPlaytimeForeverMinutes(GAME_DETAIL_PLAYTIME_FOREVER);
+        gameDetails.setImgIconUrl(GAME_DETAIL_IMG_ICON_URL);
+        gameDetails.setPlaytimeWindowsForeverMinutes(GAME_DETAIL_PLAYTIME_WINDOWS_FOREVER);
+        gameDetails.setPlaytimeMacForeverMinutes(GAME_DETAIL_PLAYTIME_MAC_FOREVER);
+        gameDetails.setPlaytimeLinuxForeverMinutes(GAME_DETAIL_LINUX_FOREVER);
+        gameDetails.setSinceLastPlayedTimeSeconds(0);
+        gameDetails.setContentDescriptorIds(new ArrayList<>());
         return gameDetails;
     }
 
