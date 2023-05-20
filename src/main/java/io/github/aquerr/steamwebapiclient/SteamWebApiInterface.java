@@ -22,7 +22,6 @@ public enum SteamWebApiInterface {
     I_STEAM_REMOTE_STORAGE("ISteamRemoteStorage", new Method[]{
             Method.GET_PUBLISHED_FILE_DETAILS
     }),
-
     I_STEAM_WEB_API_UTIL("ISteamWebAPIUtil", new Method[]{
             Method.GET_SERVER_INFO,
             Method.GET_SUPPORTED_API_LIST
@@ -65,8 +64,8 @@ public enum SteamWebApiInterface {
         GET_SERVER_INFO("GetServerInfo"),
         GET_SUPPORTED_API_LIST("GetSupportedAPIList"),
         GET_RECENTLY_PLAYED_GAMES("GetRecentlyPlayedGames"),
-        GET_PUBLISHED_FILE_DETAILS("GetPublishedFileDetails")
-        ;
+        GET_PUBLISHED_FILE_DETAILS("GetPublishedFileDetails"),
+        GET_OWNED_GAMES("GetOwnedGames");
 
         private final String methodName;
 
