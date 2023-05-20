@@ -18,6 +18,7 @@ public class SteamWebApiClient {
     private final SteamWorkshopWebApiClient workshopWebApiClient;
     private final SteamUtilWebApiClient steamUtilWebApiClient;
     private final SteamPlayerWebApiClient steamPlayerWebApiClient;
+    private final SteamRemoteStorageClient steamRemoteStorageClient;
 
     /**
      * Creates an instance of {@link SteamWebApiClient}.
@@ -71,6 +72,7 @@ public class SteamWebApiClient {
         this.workshopWebApiClient = new SteamWorkshopWebApiClient(steamHttpClient);
         this.steamUtilWebApiClient = new SteamUtilWebApiClient(steamHttpClient);
         this.steamPlayerWebApiClient = new SteamPlayerWebApiClient(steamHttpClient);
+        this.steamRemoteStorageClient = new SteamRemoteStorageClient(steamHttpClient);
     }
 
     /**
@@ -88,6 +90,14 @@ public class SteamWebApiClient {
      */
     public SteamUtilWebApiClient getSteamUtilWebApiClient() {
         return steamUtilWebApiClient;
+    }
+
+    /**
+     * Gets the {@link SteamRemoteStorageClient}
+     * @return the {@link SteamRemoteStorageClient}
+     */
+    public SteamRemoteStorageClient getSteamRemoteStorageClient() {
+        return steamRemoteStorageClient;
     }
 
     /**
