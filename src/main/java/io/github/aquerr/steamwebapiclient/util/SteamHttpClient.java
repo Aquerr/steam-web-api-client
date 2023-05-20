@@ -122,14 +122,7 @@ public class SteamHttpClient {
             throw new IllegalArgumentException("apiInterface, apiMethod, version and responseClass cannot be null!");
         }
 
-        StringBuilder uriPathBuilder = new StringBuilder();
-        uriPathBuilder.append(this.baseUrl);
-        uriPathBuilder.append("/");
-        uriPathBuilder.append(apiInterface.getInterfaceName());
-        uriPathBuilder.append("/");
-        uriPathBuilder.append(apiMethod.getMethodName());
-        uriPathBuilder.append("/");
-        uriPathBuilder.append(version);
+        StringBuilder uriPathBuilder = new StringBuilder(buildUrl(apiInterface, apiMethod, version));
         if (steamWebApiRequest != null) {
             uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
         }
@@ -231,5 +224,48 @@ public class SteamHttpClient {
         catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public <T extends SteamWebApiResponse> T post(SteamWebApiInterface apiInterface,
+                                                     SteamWebApiInterface.Method apiMethod,
+                                                     String version,
+                                                     UrlEncodedForm urlEncodedForm,
+                                                     Class<T> responseClass) {
+        if (apiInterface == null || apiMethod == null || version == null || responseClass == null || urlEncodedForm == null) {
+            throw new IllegalArgumentException("apiInterface, apiMethod, version, urlEncodedForm and responseClass cannot be null!");
+        }
+
+        URI requestUri = URI.create(buildUrl(apiInterface, apiMethod, version));
+
+        byte[] formBytes = urlEncodedForm.getAsByteArray();
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofByteArray(formBytes))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .uri(requestUri)
+                .build();
+        try {
+            HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
+                SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
+                return (T)steamWebApiResponse;
+            }
+        }
+        catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private String buildUrl(final SteamWebApiInterface apiInterface, final SteamWebApiInterface.Method apiMethod, final String version) {
+        final StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(this.baseUrl);
+        urlBuilder.append("/");
+        urlBuilder.append(apiInterface.getInterfaceName());
+        urlBuilder.append("/");
+        urlBuilder.append(apiMethod.getMethodName());
+        urlBuilder.append("/");
+        urlBuilder.append(version);
+        return urlBuilder.toString();
     }
 }
