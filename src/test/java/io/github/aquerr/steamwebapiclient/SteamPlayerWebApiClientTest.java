@@ -2,10 +2,12 @@ package io.github.aquerr.steamwebapiclient;
 
 
 import io.github.aquerr.steamwebapiclient.request.BadgesRequest;
+import io.github.aquerr.steamwebapiclient.request.CommunityBadgeProgressRequest;
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamLevelRequest;
 import io.github.aquerr.steamwebapiclient.response.BadgesResponse;
+import io.github.aquerr.steamwebapiclient.response.CommunityBadgeProgressResponse;
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
@@ -43,6 +45,7 @@ class SteamPlayerWebApiClientTest {
     private static final long BADGE_COMPLETION_TIME = 1L;
     private static final int BADGE_XP = 0;
     private static final int BADGE_SCARCITY = 0;
+    private static final long QUEST_ID = 1L;
 
     @Mock
     private SteamHttpClient steamHttpClient;
@@ -128,6 +131,25 @@ class SteamPlayerWebApiClientTest {
                 API_VERSION_1,
                 request,
                 BadgesResponse.class);
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void shouldGetCommunityBadgeProgress() {
+        //given
+        CommunityBadgeProgressRequest request = prepareCommunityBadgeProgressRequest();
+        given(client.getCommunityBadgeProgress(request)).willReturn(prepareCommunityBadgeProgressResponse());
+
+        //when
+        CommunityBadgeProgressResponse response = client.getCommunityBadgeProgress(request);
+
+        //then
+        verify(steamHttpClient).get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_COMMUNITY_BADGE_PROGRESS,
+                API_VERSION_1,
+                request,
+                CommunityBadgeProgressResponse.class);
         Assertions.assertNotNull(response);
     }
 
@@ -243,10 +265,36 @@ class SteamPlayerWebApiClientTest {
         BadgesResponse.Response.Badge badge = new BadgesResponse.Response.Badge();
         badge.setId(BADGE_ID);
         badge.setLevel(BADGE_LEVEL);
-        badge.setCompletionTime(BADGE_COMPLETION_TIME);
+        badge.setCompletionTimeSeconds(BADGE_COMPLETION_TIME);
         badge.setXp(BADGE_XP);
         badge.setScarcity(BADGE_SCARCITY);
         return badge;
+    }
+
+    private CommunityBadgeProgressRequest prepareCommunityBadgeProgressRequest() {
+        return CommunityBadgeProgressRequest.builder()
+                .steamId(STEAM_ID)
+                .badgeId(BADGE_ID)
+                .build();
+    }
+
+    private CommunityBadgeProgressResponse prepareCommunityBadgeProgressResponse() {
+        CommunityBadgeProgressResponse response = new CommunityBadgeProgressResponse();
+        response.setResponse(prepareCommunityBadgeProgressResponseResponse());
+        return response;
+    }
+
+    private CommunityBadgeProgressResponse.Response prepareCommunityBadgeProgressResponseResponse() {
+        CommunityBadgeProgressResponse.Response response = new CommunityBadgeProgressResponse.Response();
+        response.setQuests(List.of(prepareQuest()));
+        return response;
+    }
+
+    private CommunityBadgeProgressResponse.Response.Quest prepareQuest() {
+        CommunityBadgeProgressResponse.Response.Quest quest = new CommunityBadgeProgressResponse.Response.Quest();
+        quest.setQuestId(QUEST_ID);
+        quest.setCompleted(Boolean.TRUE);
+        return quest;
     }
 
 
