@@ -2,8 +2,10 @@ package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
+import io.github.aquerr.steamwebapiclient.request.SteamLevelRequest;
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
+import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,6 +43,19 @@ public class SteamPlayerWebApiClient {
                 API_VERSION_1,
                 request,
                 OwnedGamesResponse.class
+        );
+    }
+
+    /**
+     * 	Returns the Steam Level of a user.
+     */
+    public SteamLevelResponse getSteamLevel(SteamLevelRequest request) {
+        return this.steamHttpClient.get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_STEAM_LEVEL,
+                API_VERSION_1,
+                request,
+                SteamLevelResponse.class
         );
     }
 

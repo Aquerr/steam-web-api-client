@@ -65,7 +65,8 @@ public enum SteamWebApiInterface {
         GET_SUPPORTED_API_LIST("GetSupportedAPIList"),
         GET_RECENTLY_PLAYED_GAMES("GetRecentlyPlayedGames"),
         GET_PUBLISHED_FILE_DETAILS("GetPublishedFileDetails"),
-        GET_OWNED_GAMES("GetOwnedGames");
+        GET_OWNED_GAMES("GetOwnedGames"),
+        GET_STEAM_LEVEL("GetSteamLevel");
 
         private final String methodName;
 
