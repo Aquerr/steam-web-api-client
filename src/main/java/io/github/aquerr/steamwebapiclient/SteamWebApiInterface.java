@@ -67,7 +67,8 @@ public enum SteamWebApiInterface {
         GET_PUBLISHED_FILE_DETAILS("GetPublishedFileDetails"),
         GET_OWNED_GAMES("GetOwnedGames"),
         GET_STEAM_LEVEL("GetSteamLevel"),
-        GET_BADGES("GetBadges");
+        GET_BADGES("GetBadges"),
+        GET_COMMUNITY_BADGE_PROGRESS("GetCommunityBadgeProgress");
 
         private final String methodName;
 
