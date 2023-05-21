@@ -3,8 +3,10 @@ package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
+import io.github.aquerr.steamwebapiclient.request.SteamLevelRequest;
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
+import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,7 @@ class SteamPlayerWebApiClientTest {
     private static final int GAME_DETAIL_PLAYTIME_WINDOWS_FOREVER = 0;
     private static final int GAME_DETAIL_PLAYTIME_MAC_FOREVER = 0;
     private static final int GAME_DETAIL_LINUX_FOREVER = 0;
+    private static final int PROFILE_LEVEL = 0;
 
     @Mock
     private SteamHttpClient steamHttpClient;
@@ -80,6 +83,25 @@ class SteamPlayerWebApiClientTest {
                 API_VERSION_1,
                 request,
                 OwnedGamesResponse.class);
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void shouldGetSteamLevel() {
+        //given
+        SteamLevelRequest request = prepareSteamLevelRequest();
+        given(client.getSteamLevel(request)).willReturn(prepareSteamLevelResponse());
+
+        //when
+        SteamLevelResponse response = client.getSteamLevel(request);
+
+        //then
+        verify(steamHttpClient).get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_STEAM_LEVEL,
+                API_VERSION_1,
+                request,
+                SteamLevelResponse.class);
         Assertions.assertNotNull(response);
     }
 
@@ -153,4 +175,22 @@ class SteamPlayerWebApiClientTest {
         return gameDetails;
     }
 
+    private SteamLevelRequest prepareSteamLevelRequest() {
+        return SteamLevelRequest.builder()
+                .key(KEY)
+                .steamId(STEAM_ID)
+                .build();
+    }
+
+    private SteamLevelResponse prepareSteamLevelResponse() {
+        SteamLevelResponse steamLevelResponse = new SteamLevelResponse();
+        steamLevelResponse.setResponse(prepareGetSteamLevelResponse());
+        return steamLevelResponse;
+    }
+
+    private SteamLevelResponse.GetSteamLevelResponse prepareGetSteamLevelResponse() {
+        SteamLevelResponse.GetSteamLevelResponse response = new SteamLevelResponse.GetSteamLevelResponse();
+        response.setProfileLevel(PROFILE_LEVEL);
+        return response;
+    }
 }
