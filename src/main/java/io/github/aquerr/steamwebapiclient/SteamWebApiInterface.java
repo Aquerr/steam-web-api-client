@@ -66,7 +66,8 @@ public enum SteamWebApiInterface {
         GET_RECENTLY_PLAYED_GAMES("GetRecentlyPlayedGames"),
         GET_PUBLISHED_FILE_DETAILS("GetPublishedFileDetails"),
         GET_OWNED_GAMES("GetOwnedGames"),
-        GET_STEAM_LEVEL("GetSteamLevel");
+        GET_STEAM_LEVEL("GetSteamLevel"),
+        GET_BADGES("GetBadges");
 
         private final String methodName;
 
