@@ -1,8 +1,10 @@
 package io.github.aquerr.steamwebapiclient;
 
+import io.github.aquerr.steamwebapiclient.request.BadgesRequest;
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamLevelRequest;
+import io.github.aquerr.steamwebapiclient.response.BadgesResponse;
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
@@ -56,6 +58,19 @@ public class SteamPlayerWebApiClient {
                 API_VERSION_1,
                 request,
                 SteamLevelResponse.class
+        );
+    }
+
+    /**
+     * 	Gets badges that are owned by a specific user.
+     */
+    public BadgesResponse getBadges(BadgesRequest request) {
+        return this.steamHttpClient.get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_BADGES,
+                API_VERSION_1,
+                request,
+                BadgesResponse.class
         );
     }
 

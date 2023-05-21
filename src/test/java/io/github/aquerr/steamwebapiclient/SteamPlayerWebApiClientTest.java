@@ -1,9 +1,11 @@
 package io.github.aquerr.steamwebapiclient;
 
 
+import io.github.aquerr.steamwebapiclient.request.BadgesRequest;
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.PlayerRecentlyPlayedGamesRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamLevelRequest;
+import io.github.aquerr.steamwebapiclient.response.BadgesResponse;
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
@@ -36,6 +38,11 @@ class SteamPlayerWebApiClientTest {
     private static final int GAME_DETAIL_PLAYTIME_MAC_FOREVER = 0;
     private static final int GAME_DETAIL_LINUX_FOREVER = 0;
     private static final int PROFILE_LEVEL = 0;
+    private static final long BADGE_ID = 1L;
+    private static final int BADGE_LEVEL = 0;
+    private static final long BADGE_COMPLETION_TIME = 1L;
+    private static final int BADGE_XP = 0;
+    private static final int BADGE_SCARCITY = 0;
 
     @Mock
     private SteamHttpClient steamHttpClient;
@@ -102,6 +109,25 @@ class SteamPlayerWebApiClientTest {
                 API_VERSION_1,
                 request,
                 SteamLevelResponse.class);
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void shouldGetBadges() {
+        //given
+        BadgesRequest request = prepareBadgesRequest();
+        given(client.getBadges(request)).willReturn(prepareBadgesResponse());
+
+        //when
+        BadgesResponse response = client.getBadges(request);
+
+        //then
+        verify(steamHttpClient).get(
+                SteamWebApiInterface.I_PLAYER_SERVICE,
+                SteamWebApiInterface.Method.GET_BADGES,
+                API_VERSION_1,
+                request,
+                BadgesResponse.class);
         Assertions.assertNotNull(response);
     }
 
@@ -193,4 +219,35 @@ class SteamPlayerWebApiClientTest {
         response.setProfileLevel(PROFILE_LEVEL);
         return response;
     }
+
+    private BadgesRequest prepareBadgesRequest() {
+        return BadgesRequest.builder()
+                .key(KEY)
+                .steamId(STEAM_ID)
+                .build();
+    }
+
+    private BadgesResponse prepareBadgesResponse() {
+        BadgesResponse response = new BadgesResponse();
+        response.setResponse(prepareBadgesResponseResponse());
+        return response;
+    }
+
+    private BadgesResponse.Response prepareBadgesResponseResponse() {
+        BadgesResponse.Response response = new BadgesResponse.Response();
+        response.setBadges(List.of(prepareBadge()));
+        return  response;
+    }
+
+    private BadgesResponse.Response.Badge prepareBadge() {
+        BadgesResponse.Response.Badge badge = new BadgesResponse.Response.Badge();
+        badge.setId(BADGE_ID);
+        badge.setLevel(BADGE_LEVEL);
+        badge.setCompletionTime(BADGE_COMPLETION_TIME);
+        badge.setXp(BADGE_XP);
+        badge.setScarcity(BADGE_SCARCITY);
+        return badge;
+    }
+
+
 }
