@@ -4,7 +4,6 @@ import io.github.aquerr.steamwebapiclient.request.PublishedFileDetailsRequest;
 import io.github.aquerr.steamwebapiclient.response.PublishedFileDetailsResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import io.github.aquerr.steamwebapiclient.util.UrlEncodedForm;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -47,8 +46,7 @@ class SteamRemoteStorageClientTest {
 
         PublishedFileDetailsResponse expectedResponse = preparePublishedFileDetailsResponse(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2));
 
-        given(steamHttpClient.post(SteamWebApiInterface.I_STEAM_REMOTE_STORAGE,
-                SteamWebApiInterface.Method.GET_PUBLISHED_FILE_DETAILS,
+        given(steamHttpClient.post(SteamWebApiInterfaceMethod.I_STEAM_REMOTE_STORAGE_GET_PUBLISHED_FILE_DETAILS,
                 SteamWebApiClient.API_VERSION_1,
                 urlEncodedForm,
                 PublishedFileDetailsResponse.class)).willReturn(expectedResponse);

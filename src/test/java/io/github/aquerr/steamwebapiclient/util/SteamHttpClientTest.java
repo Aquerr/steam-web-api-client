@@ -2,7 +2,7 @@ package io.github.aquerr.steamwebapiclient.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.aquerr.steamwebapiclient.SteamWebApiClient;
-import io.github.aquerr.steamwebapiclient.SteamWebApiInterface;
+import io.github.aquerr.steamwebapiclient.SteamWebApiInterfaceMethod;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
@@ -53,23 +53,18 @@ class SteamHttpClientTest
     }
 
     @Test
-    void getShouldThrowIllegalArgumentExceptionWhenApiInterfaceIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(null, SteamWebApiInterface.Method.UPDATE_BAN_STATUS, "version", null, SteamWebApiResponse.class));
-    }
-
-    @Test
-    void getShouldThrowIllegalArgumentExceptionWhenApiMethodIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, null, "version", null, SteamWebApiResponse.class));
+    void getShouldThrowIllegalArgumentExceptionWhenApiInterfaceMethodIsNull() {
+        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(null, "version", null, SteamWebApiResponse.class));
     }
 
     @Test
     void getShouldThrowIllegalArgumentExceptionWhenVersionIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, SteamWebApiInterface.Method.GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
+        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
     }
 
     @Test
     void getShouldNotThrowAnyExceptionWhenVersionIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, SteamWebApiInterface.Method.GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
+        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
     }
 
     @Test
@@ -81,12 +76,12 @@ class SteamHttpClientTest
         given(httpResponse.statusCode()).willReturn(200);
         given(httpResponse.body()).willReturn(TestResourceUtils.loadMockJson("mock-json/get_server_info.json"));
 
-        this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, SteamWebApiInterface.Method.GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
+        this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
 
         verify(httpClient).send(httpRequestArgumentCaptor.capture(), any(HttpResponse.BodyHandler.class));
         assertThat(httpRequestArgumentCaptor.getValue().uri()).isEqualTo(URI.create(BASE_URL
-                + "/" + SteamWebApiInterface.I_STEAM_WEB_API_UTIL.getInterfaceName()
-                + "/" + SteamWebApiInterface.Method.GET_SERVER_INFO.getMethodName()
+                + "/" + SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO.getInterfaceName()
+                + "/" + SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO.getMethodName()
                 + "/" + SteamWebApiClient.API_VERSION_1));
     }
 
@@ -99,12 +94,12 @@ class SteamHttpClientTest
         given(httpResponse.statusCode()).willReturn(200);
         given(httpResponse.body()).willReturn(TestResourceUtils.loadMockJson("mock-json/get_supported_api_list.json"));
 
-        SupportedApiListResponse supportedApiListResponse = this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, SteamWebApiInterface.Method.GET_SUPPORTED_API_LIST, SteamWebApiClient.API_VERSION_1, new SupportedApiListRequest(), SupportedApiListResponse.class);
+        SupportedApiListResponse supportedApiListResponse = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, SteamWebApiClient.API_VERSION_1, new SupportedApiListRequest(), SupportedApiListResponse.class);
 
         verify(httpClient).send(httpRequestArgumentCaptor.capture(), any(HttpResponse.BodyHandler.class));
         assertThat(httpRequestArgumentCaptor.getValue().uri()).isEqualTo(URI.create(BASE_URL
-                + "/" + SteamWebApiInterface.I_STEAM_WEB_API_UTIL.getInterfaceName()
-                + "/" + SteamWebApiInterface.Method.GET_SUPPORTED_API_LIST.getMethodName()
+                + "/" + SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST.getInterfaceName()
+                + "/" + SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST.getMethodName()
                 + "/" + SteamWebApiClient.API_VERSION_1
                 + "?key=" + API_KEY));
 
@@ -131,7 +126,7 @@ class SteamHttpClientTest
         given(httpResponse.statusCode()).willReturn(200);
         given(httpResponse.body()).willReturn(TestResourceUtils.loadMockJson("mock-json/get_server_info.json"));
 
-        ServerInfoResponse serverInfoResponse = this.steamHttpClient.get(SteamWebApiInterface.I_STEAM_WEB_API_UTIL, SteamWebApiInterface.Method.GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
+        ServerInfoResponse serverInfoResponse = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
 
         assertThat(serverInfoResponse.getServerTime()).isEqualTo(serverTime);
         assertThat(serverInfoResponse.getServerTimeString()).isEqualTo(serverTimeString);

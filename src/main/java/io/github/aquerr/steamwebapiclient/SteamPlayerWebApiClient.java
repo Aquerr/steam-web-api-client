@@ -29,8 +29,7 @@ public class SteamPlayerWebApiClient {
      */
     public PlayerRecentlyPlayedGamesResponse getRecentlyPlayedGames(PlayerRecentlyPlayedGamesRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_RECENTLY_PLAYED_GAMES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_RECENTLY_PLAYED_GAMES,
                 API_VERSION_1,
                 request,
                 PlayerRecentlyPlayedGamesResponse.class
@@ -42,8 +41,7 @@ public class SteamPlayerWebApiClient {
      */
     public OwnedGamesResponse getOwnedGames(OwnedGamesRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_OWNED_GAMES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_OWNED_GAMES,
                 API_VERSION_1,
                 request,
                 OwnedGamesResponse.class
@@ -55,8 +53,7 @@ public class SteamPlayerWebApiClient {
      */
     public SteamLevelResponse getSteamLevel(SteamLevelRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_STEAM_LEVEL,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_STEAM_LEVEL,
                 API_VERSION_1,
                 request,
                 SteamLevelResponse.class
@@ -68,8 +65,7 @@ public class SteamPlayerWebApiClient {
      */
     public BadgesResponse getBadges(BadgesRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_BADGES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_BADGES,
                 API_VERSION_1,
                 request,
                 BadgesResponse.class
@@ -81,8 +77,7 @@ public class SteamPlayerWebApiClient {
      */
     public CommunityBadgeProgressResponse getCommunityBadgeProgress(CommunityBadgeProgressRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_COMMUNITY_BADGE_PROGRESS,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_COMMUNITY_BADGE_PROGRESS,
                 API_VERSION_1,
                 request,
                 CommunityBadgeProgressResponse.class

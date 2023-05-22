@@ -56,8 +56,7 @@ class SteamNewsWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_STEAM_NEWS,
-                SteamWebApiInterface.Method.GET_NEWS_FOR_APP,
+                SteamWebApiInterfaceMethod.I_STEAM_NEWS_GET_NEWS_FOR_APP,
                 API_VERSION_2,
                 request,
                 NewsForAppResponse.class);

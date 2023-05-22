@@ -32,8 +32,7 @@ public class SteamRemoteStorageClient {
         }
 
         return this.steamHttpClient.post(
-                SteamWebApiInterface.I_STEAM_REMOTE_STORAGE,
-                SteamWebApiInterface.Method.GET_PUBLISHED_FILE_DETAILS,
+                SteamWebApiInterfaceMethod.I_STEAM_REMOTE_STORAGE_GET_PUBLISHED_FILE_DETAILS,
                 API_VERSION_1,
                 UrlEncodedForm.of(parameters),
                 PublishedFileDetailsResponse.class
