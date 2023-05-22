@@ -28,6 +28,9 @@ public enum SteamWebApiInterface {
     }),
     I_PLAYER_SERVICE("IPlayerService", new Method[]{
             Method.GET_RECENTLY_PLAYED_GAMES
+    }),
+    I_STEAM_NEWS("ISteamNews", new Method[]{
+            Method.GET_NEWS_FOR_APP
     });
     private final String interfaceName;
     private final Method[] methods;
@@ -68,7 +71,8 @@ public enum SteamWebApiInterface {
         GET_OWNED_GAMES("GetOwnedGames"),
         GET_STEAM_LEVEL("GetSteamLevel"),
         GET_BADGES("GetBadges"),
-        GET_COMMUNITY_BADGE_PROGRESS("GetCommunityBadgeProgress");
+        GET_COMMUNITY_BADGE_PROGRESS("GetCommunityBadgeProgress"),
+        GET_NEWS_FOR_APP("GetNewsForApp");
 
         private final String methodName;
 
