@@ -69,8 +69,7 @@ class SteamPlayerWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_RECENTLY_PLAYED_GAMES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_RECENTLY_PLAYED_GAMES,
                 API_VERSION_1,
                 request,
                 PlayerRecentlyPlayedGamesResponse.class);
@@ -88,8 +87,7 @@ class SteamPlayerWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_OWNED_GAMES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_OWNED_GAMES,
                 API_VERSION_1,
                 request,
                 OwnedGamesResponse.class);
@@ -107,8 +105,7 @@ class SteamPlayerWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_STEAM_LEVEL,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_STEAM_LEVEL,
                 API_VERSION_1,
                 request,
                 SteamLevelResponse.class);
@@ -126,8 +123,7 @@ class SteamPlayerWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_BADGES,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_BADGES,
                 API_VERSION_1,
                 request,
                 BadgesResponse.class);
@@ -145,8 +141,7 @@ class SteamPlayerWebApiClientTest {
 
         //then
         verify(steamHttpClient).get(
-                SteamWebApiInterface.I_PLAYER_SERVICE,
-                SteamWebApiInterface.Method.GET_COMMUNITY_BADGE_PROGRESS,
+                SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_COMMUNITY_BADGE_PROGRESS,
                 API_VERSION_1,
                 request,
                 CommunityBadgeProgressResponse.class);

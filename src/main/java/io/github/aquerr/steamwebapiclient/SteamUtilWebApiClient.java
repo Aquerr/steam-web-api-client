@@ -27,8 +27,7 @@ public class SteamUtilWebApiClient {
      */
     public ServerInfoResponse getServerInfo(ServerInfoRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_STEAM_WEB_API_UTIL,
-                SteamWebApiInterface.Method.GET_SERVER_INFO,
+                SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO,
                 API_VERSION_1,
                 request,
                 ServerInfoResponse.class
@@ -43,8 +42,7 @@ public class SteamUtilWebApiClient {
      */
     public SupportedApiListResponse getSupportedApiList(SupportedApiListRequest request) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_STEAM_WEB_API_UTIL,
-                SteamWebApiInterface.Method.GET_SUPPORTED_API_LIST,
+                SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST,
                 API_VERSION_1,
                 request,
                 SupportedApiListResponse.class

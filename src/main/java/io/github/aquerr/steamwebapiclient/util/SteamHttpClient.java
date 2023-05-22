@@ -3,7 +3,7 @@ package io.github.aquerr.steamwebapiclient.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.github.aquerr.steamwebapiclient.SteamWebApiInterface;
+import io.github.aquerr.steamwebapiclient.SteamWebApiInterfaceMethod;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
@@ -112,17 +112,16 @@ public class SteamHttpClient {
     }
 
     public <T extends SteamWebApiResponse> T get(
-            SteamWebApiInterface apiInterface,
-            SteamWebApiInterface.Method apiMethod,
+            SteamWebApiInterfaceMethod apiInterfaceMethod,
             String version,
             SteamWebApiRequest steamWebApiRequest,
             Class<T> responseClass) {
 
-        if (apiInterface == null || apiMethod == null || version == null || responseClass == null) {
-            throw new IllegalArgumentException("apiInterface, apiMethod, version and responseClass cannot be null!");
+        if (apiInterfaceMethod == null || version == null || responseClass == null) {
+            throw new IllegalArgumentException("apiInterfaceMethod, version and responseClass cannot be null!");
         }
 
-        StringBuilder uriPathBuilder = new StringBuilder(buildUrl(apiInterface, apiMethod, version));
+        StringBuilder uriPathBuilder = new StringBuilder(buildUrl(apiInterfaceMethod, version));
         if (steamWebApiRequest != null) {
             uriPathBuilder.append(toQueryString(toQueryParams(steamWebApiRequest)));
         }
@@ -148,20 +147,19 @@ public class SteamHttpClient {
     }
 
     public <T extends SteamWebApiResponse> T get(
-            SteamWebApiInterface apiInterface,
-            SteamWebApiInterface.Method apiMethod,
+            SteamWebApiInterfaceMethod apiInterfaceMethod,
             String version,
             SteamWebApiRestrictedRequest steamWebApiRestrictedRequest,
             Class<T> responseClass) {
 
-        if (apiInterface == null || apiMethod == null || version == null || responseClass == null) {
-            throw new IllegalArgumentException("apiInterface, apiMethod, version and responseClass cannot be null!");
+        if (apiInterfaceMethod == null || version == null || responseClass == null) {
+            throw new IllegalArgumentException("apiInterfaceMethod, version and responseClass cannot be null!");
         }
 
         if (steamWebApiRestrictedRequest != null) {
             steamWebApiRestrictedRequest.setApiKey(apiKey);
         }
-        return get(apiInterface, apiMethod, version, (SteamWebApiRequest) steamWebApiRestrictedRequest, responseClass);
+        return get(apiInterfaceMethod, version, (SteamWebApiRequest) steamWebApiRestrictedRequest, responseClass);
     }
 
     private String toQueryString(Map<String, String> queryParams) {
@@ -226,16 +224,15 @@ public class SteamHttpClient {
         }
     }
 
-    public <T extends SteamWebApiResponse> T post(SteamWebApiInterface apiInterface,
-                                                     SteamWebApiInterface.Method apiMethod,
-                                                     String version,
-                                                     UrlEncodedForm urlEncodedForm,
-                                                     Class<T> responseClass) {
-        if (apiInterface == null || apiMethod == null || version == null || responseClass == null || urlEncodedForm == null) {
-            throw new IllegalArgumentException("apiInterface, apiMethod, version, urlEncodedForm and responseClass cannot be null!");
+    public <T extends SteamWebApiResponse> T post(SteamWebApiInterfaceMethod apiInterfaceMethod,
+                                                  String version,
+                                                  UrlEncodedForm urlEncodedForm,
+                                                  Class<T> responseClass) {
+        if (apiInterfaceMethod == null || version == null || responseClass == null || urlEncodedForm == null) {
+            throw new IllegalArgumentException("apiInterfaceMethod, version, urlEncodedForm and responseClass cannot be null!");
         }
 
-        URI requestUri = URI.create(buildUrl(apiInterface, apiMethod, version));
+        URI requestUri = URI.create(buildUrl(apiInterfaceMethod, version));
 
         byte[] formBytes = urlEncodedForm.getAsByteArray();
         HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -257,13 +254,13 @@ public class SteamHttpClient {
         return null;
     }
 
-    private String buildUrl(final SteamWebApiInterface apiInterface, final SteamWebApiInterface.Method apiMethod, final String version) {
+    private String buildUrl(final SteamWebApiInterfaceMethod apiInterfaceMethod, final String version) {
         final StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(this.baseUrl);
         urlBuilder.append("/");
-        urlBuilder.append(apiInterface.getInterfaceName());
+        urlBuilder.append(apiInterfaceMethod.getInterfaceName());
         urlBuilder.append("/");
-        urlBuilder.append(apiMethod.getMethodName());
+        urlBuilder.append(apiInterfaceMethod.getMethodName());
         urlBuilder.append("/");
         urlBuilder.append(version);
         return urlBuilder.toString();

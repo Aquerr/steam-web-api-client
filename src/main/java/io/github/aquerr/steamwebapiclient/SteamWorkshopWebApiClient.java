@@ -19,8 +19,7 @@ public class SteamWorkshopWebApiClient {
 
     public WorkShopQueryResponse queryFiles(WorkShopQueryFilesRequest workshopQueryFilesRequest) {
         return this.steamHttpClient.get(
-                SteamWebApiInterface.I_PUBLISHED_FILE_SERVICE,
-                SteamWebApiInterface.Method.QUERY_FILES,
+                SteamWebApiInterfaceMethod.I_PUBLISHED_FILE_SERVICE_QUERY_FILES,
                 API_VERSION_1,
                 workshopQueryFilesRequest,
                 WorkShopQueryResponse.class
