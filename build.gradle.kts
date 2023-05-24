@@ -41,6 +41,7 @@ publishing {
             pom {
                 name.set("Steam Web Api Client")
                 description.set("Steam Web Api Client built in Java.")
+                artifactId = "steam-web-api-client"
                 url.set("https://github.com/Aquerr/steam-web-api-client")
 
                 licenses {
@@ -54,7 +55,13 @@ publishing {
                     developer {
                         id.set("Aquerr")
                         name.set("Bartłomiej Stępień")
-                        url.set("https://github.com/Aquerr/steam-web-api-client");
+                        url.set("https://github.com/Aquerr")
+                    }
+
+                    developer {
+                        id.set("mateo9x")
+                        name.set("Mateusz P.")
+                        url.set("https://github.com/mateo9x")
                     }
                 }
 
@@ -66,4 +73,11 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    setRequired({
+        (!project.version.toString().endsWith("SNAPSHOT"))
+    })
+    sign(publishing.publications["maven"])
 }
