@@ -9,11 +9,12 @@ import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1
 /**
  * Steam web api workshop client.
  */
-public class SteamWorkshopWebApiClient {
+public class SteamPublishedFileWebApiClient
+{
 
     private final SteamHttpClient steamHttpClient;
 
-    SteamWorkshopWebApiClient(SteamHttpClient steamHttpClient) {
+    SteamPublishedFileWebApiClient(SteamHttpClient steamHttpClient) {
         this.steamHttpClient = steamHttpClient;
     }
 
