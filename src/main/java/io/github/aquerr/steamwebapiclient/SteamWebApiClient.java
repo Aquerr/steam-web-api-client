@@ -15,7 +15,7 @@ public class SteamWebApiClient {
     public static final String API_VERSION_1 = "v1";
     public static final String API_VERSION_2 = "v2";
 
-    private final SteamWorkshopWebApiClient workshopWebApiClient;
+    private final SteamPublishedFileWebApiClient steamPublishedFileWebApiClient;
     private final SteamUtilWebApiClient steamUtilWebApiClient;
     private final SteamPlayerWebApiClient steamPlayerWebApiClient;
     private final SteamRemoteStorageClient steamRemoteStorageClient;
@@ -70,7 +70,7 @@ public class SteamWebApiClient {
     }
 
     private SteamWebApiClient(SteamHttpClient steamHttpClient) {
-        this.workshopWebApiClient = new SteamWorkshopWebApiClient(steamHttpClient);
+        this.steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);
         this.steamUtilWebApiClient = new SteamUtilWebApiClient(steamHttpClient);
         this.steamPlayerWebApiClient = new SteamPlayerWebApiClient(steamHttpClient);
         this.steamRemoteStorageClient = new SteamRemoteStorageClient(steamHttpClient);
@@ -78,12 +78,15 @@ public class SteamWebApiClient {
     }
 
     /**
-     * Gets the {@link SteamWorkshopWebApiClient}
-     * @return the {@link SteamWorkshopWebApiClient}
+     * Gets the {@link SteamPublishedFileWebApiClient}
+     *
+     * This client lets search workshop items, like mods, collections etc.
+     *
+     * @return the {@link SteamPublishedFileWebApiClient}
      */
-    public SteamWorkshopWebApiClient getWorkshopWebApiClient()
+    public SteamPublishedFileWebApiClient getSteamPublishedFileWebApiClient()
     {
-        return workshopWebApiClient;
+        return steamPublishedFileWebApiClient;
     }
 
     /**
