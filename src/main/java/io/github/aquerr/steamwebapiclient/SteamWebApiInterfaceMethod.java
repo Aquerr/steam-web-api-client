@@ -28,7 +28,8 @@ public enum SteamWebApiInterfaceMethod
     I_PLAYER_SERVICE_GET_BADGES("IPlayerService", "GetBadges"),
     I_PLAYER_SERVICE_GET_COMMUNITY_BADGE_PROGRESS("IPlayerService", "GetCommunityBadgeProgress"),
 
-    I_STEAM_NEWS_GET_NEWS_FOR_APP("ISteamNews", "GetNewsForApp")
+    I_STEAM_NEWS_GET_NEWS_FOR_APP("ISteamNews", "GetNewsForApp"),
+    I_GAME_SERVERS_SERVICE_GET_ACCOUNT_LIST("IGameServersService", "GetAccountList")
     ;
 
     private final String interfaceName;
