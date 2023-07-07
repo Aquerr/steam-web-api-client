@@ -1,12 +1,15 @@
 package io.github.aquerr.steamwebapiclient.util;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.aquerr.steamwebapiclient.SteamWebApiClient;
 import io.github.aquerr.steamwebapiclient.SteamWebApiInterfaceMethod;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
+import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
 import io.github.aquerr.steamwebapiclient.response.SupportedApiListResponse;
+import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,7 +39,9 @@ class SteamHttpClientTest
     private static final String API_KEY = "ApiKey";
 
     @Spy
-    private ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
+    private ObjectMapper objectMapper = new ObjectMapper()
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .findAndRegisterModules();
 
     @Mock
     private HttpClient httpClient;
@@ -130,5 +135,31 @@ class SteamHttpClientTest
 
         assertThat(serverInfoResponse.getServerTime()).isEqualTo(serverTime);
         assertThat(serverInfoResponse.getServerTimeString()).isEqualTo(serverTimeString);
+    }
+
+    @Test
+    void getShouldEncodeStringPropertiesBeforePerformingTheRequest() throws IOException, InterruptedException
+    {
+        // given
+        HttpResponse httpResponse = mock(HttpResponse.class);
+
+        given(httpClient.send(any(), any())).willReturn(httpResponse);
+        given(httpResponse.statusCode()).willReturn(200);
+        given(httpResponse.body()).willReturn(TestResourceUtils.loadMockJson("mock-json/get_workshop_query_response.json"));
+
+        HttpRequest expectedRequest = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create("https://api.steampowered.com/IPublishedFileService/QueryFiles/v1?cursor=&creator_appid=0&filetype=0&requiredtags=&return_for_sale_data=false&language=0&return_short_description=false&omitted_flags=&child_publishedfileid=0&return_playtime_stats=false&totalonly=false&return_children=false&required_flags=&excludedtags=&return_vote_data=false&key=ApiKey&match_all_tags=false&return_metadata=false&return_tags=false&cache_max_age_seconds=0&numperpage=0&ids_only=false&query_type=0&return_kv_tags=false&appid=123456&days=0&include_recent_votes_only=false&page=&return_previews=false&search_text=test+test+test"))
+                .build();
+
+        // when
+        WorkShopQueryResponse workShopQueryResponse = this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_PUBLISHED_FILE_SERVICE_QUERY_FILES,
+                SteamWebApiClient.API_VERSION_1,
+                WorkShopQueryFilesRequest.builder().appId(123456).searchText("test test test").build(),
+                WorkShopQueryResponse.class);
+
+        // then
+        verify(httpClient).send(expectedRequest, HttpResponse.BodyHandlers.ofString());
     }
 }
