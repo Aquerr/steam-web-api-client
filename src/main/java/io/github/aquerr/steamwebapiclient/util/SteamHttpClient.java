@@ -12,9 +12,11 @@ import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -190,7 +192,7 @@ public class SteamHttpClient {
             String name = getSteamRequestParamNameFromField(field);
             String fieldValue = getFieldValueAsString(steamWebApiRequest, field);
             if (fieldValue != null) {
-                params.put(name, fieldValue);
+                params.put(name, URLEncoder.encode(fieldValue, StandardCharsets.UTF_8));
             }
         }
         return params;
