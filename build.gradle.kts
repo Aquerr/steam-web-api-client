@@ -27,6 +27,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
 
 tasks.test {

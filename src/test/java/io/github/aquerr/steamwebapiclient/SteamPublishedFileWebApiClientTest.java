@@ -1,27 +1,31 @@
 package io.github.aquerr.steamwebapiclient;
 
+import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
+import io.github.aquerr.steamwebapiclient.util.TestHttpUtils;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertWith;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.MockitoAnnotations.openMocks;
 
+@WireMockTest(httpPort = 8080)
 class SteamPublishedFileWebApiClientTest
 {
     private static final int APP_ID = 123456;
@@ -61,23 +65,21 @@ class SteamPublishedFileWebApiClientTest
     }
 
     @Test
-    void shouldGetPublishedFileDetailsReturnResponseWhenSearchTextContainsWhitespace() throws IOException, InterruptedException
+    void shouldGetPublishedFileDetailsReturnResponseWhenSearchTextContainsWhitespace(WireMockRuntimeInfo wireMockRuntimeInfo)
     {
         // given
+        String apiKey = "ApiKey";
         WorkShopQueryFilesRequest request = WorkShopQueryFilesRequest.builder()
                 .appId(APP_ID)
+                .key(apiKey)
                 .searchText("Enhanced Movement")
                 .build();
+        stubFor(get(new UrlPathPattern(equalTo("/IPublishedFileService/QueryFiles/v1"), false))
+                .withQueryParams(TestHttpUtils.toQueryParams(request))
+                .willReturn(okJson(TestResourceUtils.loadMockJson("mock-json/get_workshop_query_response.json"))));
 
-        String baseUrl = "https://api.steampowered.com";
-        String apiKey = "ApiKey";
-        HttpClient httpClient = mock(HttpClient.class);
-        SteamHttpClient steamHttpClient = new SteamHttpClient(baseUrl, apiKey, httpClient);
+        SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey);
         SteamPublishedFileWebApiClient steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);
-        HttpResponse response = mock(HttpResponse.class);
-        given(response.statusCode()).willReturn(200);
-        given(response.body()).willReturn(TestResourceUtils.loadMockJson("mock-json/get_workshop_query_response.json"));
-        given(httpClient.send(any(), any())).willReturn(response);
 
         // when
         WorkShopQueryResponse workShopQueryResponse = steamPublishedFileWebApiClient.queryFiles(request);
