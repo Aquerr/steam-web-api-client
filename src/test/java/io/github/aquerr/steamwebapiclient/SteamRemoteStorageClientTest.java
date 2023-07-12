@@ -4,10 +4,11 @@ import io.github.aquerr.steamwebapiclient.request.PublishedFileDetailsRequest;
 import io.github.aquerr.steamwebapiclient.response.PublishedFileDetailsResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import io.github.aquerr.steamwebapiclient.util.UrlEncodedForm;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +17,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.MockitoAnnotations.openMocks;
 
+@ExtendWith(MockitoExtension.class)
 class SteamRemoteStorageClientTest {
 
     private static final long PUBLISHED_FILE_ID = 123456789L;
@@ -28,11 +29,6 @@ class SteamRemoteStorageClientTest {
 
     @InjectMocks
     private SteamRemoteStorageClient steamRemoteStorageClient;
-
-    @BeforeEach
-    void setUp() {
-        openMocks(this);
-    }
 
     @Test
     void getPublishedFileDetailsReturnPublishedFileDetailsResponse() {
