@@ -13,10 +13,11 @@ import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResp
 import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ import java.util.List;
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.openMocks;
 
+@ExtendWith(MockitoExtension.class)
 class SteamPlayerWebApiClientTest {
 
     private static final String KEY = "KEY";
@@ -52,11 +53,6 @@ class SteamPlayerWebApiClientTest {
 
     @InjectMocks
     private SteamPlayerWebApiClient client;
-
-    @BeforeEach
-    void setUp() {
-        openMocks(this);
-    }
 
     @Test
     void shouldGetRecentlyPlayedGames() {

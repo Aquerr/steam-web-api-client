@@ -23,9 +23,10 @@ dependencies {
     implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
     implementation("com.fasterxml.jackson.core:jackson-databind")
 
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-core:5.4.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.4.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }

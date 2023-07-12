@@ -3,17 +3,18 @@ package io.github.aquerr.steamwebapiclient;
 import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.openMocks;
 
+@ExtendWith(MockitoExtension.class)
 class SteamGameServersServiceApiClientTest {
 
     private static final String KEY = "KEY";
@@ -23,11 +24,6 @@ class SteamGameServersServiceApiClientTest {
 
     @InjectMocks
     private SteamGameServersServiceApiClient client;
-
-    @BeforeEach
-    void setUp() {
-        openMocks(this);
-    }
 
     @Test
     void shouldGetAccountList() {

@@ -4,10 +4,11 @@ import io.github.aquerr.steamwebapiclient.request.NewsForAppRequest;
 import io.github.aquerr.steamwebapiclient.response.NewsForAppResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
 import java.util.Date;
@@ -16,8 +17,8 @@ import java.util.List;
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_2;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.openMocks;
 
+@ExtendWith(MockitoExtension.class)
 class SteamNewsWebApiClientTest {
 
     private static final long APP_ID = 1L;
@@ -39,11 +40,6 @@ class SteamNewsWebApiClientTest {
 
     @InjectMocks
     private SteamNewsWebApiClient client;
-
-    @BeforeEach
-    void setUp() {
-        openMocks(this);
-    }
 
     @Test
     void shouldGetNewsForApp() {

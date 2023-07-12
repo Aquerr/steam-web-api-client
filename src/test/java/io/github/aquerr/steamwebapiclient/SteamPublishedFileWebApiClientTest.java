@@ -8,10 +8,11 @@ import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import io.github.aquerr.steamwebapiclient.util.TestHttpUtils;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertWith;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.MockitoAnnotations.openMocks;
 
 @WireMockTest(httpPort = 8080)
+@ExtendWith(MockitoExtension.class)
 class SteamPublishedFileWebApiClientTest
 {
     private static final int APP_ID = 123456;
@@ -37,11 +38,6 @@ class SteamPublishedFileWebApiClientTest
 
     @InjectMocks
     private SteamPublishedFileWebApiClient steamPublishedFileWebApiClient;
-
-    @BeforeEach
-    void setUp() {
-        openMocks(this);
-    }
 
     @Test
     void getPublishedFileDetailsReturnPublishedFileDetailsResponse() {
