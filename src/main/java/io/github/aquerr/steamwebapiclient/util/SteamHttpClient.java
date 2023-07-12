@@ -8,6 +8,7 @@ import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
+import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -24,6 +25,7 @@ import java.util.Map;
 /**
  * A wrapper around Java {@link HttpClient} to make steam api calls.
  */
+@Log
 public class SteamHttpClient {
 
     private final String apiKey;
@@ -140,6 +142,8 @@ public class SteamHttpClient {
                 ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
                 SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
                 return (T)steamWebApiResponse;
+            } else {
+                log.warning(response.body());
             }
         }
         catch (IOException | InterruptedException e) {
@@ -248,6 +252,8 @@ public class SteamHttpClient {
                 ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
                 SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
                 return (T)steamWebApiResponse;
+            } else {
+                log.warning(response.body());
             }
         }
         catch (IOException | InterruptedException e) {
