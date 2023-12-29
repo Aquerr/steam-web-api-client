@@ -18,7 +18,7 @@ public class BadgesRequest implements SteamWebApiRestrictedRequest {
     /**
      * Steamworks Web API user authentication key.
      * <p>
-     * Added automatically by the client library if not added manually.
+     * Added automatically by the {@link io.github.aquerr.steamwebapiclient.SteamWebApiClient} if not added manually.
      */
     @SteamRequestQueryParam("key")
     @Builder.Default

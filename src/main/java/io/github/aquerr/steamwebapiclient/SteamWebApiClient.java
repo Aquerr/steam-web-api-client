@@ -6,9 +6,9 @@ import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import java.net.http.HttpClient;
 
 /**
- * Main Entry point of the API.
+ * Main entry point of the API.
  * Instances of {@link SteamWebApiClient} immutable.
- * It is recommended to only have one instance of this class.
+ * It is recommended to have only one instance of this class.
  */
 public class SteamWebApiClient {
     public static final String BASE_WEB_API_URI = "https://api.steampowered.com";

@@ -6,6 +6,7 @@ plugins {
 }
 
 group = "io.github.aquerr"
+description = "Simple Java Steam Web API client."
 version = "1.0.0-SNAPSHOT"
 
 repositories {
@@ -20,8 +21,7 @@ java {
 }
 
 dependencies {
-    implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
-    implementation("com.fasterxml.jackson.core:jackson-databind")
+    api("com.fasterxml.jackson.core:jackson-databind:2.15.3")
 
     testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -38,12 +38,13 @@ tasks.test {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+
             from(components["java"])
 
             pom {
                 name.set("Steam Web Api Client")
-                description.set("Steam Web Api Client built in Java.")
                 artifactId = "steam-web-api-client"
+                description.set(project.description)
                 url.set("https://github.com/Aquerr/steam-web-api-client")
 
                 licenses {
@@ -72,6 +73,28 @@ publishing {
                     developerConnection.set("scm:git:ssh://github.com/Aquerr/steam-web-api-client.git")
                     url.set("https://github.com/Aquerr/steam-web-api-client")
                 }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "oss"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+            credentials {
+                username = project.findProperty("ossrhUsername") as String?
+                password = project.findProperty("ossrhPassword") as String?
+            }
+        }
+
+        maven {
+            name = "oss-snapshots"
+            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+
+            credentials {
+                username = project.findProperty("ossrhUsername") as String?
+                password = project.findProperty("ossrhPassword") as String?
             }
         }
     }

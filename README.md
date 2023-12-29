@@ -5,11 +5,25 @@ This library provides a simple way to interact with Steam Web Api through Java.
 ## Features
 
 * Query Steam Workshop
+* Get information about users/players.
 * And more...
 
 ## Usage
 
-The library is currently available via jitpack.
+#### Maven
+
+`steam-web-api-client` is available at Maven Central.
+```
+<dependencies>
+    <dependency>
+        <groupId>io.github.aquerr</groupId>
+        <artifactId>steam-web-api-client</artifactId>
+        <version>${steam-web-api-client.version}</version>
+    </dependency>
+</dependencies>
+```
+
+It is also possible to get the library via Jitpack.
 
 #### Maven
 ```
@@ -38,24 +52,29 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Aquerr:steam-web-api-client:main-SNAPSHOT'
+    implementation 'com.github.Aquerr:steam-web-api-client:version' // <-- Via Maven Central
+    implementation 'com.github.Aquerr:steam-web-api-client:main-SNAPSHOT' // <-- Via Jitpack
 }
 ```
 
 Kotlin DSL:
 ```
 repositories {
+    mavenCentral()
     maven("https://jitpack.io")
 }
 
 dependencies {
-    implementation("com.github.Aquerr:steam-web-api-client:main-SNAPSHOT")
+    implementation("io.github.aquerr:steam-web-api-client:version") // <-- Via Maven Central
+    implementation("io.github.aquerr:steam-web-api-client:main-SNAPSHOT") // <-- Via Jitpack
 }
 ```
 
 ## Credits
 
-Aquerr (Bartłomiej Stępień)
+Lead Developer - [Aquerr](https://github.com/Aquerr)
+
+Developer - [mateo9x](https://github.com/mateo9x)
 
 ## License
 

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A wrapper around Java {@link HttpClient} to make steam api calls.
+ * A wrapper around Java {@link HttpClient} to perform Steam API calls.
  */
 @Log
 public class SteamHttpClient {
