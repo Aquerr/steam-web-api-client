@@ -1,3 +1,6 @@
+![GitHub License](https://img.shields.io/github/license/Aquerr/steam-web-api-client)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.aquerr/steam-web-api-client)
+
 # Steam Web Api Client
 
 This library provides a simple way to interact with Steam Web Api through Java.
