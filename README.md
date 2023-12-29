@@ -1,5 +1,5 @@
-![GitHub License](https://img.shields.io/github/license/Aquerr/steam-web-api-client)
-![Maven Central](https://img.shields.io/maven-central/v/io.github.aquerr/steam-web-api-client)
+[![GitHub License](https://img.shields.io/github/license/Aquerr/steam-web-api-client)](https://github.com/Aquerr/steam-web-api-client/blob/main/LICENSE.md)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.aquerr/steam-web-api-client)](https://central.sonatype.com/artifact/io.github.aquerr/steam-web-api-client/versions)
 
 # Steam Web Api Client
 
