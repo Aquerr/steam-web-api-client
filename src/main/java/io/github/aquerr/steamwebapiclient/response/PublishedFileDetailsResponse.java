@@ -1,7 +1,10 @@
 package io.github.aquerr.steamwebapiclient.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -162,7 +165,7 @@ public class PublishedFileDetailsResponse implements SteamWebApiResponse {
              * The list of tags for given published file.
              */
             @JsonProperty("tags")
-            private List<Tag> tags;
+            private List<Tag> tags = new ArrayList<>();
 
             /**
              * The time when the item got created in seconds since epoch time.
@@ -208,6 +211,8 @@ public class PublishedFileDetailsResponse implements SteamWebApiResponse {
              * Represents the steam workshop tag.
              */
             @Data
+            @NoArgsConstructor
+            @AllArgsConstructor
             public static class Tag {
 
                 /**

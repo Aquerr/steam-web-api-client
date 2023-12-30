@@ -1,13 +1,13 @@
-package io.github.aquerr.steamwebapiclient.util;
+package io.github.aquerr.steamwebapiclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.github.aquerr.steamwebapiclient.SteamWebApiInterfaceMethod;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
+import io.github.aquerr.steamwebapiclient.util.UrlEncodedForm;
 import lombok.extern.java.Log;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.util.Map;
  * A wrapper around Java {@link HttpClient} to perform Steam API calls.
  */
 @Log
-public class SteamHttpClient {
+class SteamHttpClient {
 
     private final String apiKey;
     private final String baseUrl;
@@ -42,17 +42,8 @@ public class SteamHttpClient {
      * @param baseUrl the base url.
      * @param apiKey the api key, can be null.
      */
-    public SteamHttpClient(String baseUrl, String apiKey) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-
-        this.httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
-                .build();
-
-        this.objectMapper = new ObjectMapper()
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .findAndRegisterModules();
+    SteamHttpClient(String baseUrl, String apiKey) {
+        this(baseUrl, apiKey, defaultHttpClient(), defaultObjectMapper());
     }
 
     /**
@@ -64,15 +55,8 @@ public class SteamHttpClient {
      * @param apiKey the api key, can be null.
      * @param objectMapper the object mapper.
      */
-    public SteamHttpClient(String baseUrl, String apiKey, ObjectMapper objectMapper) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-
-        this.httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
-                .build();
-
-        this.objectMapper = objectMapper.copy();
+    SteamHttpClient(String baseUrl, String apiKey, ObjectMapper objectMapper) {
+        this(baseUrl, apiKey, defaultHttpClient(), objectMapper);
     }
 
     /**
@@ -84,15 +68,8 @@ public class SteamHttpClient {
      * @param apiKey the api key, can be null.
      * @param httpClient the http client.
      */
-    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-
-        this.httpClient = httpClient;
-
-        this.objectMapper = new ObjectMapper()
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .findAndRegisterModules();
+    SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient) {
+        this(baseUrl, apiKey, httpClient, defaultObjectMapper());
     }
 
     /**
@@ -106,12 +83,10 @@ public class SteamHttpClient {
      * @param httpClient the http client.
      * @param objectMapper the object mapper.
      */
-    public SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
+    SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
-
         this.httpClient = httpClient;
-
         this.objectMapper = objectMapper.copy();
     }
 
@@ -124,6 +99,8 @@ public class SteamHttpClient {
         if (apiInterfaceMethod == null || version == null || responseClass == null) {
             throw new IllegalArgumentException("apiInterfaceMethod, version and responseClass cannot be null!");
         }
+
+        populateApiKeyIfRestrictedRequest(steamWebApiRequest);
 
         StringBuilder uriPathBuilder = new StringBuilder(buildUrl(apiInterfaceMethod, version));
         if (steamWebApiRequest != null) {
@@ -152,20 +129,10 @@ public class SteamHttpClient {
         return null;
     }
 
-    public <T extends SteamWebApiResponse> T get(
-            SteamWebApiInterfaceMethod apiInterfaceMethod,
-            String version,
-            SteamWebApiRestrictedRequest steamWebApiRestrictedRequest,
-            Class<T> responseClass) {
-
-        if (apiInterfaceMethod == null || version == null || responseClass == null) {
-            throw new IllegalArgumentException("apiInterfaceMethod, version and responseClass cannot be null!");
-        }
-
-        if (steamWebApiRestrictedRequest != null) {
+    private void populateApiKeyIfRestrictedRequest(SteamWebApiRequest steamWebApiRequest) {
+        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest steamWebApiRestrictedRequest) {
             steamWebApiRestrictedRequest.setApiKey(apiKey);
         }
-        return get(apiInterfaceMethod, version, (SteamWebApiRequest) steamWebApiRestrictedRequest, responseClass);
     }
 
     private String toQueryString(Map<String, String> queryParams) {
@@ -272,5 +239,18 @@ public class SteamHttpClient {
         urlBuilder.append("/");
         urlBuilder.append(version);
         return urlBuilder.toString();
+    }
+
+    private static HttpClient defaultHttpClient() {
+        return HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
+    }
+
+    private static ObjectMapper defaultObjectMapper() {
+        return new ObjectMapper()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
+                .findAndRegisterModules();
     }
 }

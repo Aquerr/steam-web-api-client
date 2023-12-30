@@ -7,7 +7,7 @@ plugins {
 
 group = "io.github.aquerr"
 description = "Simple Java Steam Web API client."
-version = "1.0.0-SNAPSHOT"
+version = "1.1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()

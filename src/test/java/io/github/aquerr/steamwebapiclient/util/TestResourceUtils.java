@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 
 public class TestResourceUtils
 {
-    public static String loadMockJson(String path) {
+    public static String loadMockFileContent(String path) {
         try(InputStream resourceInputStream = TestResourceUtils.class.getClassLoader().getResourceAsStream(path);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceInputStream)))
-        {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceInputStream))) {
+
             StringBuilder result = new StringBuilder();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -18,8 +18,7 @@ public class TestResourceUtils
             }
             return result.toString();
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

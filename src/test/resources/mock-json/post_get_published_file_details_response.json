@@ -1,0 +1,84 @@
+{
+  "response": {
+    "result": 1,
+    "resultcount": 2,
+    "publishedfiledetails": [
+      {
+        "publishedfileid": "3122668835",
+        "result": 1,
+        "creator": "76561199405322406",
+        "creator_app_id": 570,
+        "consumer_app_id": 570,
+        "filename": "",
+        "file_size": 4310102,
+        "preview_url": "https://steamuserimages-a.akamaihd.net/ugc/2267064045254989652/D7767F9579F2826E431615C77816CD306CA746DA/",
+        "hcontent_preview": "2267064045254989652",
+        "title": "Monk of the Dragon School | head",
+        "description": "Monk of the Dragon School | head\r\n\r\n[img]https://i.imgur.com/TdCROnX.gif[/img]\r\n\r\n[img]https://i.imgur.com/0fmiLDU.gif[/img]",
+        "time_created": 1703532880,
+        "time_updated": 1703535461,
+        "visibility": 0,
+        "banned": 0,
+        "ban_reason": "",
+        "subscriptions": 0,
+        "favorited": 6,
+        "lifetime_subscriptions": 0,
+        "lifetime_favorited": 6,
+        "views": 423,
+        "tags": [
+          {
+            "tag": "Wearable"
+          },
+          {
+            "tag": "Marci"
+          },
+          {
+            "tag": "head"
+          },
+          {
+            "tag": "imported"
+          },
+          {
+            "tag": "reborn"
+          }
+        ]
+      },
+      {
+        "publishedfileid": "210267782",
+        "result": 1,
+        "creator": "76561198011739780",
+        "creator_app_id": 4000,
+        "consumer_app_id": 4000,
+        "filename": "addon_uploads/1465590012_1944094223.gma",
+        "file_size": 22080047,
+        "file_url": "https://steamusercontent-a.akamaihd.net/ugc/260461180141963921/F51B5298FCCBBB9B8BD0C3FB71042DC8227926FB/",
+        "hcontent_file": "260461180141963921",
+        "preview_url": "https://steamuserimages-a.akamaihd.net/ugc/486686236627557984/EC4DD07A4200024F2850AC4CB9280AAFAE81A236/",
+        "hcontent_preview": "486686236627557984",
+        "title": "DOOM 3 SWEPs",
+        "description": "Happy New Year! This time I released DOOM 3 SWEPs, I tried to make it the most faithful possible, so some things are still WIP.\r\n\r\n[h1][b]Convars:[/b][/h1]\r\n\r\ndoom3_crosshair (1 or 2) - Doom 3 crosshair with hit checker or just white stripes\r\ndoom3_hud (0 or 1) - Doom 3 HUD (WIP)\r\ndoom3_firelight (1 or 0) - enable/disable light effects\r\ndoom3_smokeeffect (1 or 0) - enable/disable weapon smoke effect\r\ndoom3_onlydoomflashlight (1 or 0) - disable standard flashlight, players have to use Doom3 one\r\ndoom3_restrictbfg (1 or 0) - disables BFG\r\n\r\n[b]Damage:[/b]\r\n\r\n[i]Damage values in ID Software games differs in singleplayer and multiplayer. You can modify them with these convars or change them over in Utilities menu. Default is multiplayer values[/i]\r\ndoom3_sk_pistol_damage (def. 15) - Pistol damage\r\ndoom3_sk_shotgun_damage (def. 15) - Shotgun damage\r\ndoom3_sk_machinegun_damage (def. 12) - Machinegun damage\r\ndoom3_sk_chaingun_damage (def. 25) - Chaingun damage\r\ndoom3_sk_rocketlauncher_damage (def. 100) - Rocket explosion damage\r\ndoom3_sk_rocketlauncher_radius (def. 125) - Rocket explosion radius\r\ndoom3_sk_grenade_damage (def. 75) - Grenade explosion damage\r\ndoom3_sk_plasmagun_damage (def. 30) - Plasma damage\r\ndoom3_sk_plasmagun_ammocapacity (def. 30) - Plasmagun ammo capacity\r\n\r\n[h1][b]FAQ:[/b][/h1]\r\n\r\n[b]Q:[/b] Do I need any content for the addon?\r\n[b]A:[/b] Of course no. All content in the addon is custom and already present in it\r\n\r\n[b]Q:[/b] Where's Soul Cube?\r\n[b]A:[/b] It's too hard to code, sorry\r\n\r\n[b]Q:[/b] What ammo does the BFG use?\r\n[b]A:[/b] BFG uses 'CombineCannon' ammo, use toolgun or 'givecurrentammo' to get ammo\r\n\r\n[b]Q:[/b] Can you make c_ models for them?\r\n[b]A:[/b] No\r\n\r\n[b]Q:[/b] I got lua errors when using it with NPCs\r\n[b]A:[/b] Those sweps currently unstable with NPCs\r\n\r\n[b]Q:[/b] It crashes my game\r\n[b]A:[/b] Sadly I don't know what causes this, try to clean your gmod\r\n\r\n\r\nThanks to [url=http://steamcommunity.com/id/matsilagi2]Matsilagi[/url]\r\n------\r\n\r\nIf you want to know about my new projects and updates, you can subscribe to my YouTube channel\r\n[url]http://www.youtube.com/user/TheMostUpset[/url]\r\n[url=http://www.youtube.com/user/TheMostUpset][img]http://i.imgur.com/kB8BWZQ.png[/img][/url]",
+        "time_created": 1388443688,
+        "time_updated": 1465590262,
+        "visibility": 0,
+        "banned": 0,
+        "ban_reason": "",
+        "subscriptions": 852337,
+        "favorited": 27873,
+        "lifetime_subscriptions": 1826326,
+        "lifetime_favorited": 32794,
+        "views": 417752,
+        "tags": [
+          {
+            "tag": "Addon"
+          },
+          {
+            "tag": "Weapon"
+          },
+          {
+            "tag": "Fun"
+          }
+        ]
+      }
+    ]
+  }
+}

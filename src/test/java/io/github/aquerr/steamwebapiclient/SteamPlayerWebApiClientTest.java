@@ -11,7 +11,6 @@ import io.github.aquerr.steamwebapiclient.response.CommunityBadgeProgressRespons
 import io.github.aquerr.steamwebapiclient.response.OwnedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.PlayerRecentlyPlayedGamesResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamLevelResponse;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

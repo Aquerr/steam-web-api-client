@@ -118,10 +118,11 @@ public class WorkShopQueryResponse implements SteamWebApiResponse {
             private String fileSize;
 
             /**
-             * The file type. TODO:// Link RemoteStorageWorkshopFileType
+             * The file type.
              *
              * <a href="https://partner.steamgames.com/doc/api/ISteamRemoteStorage#EWorkshopFileType">https://partner.steamgames.com/doc/api/ISteamRemoteStorage#EWorkshopFileType</a>
              */
+            //TODO: Add enum for fileType and add getFileTypeAsEnum method in this class.
             @JsonProperty("file_type")
             private int fileType;
 

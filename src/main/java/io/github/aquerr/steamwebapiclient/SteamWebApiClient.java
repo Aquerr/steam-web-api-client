@@ -1,7 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 
 import java.net.http.HttpClient;
 
