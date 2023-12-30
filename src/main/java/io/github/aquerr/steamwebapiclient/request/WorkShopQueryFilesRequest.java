@@ -282,7 +282,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
     }
 
     /**
-     * Same as {@link <a href="https://partner.steamgames.com/doc/webapi/IPublishedFileService#EPublishedFileInfoMatchingFileType">https://partner.steamgames.com/doc/webapi/IPublishedFileService#EPublishedFileInfoMatchingFileType</a>}
+     * Same as <a href="https://partner.steamgames.com/doc/webapi/IPublishedFileService#EPublishedFileInfoMatchingFileType">https://partner.steamgames.com/doc/webapi/IPublishedFileService#EPublishedFileInfoMatchingFileType</a>
      */
     public enum PublishedFileInfoMatchingFileType {
 
