@@ -1,71 +1,106 @@
 package io.github.aquerr.steamwebapiclient;
 
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
+import io.github.aquerr.steamwebapiclient.request.CollectionDetailsRequest;
 import io.github.aquerr.steamwebapiclient.request.PublishedFileDetailsRequest;
+import io.github.aquerr.steamwebapiclient.response.CollectionDetailsResponse;
 import io.github.aquerr.steamwebapiclient.response.PublishedFileDetailsResponse;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
-import io.github.aquerr.steamwebapiclient.util.UrlEncodedForm;
+import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
+@WireMockTest(httpPort = 4444)
 @ExtendWith(MockitoExtension.class)
 class SteamRemoteStorageClientTest {
 
     private static final long PUBLISHED_FILE_ID = 123456789L;
     private static final long PUBLISHED_FILE_ID_2 = 9532492348L;
+    private static final long PUBLISHED_FILE_ID_3 = 181627512L;
 
-    @Mock
-    private SteamHttpClient steamHttpClient;
+    private static final String API_KEY = "ApiKey";
 
-    @InjectMocks
+    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY);
+
     private SteamRemoteStorageClient steamRemoteStorageClient;
+
+    @BeforeEach
+    void setUp() {
+        this.steamRemoteStorageClient = new SteamRemoteStorageClient(this.steamHttpClient);
+    }
 
     @Test
     void getPublishedFileDetailsReturnPublishedFileDetailsResponse() {
 
         // given
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("itemcount", String.valueOf(2));
-        parameters.put("publishedfileids[0]", String.valueOf(PUBLISHED_FILE_ID));
-        parameters.put("publishedfileids[1]", String.valueOf(PUBLISHED_FILE_ID_2));
-        UrlEncodedForm urlEncodedForm = UrlEncodedForm.of(parameters);
-
-        PublishedFileDetailsResponse expectedResponse = preparePublishedFileDetailsResponse(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2));
-
-        given(steamHttpClient.post(SteamWebApiInterfaceMethod.I_STEAM_REMOTE_STORAGE_GET_PUBLISHED_FILE_DETAILS,
-                SteamWebApiClient.API_VERSION_1,
-                urlEncodedForm,
-                PublishedFileDetailsResponse.class)).willReturn(expectedResponse);
+        stubFor(post(new UrlPathPattern(equalTo("/ISteamRemoteStorage/GetPublishedFileDetails/v1"), false))
+                .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded"))
+                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-json/post_get_published_file_details_request.txt")))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/post_get_published_file_details_response.json"))));
 
         // when
-        PublishedFileDetailsResponse response = steamRemoteStorageClient.getPublishedFileDetails(new PublishedFileDetailsRequest(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2)));
+        PublishedFileDetailsResponse response = steamRemoteStorageClient.getPublishedFileDetails(new PublishedFileDetailsRequest(List.of(3122668835L, 210267782L)));
 
         // then
-        assertThat(response).isEqualTo(expectedResponse);
+        assertThat(response).satisfies(resp -> {
+            assertThat(resp.getResponse().getResult()).isEqualTo(1);
+            assertThat(resp.getResponse().getResultCount()).isEqualTo(2);
+
+            assertThat(resp.getResponse().getPublishedFileDetails().get(0)).satisfies(firstDetails -> {
+                assertThat(firstDetails.getPublishedFileId()).isEqualTo(String.valueOf(3122668835L));
+                assertThat(firstDetails.getCreator()).isEqualTo(76561199405322406L);
+            });
+
+            assertThat(resp.getResponse().getPublishedFileDetails().get(1)).satisfies(secondDetails -> {
+                assertThat(secondDetails.getPublishedFileId()).isEqualTo(String.valueOf(210267782L));
+                assertThat(secondDetails.getTags()).contains(
+                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Addon"),
+                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Weapon"),
+                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Fun")
+                );
+            });
+        });
     }
 
-    private PublishedFileDetailsResponse preparePublishedFileDetailsResponse(List<Long> publishedFileIds) {
-        PublishedFileDetailsResponse publishedFileDetailsResponse = new PublishedFileDetailsResponse();
-        PublishedFileDetailsResponse.QueryFilesResponse queryFilesResponse = new PublishedFileDetailsResponse.QueryFilesResponse();
-        publishedFileDetailsResponse.setResponse(queryFilesResponse);
-        List<PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails> publishedFileDetailsList = new ArrayList<>();
-        queryFilesResponse.setPublishedFileDetails(publishedFileDetailsList);
+    @Test
+    void getCollectionDetailsReturnCollectionDetailsResponse() {
+        // given
+        stubFor(post(new UrlPathPattern(equalTo("/ISteamRemoteStorage/GetCollectionDetails/v1"), false))
+                .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded"))
+                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-json/post_get_collection_details_request.txt")))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/post_get_collection_details_response.json"))));
 
-        publishedFileIds.forEach(id -> {
-            PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails publishedFileDetails = new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails();
-            publishedFileDetails.setPublishedFileId(String.valueOf(id));
-            publishedFileDetailsList.add(publishedFileDetails);
+        // when
+        CollectionDetailsResponse response = steamRemoteStorageClient.getCollectionDetails(new CollectionDetailsRequest(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2, PUBLISHED_FILE_ID_3)));
+
+        // then
+        assertThat(response).satisfies(resp -> {
+            assertThat(resp.getResponse().getResult()).isEqualTo(1);
+            assertThat(resp.getResponse().getResultCount()).isEqualTo(2);
+            assertThat(resp.getResponse().getCollectionDetails().get(0).getCollectionId()).isEqualTo(PUBLISHED_FILE_ID);
+
+            assertThat(resp.getResponse().getCollectionDetails().get(0)).satisfies(firstDetails -> {
+                assertThat(firstDetails.getResultAsEnum()).isEqualTo(CollectionDetailsResponse.Response.CollectionDetails.ResultType.FOUND);
+            });
+
+            assertThat(resp.getResponse().getCollectionDetails().get(1)).satisfies(secondDetails -> {
+                assertThat(secondDetails.getResultAsEnum()).isEqualTo(CollectionDetailsResponse.Response.CollectionDetails.ResultType.FOUND);
+            });
+
+            assertThat(resp.getResponse().getCollectionDetails().get(2)).satisfies(thirdDetails -> {
+                assertThat(thirdDetails.getItems()).isEmpty();
+                assertThat(thirdDetails.getResultAsEnum()).isEqualTo(CollectionDetailsResponse.Response.CollectionDetails.ResultType.NOT_FOUND);
+            });
         });
-        return publishedFileDetailsResponse;
     }
 }

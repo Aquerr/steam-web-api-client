@@ -5,7 +5,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import io.github.aquerr.steamwebapiclient.util.TestHttpUtils;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
@@ -72,7 +71,7 @@ class SteamPublishedFileWebApiClientTest
                 .build();
         stubFor(get(new UrlPathPattern(equalTo("/IPublishedFileService/QueryFiles/v1"), false))
                 .withQueryParams(TestHttpUtils.toQueryParams(request))
-                .willReturn(okJson(TestResourceUtils.loadMockJson("mock-json/get_workshop_query_response.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_workshop_query_response.json"))));
 
         SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey);
         SteamPublishedFileWebApiClient steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);

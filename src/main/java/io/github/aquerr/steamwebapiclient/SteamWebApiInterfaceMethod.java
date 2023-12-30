@@ -3,7 +3,7 @@ package io.github.aquerr.steamwebapiclient;
 /**
  * Enum representing steam web api interfaces.
  */
-public enum SteamWebApiInterfaceMethod
+enum SteamWebApiInterfaceMethod
 {
 
     I_WORKSHOP_SERVICE_SET_ITEM_PAYMENT_RULES("IWorkshopService", "SetItemPaymentRules"),
@@ -18,6 +18,7 @@ public enum SteamWebApiInterfaceMethod
     I_PUBLISHED_FILE_SERVICE_UPDATE_TAGS("IPublishedFileService", "UpdateTags"),
 
     I_STEAM_REMOTE_STORAGE_GET_PUBLISHED_FILE_DETAILS("ISteamRemoteStorage", "GetPublishedFileDetails"),
+    I_STEAM_REMOTE_STORAGE_GET_COLLECTION_DETAILS("ISteamRemoteStorage", "GetCollectionDetails"),
 
     I_STEAM_WEB_API_UTIL_GET_SERVER_INFO("ISteamWebAPIUtil", "GetServerInfo"),
     I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST("ISteamWebAPIUtil", "GetSupportedAPIList"),

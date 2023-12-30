@@ -2,7 +2,6 @@ package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

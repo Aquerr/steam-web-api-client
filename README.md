@@ -11,6 +11,12 @@ This library provides a simple way to interact with Steam Web Api through Java.
 * Get information about users/players.
 * And more...
 
+# Prerequisites
+
+* Java 17
+* [Jackson (databind)](https://github.com/FasterXML/jackson-databind)
+* [Steam Web Api Access Token](https://steamcommunity.com/dev) (required for most endpoints)
+
 ## Usage
 
 #### Maven
@@ -71,6 +77,67 @@ dependencies {
     implementation("io.github.aquerr:steam-web-api-client:version") // <-- Via Maven Central
     implementation("io.github.aquerr:steam-web-api-client:main-SNAPSHOT") // <-- Via Jitpack
 }
+```
+
+### Code Examples
+
+#### Creating the SteamWebApiClient
+
+```
+String steamApiKey = "123mykey123"; // Your Steam Web Api Key
+SteamWebApiClient steamWebApiClient = new SteamWebApiClient(steamApiKey);
+
+// As because api key is not required for all endpoints, this is also valid.
+// Remember that endpoints that require api key will not work with such setup.
+SteamWebApiClient steamWebApiClient = new SteamWebApiClient(null);
+
+```
+
+#### Configuring the underlying HttpClient and ObjectMapper
+```
+// Default HttpClient used by the library has timeout set to 5 seconds.
+// Let's increase that timeout.
+HttpClient httpClient = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(10))
+        .build();
+
+// Default ObjectMapper does not fail on unknow properties, so let's change it to fail!
+ObjectMapper objectMapper = new ObjectMapper()
+        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+String steamApiKey = "123mykey123"; // Your Steam Web Api Key
+SteamWebApiClient steamWebApiClient = new SteamWebApiClient(null, httpClient, objectMapper);
+
+```
+
+#### Example workshop search
+
+```
+WorkShopQueryFilesRequest request = WorkShopQueryFilesRequest.builder()
+        .appId(730) // Counter Strike App Id
+        .searchText("Adventure COOP Maps")
+        .fileType(WorkShopQueryFilesRequest.PublishedFileInfoMatchingFileType.ITEMS)
+        .queryType(WorkShopQueryFilesRequest.PublishedFileQueryType.RANKED_BY_TOTAL_UNIQUE_SUBSCRIPTIONS)
+        .key(steamApiKey) // Not required if you set up your SteamWebApiClient with an API Key.
+        .numPerPage(10) // Number of items per page.
+        .cursor("*") // We should set this to * for first request according to Steam Web Api Docs.
+                     // After that use cursor from response that will get you next page.
+
+        .returnPreviews(true) // If preview images should be returned.
+        .build();
+WorkShopQueryResponse response = steamWebApiClient.getSteamPublishedFileWebApiClient().queryFiles(request);
+```
+
+#### Get recently played games by a user
+
+Note: If looked up user has private profile, and you are not friends, then the response will contain an empty list.
+```
+PlayerRecentlyPlayedGamesRequest request = PlayerRecentlyPlayedGamesRequest.builder()
+        .steamId(1234L)
+        .count(10)
+        .build()
+
+PlayerRecentlyPlayedGamesResponse response = steamWebApiClient.getPlayerWebApiClient().getRecentlyPlayedGames(request);
 ```
 
 ## Credits

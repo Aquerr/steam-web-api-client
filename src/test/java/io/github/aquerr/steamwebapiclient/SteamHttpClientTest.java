@@ -1,16 +1,15 @@
-package io.github.aquerr.steamwebapiclient.util;
+package io.github.aquerr.steamwebapiclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.EqualToPattern;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
-import io.github.aquerr.steamwebapiclient.SteamWebApiClient;
-import io.github.aquerr.steamwebapiclient.SteamWebApiInterfaceMethod;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
 import io.github.aquerr.steamwebapiclient.response.SupportedApiListResponse;
+import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
@@ -25,7 +24,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@WireMockTest(httpPort = 8080)
+@WireMockTest(httpPort = 4444)
 @ExtendWith(MockitoExtension.class)
 class SteamHttpClientTest
 {
@@ -36,7 +35,7 @@ class SteamHttpClientTest
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .findAndRegisterModules();
 
-    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", API_KEY, objectMapper);
+    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, objectMapper);
 
     @Test
     void getShouldThrowIllegalArgumentExceptionWhenApiInterfaceMethodIsNull() {
@@ -58,7 +57,7 @@ class SteamHttpClientTest
     {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetServerInfo/v1"), false))
-                .willReturn(okJson(TestResourceUtils.loadMockJson("mock-json/get_server_info.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_server_info.json"))));
 
         // when
         ServerInfoResponse response = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
@@ -75,7 +74,7 @@ class SteamHttpClientTest
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetSupportedAPIList/v1"), false))
                 .withQueryParam("key", new EqualToPattern(API_KEY))
-                .willReturn(okJson(TestResourceUtils.loadMockJson("mock-json/get_supported_api_list.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_supported_api_list.json"))));
 
         // when
         SupportedApiListResponse supportedApiListResponse = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, SteamWebApiClient.API_VERSION_1, new SupportedApiListRequest(), SupportedApiListResponse.class);
@@ -98,7 +97,7 @@ class SteamHttpClientTest
     {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetServerInfo/v1"), false))
-                .willReturn(okJson(TestResourceUtils.loadMockJson("mock-json/get_server_info.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_server_info.json"))));
 
         // when
         ServerInfoResponse response = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);

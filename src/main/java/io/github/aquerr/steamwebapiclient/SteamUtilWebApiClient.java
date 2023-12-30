@@ -4,7 +4,6 @@ import io.github.aquerr.steamwebapiclient.request.ServerInfoRequest;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.SupportedApiListResponse;
-import io.github.aquerr.steamwebapiclient.util.SteamHttpClient;
 
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1;
 
