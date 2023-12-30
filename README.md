@@ -89,8 +89,7 @@ SteamWebApiClient steamWebApiClient = new SteamWebApiClient(steamApiKey);
 
 // As because api key is not required for all endpoints, this is also valid.
 // Remember that endpoints that require api key will not work with such setup.
-SteamWebApiClient steamWebApiClient = new SteamWebApiClient(null);
-
+SteamWebApiClient steamWebApiClient = new SteamWebApiClient();
 ```
 
 #### Configuring the underlying HttpClient and ObjectMapper
@@ -101,13 +100,12 @@ HttpClient httpClient = HttpClient.newBuilder()
         .connectTimeout(Duration.ofSeconds(10))
         .build();
 
-// Default ObjectMapper does not fail on unknow properties, so let's change it to fail!
+// Default ObjectMapper does not fail on unknown properties, so let's change it to fail!
 ObjectMapper objectMapper = new ObjectMapper()
         .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 String steamApiKey = "123mykey123"; // Your Steam Web Api Key
 SteamWebApiClient steamWebApiClient = new SteamWebApiClient(null, httpClient, objectMapper);
-
 ```
 
 #### Example workshop search

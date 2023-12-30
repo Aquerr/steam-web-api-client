@@ -21,7 +21,7 @@ public class NewsForAppRequest implements SteamWebApiRestrictedRequest {
      */
     @NonNull
     @SteamRequestQueryParam("appid")
-    private Long appId;
+    private int appId;
 
     /**
      * Maximum length for the content to return, if this is 0 the full content is returned, if it's less then a blurb is generated to fit.

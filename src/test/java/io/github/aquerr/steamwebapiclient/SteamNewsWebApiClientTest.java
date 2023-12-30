@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class SteamNewsWebApiClientTest {
 
-    private static final long APP_ID = 1L;
+    private static final int APP_ID = 1;
     private static final int COUNT = 1;
     private static final int MAX_LENGTH = 1;
     private static final String FEEDS = "gaming,news";
