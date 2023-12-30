@@ -22,6 +22,16 @@ public class SteamWebApiClient {
     private final SteamGameServersServiceApiClient steamGameServersServiceApiClient;
 
     /**
+     * Creates an instance of {@link SteamWebApiClient} without API token.
+     *
+     * Note: Such client will be able to use only those endpoints that does not require Steam Web API token.
+     * To fully use the client, consider using another constructor and provide Steam Web API token.
+     */
+    public SteamWebApiClient() {
+        this(new SteamHttpClient(BASE_WEB_API_URI, null));
+    }
+
+    /**
      * Creates an instance of {@link SteamWebApiClient}.
      *
      * Note: Api token is not required for the client to function.

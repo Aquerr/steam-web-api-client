@@ -1,0 +1,178 @@
+{
+  "response": {
+    "total_trades": 88,
+    "more": true,
+    "trades": [
+      {
+        "tradeid": "1894412447350854522",
+        "steamid_other": "76564198325376876",
+        "time_init": 1511552191,
+        "status": 3,
+        "assets_received": [
+          {
+            "appid": 730,
+            "contextid": "2",
+            "assetid": "12781005241",
+            "amount": "1",
+            "classid": "1011952495",
+            "instanceid": "188530170",
+            "new_assetid": "12781040766",
+            "new_contextid": "2"
+          }
+        ]
+      },
+      {
+        "tradeid": "1891933900753285999",
+        "steamid_other": "76561198324683384",
+        "time_init": 1507285658,
+        "status": 1,
+        "assets_received": [
+          {
+            "appid": 730,
+            "contextid": "2",
+            "assetid": "12164285900",
+            "amount": "1",
+            "classid": "2316442518",
+            "instanceid": "188530139",
+            "new_assetid": "12179563547",
+            "new_contextid": "2"
+          }
+        ]
+      }
+    ],
+    "descriptions": [
+      {
+        "appid": 730,
+        "classid": "1011952495",
+        "instanceid": "188530170",
+        "currency": false,
+        "background_color": "",
+        "icon_url": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpouL-iLhFf0Ob3fzhF6cqJlY6Fnv_9P7rFmXlu5cB1g_zMu4ms3FHg-RA6Yz30cYLDdQ9saFrW8wW8yOnm1pDpv8vNzHMyuXIq5inD30vg_iCKYUg",
+        "icon_url_large": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpouL-iLhFf0Ob3fzhF6cqJlY6Fnv_9P7rFmXlu5cB1g_zMyoD0mlOx5RZlZzz3JtXDclI5NFyG_VjsyOzpjMK-tZrAmnQ2uXYm4H6MnEe_gk5SLrs4_EInbzs",
+        "descriptions": [
+          {
+            "type": "html",
+            "value": "Exterior: Field-Tested"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "This item features StatTrak™ technology, which tracks certain statistics when equipped by its owner.",
+            "color": "99ccff"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "This item tracks Confirmed Kills.",
+            "color": "CF6A32"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "The Negev is a beast that can keep the enemy at bay with its pin-point supressive fire, provided you have the luxury of time to gain control over it. It has been custom painted with a monstrous design and then distressed.\n\n<i>Get back here, I'm talking to you!</i>"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "The Falchion Collection",
+            "color": "9da1a9"
+          },
+          {
+            "type": "html",
+            "value": " "
+          }
+        ],
+        "tradable": true,
+        "actions": [
+          {
+            "link": "steam://rungame/730/76561202255233023/+csgo_econ_action_preview%20S%owner_steamid%A%assetid%D7362963868770991876",
+            "name": "Inspect in Game..."
+          }
+        ],
+        "name": "StatTrak™ Negev | Loudmouth",
+        "name_color": "CF6A32",
+        "type": "StatTrak™ Restricted Machinegun",
+        "market_name": "StatTrak™ Negev | Loudmouth (Field-Tested)",
+        "market_hash_name": "StatTrak™ Negev | Loudmouth (Field-Tested)",
+        "market_actions": [
+          {
+            "link": "steam://rungame/730/76561202255233023/+csgo_econ_action_preview%20M%listingid%A%assetid%D7362963868770991876",
+            "name": "Inspect in Game..."
+          }
+        ],
+        "commodity": false,
+        "market_tradable_restriction": 7,
+        "marketable": true
+      },
+      {
+        "appid": 730,
+        "classid": "2316442518",
+        "instanceid": "188530139",
+        "currency": false,
+        "background_color": "",
+        "icon_url": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7uifDhh3szFcDoV09-3gZOfnvTLPr7Vn35cpscnjrzHpdWn3QLt_kFvYjvwLISddFdqZl3R-Vnswuu8h5Hov8uYn3B9-n51X8RUnQk",
+        "icon_url_large": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7uifDhh3szFcDoV09-3gZOfnvTLPr7Vn35c18lwmO7Eu46jjAGy-0puZm_6IYSWc1Q9aVrY_ADqxuvuhp7uv5iay3U3uXZzs33D30vg3qhaMJs",
+        "descriptions": [
+          {
+            "type": "html",
+            "value": "Exterior: Field-Tested"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "The CT-exclusive Mag-7 delivers a devastating amount of damage at close range. Its rapid magazine-style reloads make it a great tactical choice. It has been painted with a grey anodized pattern and finished with blue highlights.\n\n<i>\"I wouldn't drink that\"</i>"
+          },
+          {
+            "type": "html",
+            "value": " "
+          },
+          {
+            "type": "html",
+            "value": "The Operation Hydra Collection",
+            "color": "9da1a9"
+          },
+          {
+            "type": "html",
+            "value": " "
+          }
+        ],
+        "tradable": true,
+        "actions": [
+          {
+            "link": "steam://rungame/730/76561202255233023/+csgo_econ_action_preview%20S%owner_steamid%A%assetid%D7128811794787422815",
+            "name": "Inspect in Game..."
+          }
+        ],
+        "name": "MAG-7 | Hard Water",
+        "name_color": "D2D2D2",
+        "type": "Mil-Spec Grade Shotgun",
+        "market_name": "MAG-7 | Hard Water (Field-Tested)",
+        "market_hash_name": "MAG-7 | Hard Water (Field-Tested)",
+        "market_actions": [
+          {
+            "link": "steam://rungame/730/76561202255233023/+csgo_econ_action_preview%20M%listingid%A%assetid%D7128811794787422815",
+            "name": "Inspect in Game..."
+          }
+        ],
+        "commodity": false,
+        "market_tradable_restriction": 7,
+        "marketable": true
+      }
+    ]
+  }
+}

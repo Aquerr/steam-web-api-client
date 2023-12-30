@@ -25,7 +25,7 @@ public class NewsForAppResponse implements SteamWebApiResponse {
          * AppID for which news were retrieved.
          */
         @JsonProperty("appid")
-        private long appId;
+        private int appId;
 
         /**
          * List of news for app.
@@ -106,7 +106,7 @@ public class NewsForAppResponse implements SteamWebApiResponse {
              * AppID for which news were retrieved.
              */
             @JsonProperty("appid")
-            private long appId;
+            private int appId;
 
             /**
              * Gets the creation date time as {@link ZonedDateTime} with UTC time zone.
