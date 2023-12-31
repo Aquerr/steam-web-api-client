@@ -45,7 +45,7 @@ It is also possible to get the library via Jitpack.
 
 <dependencies>
   <dependency>
-    <groupId>io.github.aquerr</groupId>
+    <groupId>com.github.Aquerr</groupId>
     <artifactId>steam-web-api-client</artifactId>
     <version>main-SNAPSHOT</version>
   </dependency>
@@ -61,7 +61,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Aquerr:steam-web-api-client:version' // <-- Via Maven Central
+    implementation 'io.github.aquerr:steam-web-api-client:version' // <-- Via Maven Central
     implementation 'com.github.Aquerr:steam-web-api-client:main-SNAPSHOT' // <-- Via Jitpack
 }
 ```
@@ -75,7 +75,7 @@ repositories {
 
 dependencies {
     implementation("io.github.aquerr:steam-web-api-client:version") // <-- Via Maven Central
-    implementation("io.github.aquerr:steam-web-api-client:main-SNAPSHOT") // <-- Via Jitpack
+    implementation("com.github.Aquerr:steam-web-api-client:main-SNAPSHOT") // <-- Via Jitpack
 }
 ```
 
@@ -105,7 +105,7 @@ ObjectMapper objectMapper = new ObjectMapper()
         .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 String steamApiKey = "123mykey123"; // Your Steam Web Api Key
-SteamWebApiClient steamWebApiClient = new SteamWebApiClient(null, httpClient, objectMapper);
+SteamWebApiClient steamWebApiClient = new SteamWebApiClient(steamApiKey, httpClient, objectMapper);
 ```
 
 #### Example workshop search
