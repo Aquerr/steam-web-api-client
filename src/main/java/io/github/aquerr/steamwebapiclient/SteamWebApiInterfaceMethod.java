@@ -31,6 +31,7 @@ enum SteamWebApiInterfaceMethod
 
     I_STEAM_NEWS_GET_NEWS_FOR_APP("ISteamNews", "GetNewsForApp"),
     I_GAME_SERVERS_SERVICE_GET_ACCOUNT_LIST("IGameServersService", "GetAccountList"),
+    I_GAME_SERVERS_SERVICE_CREATE_ACCOUNT("IGameServersService", "CreateAccount"),
 
     I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory")
     ;

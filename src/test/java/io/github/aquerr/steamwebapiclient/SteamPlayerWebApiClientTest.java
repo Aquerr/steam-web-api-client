@@ -1,6 +1,7 @@
 package io.github.aquerr.steamwebapiclient;
 
 
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.BadgesRequest;
 import io.github.aquerr.steamwebapiclient.request.CommunityBadgeProgressRequest;
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
@@ -54,7 +55,7 @@ class SteamPlayerWebApiClientTest {
     private SteamPlayerWebApiClient client;
 
     @Test
-    void shouldGetRecentlyPlayedGames() {
+    void shouldGetRecentlyPlayedGames() throws ClientException {
         //given
         PlayerRecentlyPlayedGamesRequest request = preparePlayerGetRecentlyPlayedGamesRequest();
         given(client.getRecentlyPlayedGames(request)).willReturn(preparePlayerGetRecentlyPlayedGamesResponse());
@@ -72,7 +73,7 @@ class SteamPlayerWebApiClientTest {
     }
 
     @Test
-    void shouldGetOwnedGames() {
+    void shouldGetOwnedGames() throws ClientException {
         //given
         OwnedGamesRequest request = prepareOwnedGamesRequest();
         given(client.getOwnedGames(request)).willReturn(prepareOwnedGamesResponse());
@@ -90,7 +91,7 @@ class SteamPlayerWebApiClientTest {
     }
 
     @Test
-    void shouldGetSteamLevel() {
+    void shouldGetSteamLevel() throws ClientException {
         //given
         SteamLevelRequest request = prepareSteamLevelRequest();
         given(client.getSteamLevel(request)).willReturn(prepareSteamLevelResponse());
@@ -108,7 +109,7 @@ class SteamPlayerWebApiClientTest {
     }
 
     @Test
-    void shouldGetBadges() {
+    void shouldGetBadges() throws ClientException {
         //given
         BadgesRequest request = prepareBadgesRequest();
         given(client.getBadges(request)).willReturn(prepareBadgesResponse());
@@ -126,7 +127,7 @@ class SteamPlayerWebApiClientTest {
     }
 
     @Test
-    void shouldGetCommunityBadgeProgress() {
+    void shouldGetCommunityBadgeProgress() throws ClientException {
         //given
         CommunityBadgeProgressRequest request = prepareCommunityBadgeProgressRequest();
         given(client.getCommunityBadgeProgress(request)).willReturn(prepareCommunityBadgeProgressResponse());

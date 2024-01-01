@@ -1,5 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 
@@ -22,8 +23,14 @@ public class SteamPublishedFileWebApiClient
      *
      * @param request the request as {@link WorkShopQueryFilesRequest}
      * @return the response as {@link WorkShopQueryResponse}
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public WorkShopQueryResponse queryFiles(WorkShopQueryFilesRequest request) {
+    public WorkShopQueryResponse queryFiles(WorkShopQueryFilesRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PUBLISHED_FILE_SERVICE_QUERY_FILES,
                 API_VERSION_1,

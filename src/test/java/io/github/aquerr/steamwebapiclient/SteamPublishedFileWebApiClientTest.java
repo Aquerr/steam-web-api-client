@@ -1,8 +1,8 @@
 package io.github.aquerr.steamwebapiclient;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 import io.github.aquerr.steamwebapiclient.util.TestHttpUtils;
@@ -39,7 +39,7 @@ class SteamPublishedFileWebApiClientTest
     private SteamPublishedFileWebApiClient steamPublishedFileWebApiClient;
 
     @Test
-    void getPublishedFileDetailsReturnPublishedFileDetailsResponse() {
+    void getPublishedFileDetailsReturnPublishedFileDetailsResponse() throws ClientException {
 
         // given
         WorkShopQueryResponse expectedResponse = prepareWorkShopQueryResponse(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2));
@@ -60,8 +60,7 @@ class SteamPublishedFileWebApiClientTest
     }
 
     @Test
-    void shouldGetPublishedFileDetailsReturnResponseWhenSearchTextContainsWhitespace(WireMockRuntimeInfo wireMockRuntimeInfo)
-    {
+    void shouldGetPublishedFileDetailsReturnResponseWhenSearchTextContainsWhitespace() throws ClientException {
         // given
         String apiKey = "ApiKey";
         WorkShopQueryFilesRequest request = WorkShopQueryFilesRequest.builder()
@@ -71,7 +70,7 @@ class SteamPublishedFileWebApiClientTest
                 .build();
         stubFor(get(new UrlPathPattern(equalTo("/IPublishedFileService/QueryFiles/v1"), false))
                 .withQueryParams(TestHttpUtils.toQueryParams(request))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_workshop_query_response.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_workshop_query_response.json"))));
 
         SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey);
         SteamPublishedFileWebApiClient steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);

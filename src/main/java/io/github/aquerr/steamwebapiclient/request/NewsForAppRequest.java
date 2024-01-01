@@ -8,13 +8,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The request representing <a href="https://partner.steamgames.com/doc/webapi/IPlayerService#GetCommunityBadgeProgress">https://partner.steamgames.com/doc/webapi/IPlayerService#GetCommunityBadgeProgress</a>
+ * The request representing <a href="https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp">https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp</a>
  */
 @Builder
 @Getter
 @Setter
 @ToString
-public class NewsForAppRequest implements SteamWebApiRestrictedRequest {
+public class NewsForAppRequest implements SteamWebApiRequest {
 
     /**
      * AppID to retrieve news for. Field required.
@@ -46,12 +46,4 @@ public class NewsForAppRequest implements SteamWebApiRestrictedRequest {
      */
     @SteamRequestQueryParam("feeds")
     private String feeds;
-
-    @Override
-    public void setApiKey(String apiKey) {}
-
-    @Override
-    public String getApiKey() {
-        return null;
-    }
 }
