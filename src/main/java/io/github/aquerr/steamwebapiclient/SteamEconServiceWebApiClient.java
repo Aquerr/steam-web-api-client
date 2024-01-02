@@ -2,7 +2,9 @@ package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.TradeHistoryRequest;
+import io.github.aquerr.steamwebapiclient.request.TradeOfferRequest;
 import io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse;
+import io.github.aquerr.steamwebapiclient.response.TradeOfferResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -30,6 +32,24 @@ public class SteamEconServiceWebApiClient {
                 API_VERSION_1,
                 request,
                 TradeHistoryResponse.class
+        );
+    }
+
+    /**
+     * Gets a specific trade offer with the WebAPI key.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
+     */
+    public TradeOfferResponse getTradeOffer(TradeOfferRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_ECON_SERVICE_GET_TRADE_OFFER,
+                API_VERSION_1,
+                request,
+                TradeOfferResponse.class
         );
     }
 }

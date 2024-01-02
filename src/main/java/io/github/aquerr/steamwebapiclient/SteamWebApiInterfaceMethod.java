@@ -33,7 +33,8 @@ enum SteamWebApiInterfaceMethod
     I_GAME_SERVERS_SERVICE_GET_ACCOUNT_LIST("IGameServersService", "GetAccountList"),
     I_GAME_SERVERS_SERVICE_CREATE_ACCOUNT("IGameServersService", "CreateAccount"),
 
-    I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory")
+    I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory"),
+    I_ECON_SERVICE_GET_TRADE_OFFER("IEconService", "GetTradeOffer")
     ;
 
     private final String interfaceName;
