@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.EqualToPattern;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
@@ -38,26 +39,20 @@ class SteamHttpClientTest
     private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, objectMapper);
 
     @Test
-    void getShouldThrowIllegalArgumentExceptionWhenApiInterfaceMethodIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(null, "version", null, SteamWebApiResponse.class));
+    void getShouldThrowClientExceptionWhenApiInterfaceMethodIsNull() {
+        assertThrows(ClientException.class, () -> this.steamHttpClient.get(null, "version", null, SteamWebApiResponse.class));
     }
 
     @Test
-    void getShouldThrowIllegalArgumentExceptionWhenVersionIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
+    void getShouldThrowClientExceptionWhenVersionIsNull() {
+        assertThrows(ClientException.class, () -> this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, null, new SupportedApiListRequest(), SteamWebApiResponse.class));
     }
 
     @Test
-    void getShouldNotThrowAnyExceptionWhenVersionIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, null, null, SteamWebApiResponse.class));
-    }
-
-    @Test
-    void getShouldNotConvertPassedRequestToQueryParamsWhenRequestIsNull()
-    {
+    void getShouldNotConvertPassedRequestToQueryParamsWhenRequestIsNull() throws ClientException {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetServerInfo/v1"), false))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_server_info.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_server_info.json"))));
 
         // when
         ServerInfoResponse response = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);
@@ -69,12 +64,11 @@ class SteamHttpClientTest
     }
 
     @Test
-    void getShouldConvertPassedRequestToQueryParams()
-    {
+    void getShouldConvertPassedRequestToQueryParams() throws ClientException {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetSupportedAPIList/v1"), false))
                 .withQueryParam("key", new EqualToPattern(API_KEY))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_supported_api_list.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_supported_api_list.json"))));
 
         // when
         SupportedApiListResponse supportedApiListResponse = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST, SteamWebApiClient.API_VERSION_1, new SupportedApiListRequest(), SupportedApiListResponse.class);
@@ -93,11 +87,10 @@ class SteamHttpClientTest
     }
 
     @Test
-    void getShouldPerformRequestAndReturnMappedResponse()
-    {
+    void getShouldPerformRequestAndReturnMappedResponse() throws ClientException {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/ISteamWebAPIUtil/GetServerInfo/v1"), false))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_server_info.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_server_info.json"))));
 
         // when
         ServerInfoResponse response = this.steamHttpClient.get(SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO, SteamWebApiClient.API_VERSION_1, null, ServerInfoResponse.class);

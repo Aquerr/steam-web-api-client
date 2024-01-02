@@ -1,5 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.NewsForAppRequest;
 import io.github.aquerr.steamwebapiclient.response.NewsForAppResponse;
 import org.junit.jupiter.api.Assertions;
@@ -41,7 +42,7 @@ class SteamNewsWebApiClientTest {
     private SteamNewsWebApiClient client;
 
     @Test
-    void shouldGetNewsForApp() {
+    void shouldGetNewsForApp() throws ClientException {
         //given
         NewsForAppRequest request = prepareNewsForAppRequest();
         given(client.getNewsForApp(request)).willReturn(prepareNewsForAppResponse());

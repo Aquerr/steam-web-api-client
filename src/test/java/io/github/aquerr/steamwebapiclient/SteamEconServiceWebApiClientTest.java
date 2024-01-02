@@ -2,6 +2,7 @@ package io.github.aquerr.steamwebapiclient;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.TradeHistoryRequest;
 import io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
@@ -26,10 +27,10 @@ class SteamEconServiceWebApiClientTest {
     private final SteamEconServiceWebApiClient client = new SteamEconServiceWebApiClient(this.steamHttpClient);
 
     @Test
-    void getTradeHistoryShouldReturnTradeHistory() {
+    void getTradeHistoryShouldReturnTradeHistory() throws ClientException {
         // given
         stubFor(get(new UrlPathPattern(equalTo("/IEconService/GetTradeHistory/v1"), false))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/get_trade_history_response.json"))));
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_trade_history_response.json"))));
 
         // when
         TradeHistoryResponse response = client.getTradeHistory(TradeHistoryRequest.builder()

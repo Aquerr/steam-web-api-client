@@ -1,5 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.BadgesRequest;
 import io.github.aquerr.steamwebapiclient.request.CommunityBadgeProgressRequest;
 import io.github.aquerr.steamwebapiclient.request.OwnedGamesRequest;
@@ -25,8 +26,14 @@ public class SteamPlayerWebApiClient {
 
     /**
      * 	Gets information about a player's recently played games.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public PlayerRecentlyPlayedGamesResponse getRecentlyPlayedGames(PlayerRecentlyPlayedGamesRequest request) {
+    public PlayerRecentlyPlayedGamesResponse getRecentlyPlayedGames(PlayerRecentlyPlayedGamesRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_RECENTLY_PLAYED_GAMES,
                 API_VERSION_1,
@@ -37,8 +44,14 @@ public class SteamPlayerWebApiClient {
 
     /**
      * 	Return a list of games owned by the player.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public OwnedGamesResponse getOwnedGames(OwnedGamesRequest request) {
+    public OwnedGamesResponse getOwnedGames(OwnedGamesRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_OWNED_GAMES,
                 API_VERSION_1,
@@ -49,8 +62,14 @@ public class SteamPlayerWebApiClient {
 
     /**
      * 	Returns the Steam Level of a user.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public SteamLevelResponse getSteamLevel(SteamLevelRequest request) {
+    public SteamLevelResponse getSteamLevel(SteamLevelRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_STEAM_LEVEL,
                 API_VERSION_1,
@@ -61,8 +80,14 @@ public class SteamPlayerWebApiClient {
 
     /**
      * 	Gets badges that are owned by a specific user.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public BadgesResponse getBadges(BadgesRequest request) {
+    public BadgesResponse getBadges(BadgesRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_BADGES,
                 API_VERSION_1,
@@ -73,8 +98,14 @@ public class SteamPlayerWebApiClient {
 
     /**
      * 	Gets all the quests needed to get the specified badge, and which are completed.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public CommunityBadgeProgressResponse getCommunityBadgeProgress(CommunityBadgeProgressRequest request) {
+    public CommunityBadgeProgressResponse getCommunityBadgeProgress(CommunityBadgeProgressRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_PLAYER_SERVICE_GET_COMMUNITY_BADGE_PROGRESS,
                 API_VERSION_1,

@@ -1,0 +1,19 @@
+{
+  "response": {
+    "servers": [
+      {
+        "steamid": "25564392950647528",
+        "appid": 730,
+        "login_token": "2464D219E321A5C291FCE5CCE9D27A38",
+        "memo": "Test GSLT",
+        "is_deleted": false,
+        "is_expired": true,
+        "rt_last_logon": 0
+      }
+    ],
+    "is_banned": false,
+    "expires": 0,
+    "actor": "26561697917265748",
+    "last_action_time": 0
+  }
+}

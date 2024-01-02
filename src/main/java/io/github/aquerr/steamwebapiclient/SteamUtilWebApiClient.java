@@ -1,5 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.ServerInfoRequest;
 import io.github.aquerr.steamwebapiclient.request.SupportedApiListRequest;
 import io.github.aquerr.steamwebapiclient.response.ServerInfoResponse;
@@ -23,8 +24,14 @@ public class SteamUtilWebApiClient {
      *
      * @param request the request as {@link ServerInfoRequest}
      * @return the response as {@link ServerInfoRequest}
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public ServerInfoResponse getServerInfo(ServerInfoRequest request) {
+    public ServerInfoResponse getServerInfo(ServerInfoRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SERVER_INFO,
                 API_VERSION_1,
@@ -38,8 +45,14 @@ public class SteamUtilWebApiClient {
      *
      * @param request the request as {@link SupportedApiListRequest}
      * @return the response as {@link SupportedApiListResponse}
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
      */
-    public SupportedApiListResponse getSupportedApiList(SupportedApiListRequest request) {
+    public SupportedApiListResponse getSupportedApiList(SupportedApiListRequest request) throws ClientException {
         return this.steamHttpClient.get(
                 SteamWebApiInterfaceMethod.I_STEAM_WEB_API_UTIL_GET_SUPPORTED_API_LIST,
                 API_VERSION_1,

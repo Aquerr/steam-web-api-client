@@ -2,6 +2,7 @@ package io.github.aquerr.steamwebapiclient;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
+import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.CollectionDetailsRequest;
 import io.github.aquerr.steamwebapiclient.request.PublishedFileDetailsRequest;
 import io.github.aquerr.steamwebapiclient.response.CollectionDetailsResponse;
@@ -40,13 +41,13 @@ class SteamRemoteStorageClientTest {
     }
 
     @Test
-    void getPublishedFileDetailsReturnPublishedFileDetailsResponse() {
+    void getPublishedFileDetailsReturnPublishedFileDetailsResponse() throws ClientException {
 
         // given
         stubFor(post(new UrlPathPattern(equalTo("/ISteamRemoteStorage/GetPublishedFileDetails/v1"), false))
                 .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded"))
-                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-json/post_get_published_file_details_request.txt")))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/post_get_published_file_details_response.json"))));
+                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-files/post_get_published_file_details_request.txt")))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_get_published_file_details_response.json"))));
 
         // when
         PublishedFileDetailsResponse response = steamRemoteStorageClient.getPublishedFileDetails(new PublishedFileDetailsRequest(List.of(3122668835L, 210267782L)));
@@ -73,12 +74,12 @@ class SteamRemoteStorageClientTest {
     }
 
     @Test
-    void getCollectionDetailsReturnCollectionDetailsResponse() {
+    void getCollectionDetailsReturnCollectionDetailsResponse() throws ClientException {
         // given
         stubFor(post(new UrlPathPattern(equalTo("/ISteamRemoteStorage/GetCollectionDetails/v1"), false))
                 .withHeader("Content-Type", equalTo("application/x-www-form-urlencoded"))
-                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-json/post_get_collection_details_request.txt")))
-                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-json/post_get_collection_details_response.json"))));
+                .withRequestBody(equalTo(TestResourceUtils.loadMockFileContent("mock-files/post_get_collection_details_request.txt")))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_get_collection_details_response.json"))));
 
         // when
         CollectionDetailsResponse response = steamRemoteStorageClient.getCollectionDetails(new CollectionDetailsRequest(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2, PUBLISHED_FILE_ID_3)));
