@@ -5,8 +5,14 @@ import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
 import io.github.aquerr.steamwebapiclient.request.CreateAccountRequest;
+import io.github.aquerr.steamwebapiclient.request.DeleteAccountRequest;
+import io.github.aquerr.steamwebapiclient.request.ResetLoginTokenRequest;
+import io.github.aquerr.steamwebapiclient.request.SetMemoRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
 import io.github.aquerr.steamwebapiclient.response.CreateAccountResponse;
+import io.github.aquerr.steamwebapiclient.response.DeleteAccountResponse;
+import io.github.aquerr.steamwebapiclient.response.ResetLoginTokenResponse;
+import io.github.aquerr.steamwebapiclient.response.SetMemoResponse;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
@@ -24,8 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @WireMockTest(httpPort = 4444)
 @ExtendWith(MockitoExtension.class)
 class SteamGameServersServiceApiClientTest {
-
-    private static final String KEY = "KEY";
 
     private static final String API_KEY = "ApiKey";
 
@@ -68,7 +73,7 @@ class SteamGameServersServiceApiClientTest {
         stubFor(post(new UrlPathPattern(equalTo("/IGameServersService/CreateAccount/v1"), false))
                 .withQueryParams(Map.of(
                         "key", equalTo(API_KEY),
-                        "input_json", equalTo("{\"appid\":744,\"memo\":\"Test GSLT\"}")
+                        "input_json", equalToJson("{\"appid\":744,\"memo\":\"Test GSLT\"}")
                 ))
                 .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_create_account_response.json"))));
 
@@ -86,9 +91,62 @@ class SteamGameServersServiceApiClientTest {
         });
     }
 
-    private AccountListRequest prepareAccountListRequest() {
-        return AccountListRequest.builder()
-                .key(KEY)
-                .build();
+    @Test
+    void shouldDeleteAccount() throws ClientException {
+        // given
+        stubFor(post(new UrlPathPattern(equalTo("/IGameServersService/DeleteAccount/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "input_json", equalToJson("{\"steamid\":\"35562374938658193\"}")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_delete_account_response.json"))));
+
+        // when
+        DeleteAccountResponse response = client.deleteAccount(DeleteAccountRequest.builder()
+                .steamId("35562374938658193")
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+    }
+
+    @Test
+    void shouldSetMemo() throws ClientException {
+        // given
+        stubFor(post(new UrlPathPattern(equalTo("/IGameServersService/SetMemo/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "input_json", equalToJson("{\"steamid\":\"35562374938658193\", \"memo\": \"New Memo\"}")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_set_memo_response.json"))));
+
+        // when
+        SetMemoResponse response = client.setMemo(SetMemoRequest.builder()
+                .steamId("35562374938658193")
+                .memo("New Memo")
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+    }
+
+    @Test
+    void shouldResetLoginToken() throws ClientException {
+        // given
+        stubFor(post(new UrlPathPattern(equalTo("/IGameServersService/ResetLoginToken/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "input_json", equalToJson("{\"steamid\":\"35562374938658193\"}")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/post_reset_login_token_response.json"))));
+
+        // when
+        ResetLoginTokenResponse response = client.resetLoginToken(ResetLoginTokenRequest.builder()
+                .steamId("35562374938658193")
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+        assertThat(response.getResponse().getLoginToken()).isEqualTo("DXC2CE2WA8CB0BA5F3B29A5F1E622D21");
     }
 }

@@ -9,13 +9,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The request representing <a href="https://partner.steamgames.com/doc/webapi/IGameServersService#CreateAccount">https://partner.steamgames.com/doc/webapi/IGameServersService#CreateAccount</a>
+ * The request representing <a href="https://partner.steamgames.com/doc/webapi/IGameServersService#SetMemo">https://partner.steamgames.com/doc/webapi/IGameServersService#SetMemo</a>
  */
 @Builder
 @Getter
 @Setter
 @ToString
-public class CreateAccountRequest implements SteamWebApiRestrictedRequest {
+public class SetMemoRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * Steamworks Web API user authentication key.
@@ -28,13 +28,13 @@ public class CreateAccountRequest implements SteamWebApiRestrictedRequest {
     private String key = "";
 
     /**
-     * The id of the app that the GSLT (Game Server Login Token) should be created for.
+     * The steam identifier of the GSLT (Game Server Login Token).
      */
-    @JsonProperty("appid")
-    private int appId;
+    @JsonProperty("steamid")
+    private String steamId;
 
     /**
-     * The memo/description for the GSLT (Game Server Login Token).
+     * New memo.
      */
     @JsonProperty("memo")
     private String memo;
