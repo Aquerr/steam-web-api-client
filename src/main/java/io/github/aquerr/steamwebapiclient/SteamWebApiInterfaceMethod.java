@@ -34,6 +34,7 @@ enum SteamWebApiInterfaceMethod
     I_GAME_SERVERS_SERVICE_CREATE_ACCOUNT("IGameServersService", "CreateAccount"),
 
     I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory"),
+    I_ECON_SERVICE_GET_TRADE_OFFERS("IEconService", "GetTradeOffers"),
     I_ECON_SERVICE_GET_TRADE_OFFER("IEconService", "GetTradeOffer")
     ;
 
