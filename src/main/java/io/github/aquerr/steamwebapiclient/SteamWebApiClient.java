@@ -20,6 +20,7 @@ public class SteamWebApiClient {
     private final SteamRemoteStorageClient steamRemoteStorageClient;
     private final SteamNewsWebApiClient steamNewsWebApiClient;
     private final SteamGameServersServiceApiClient steamGameServersServiceApiClient;
+    private final SteamEconServiceWebApiClient steamEconServiceWebApiClient;
 
     /**
      * Creates an instance of {@link SteamWebApiClient} without API token.
@@ -86,6 +87,7 @@ public class SteamWebApiClient {
         this.steamRemoteStorageClient = new SteamRemoteStorageClient(steamHttpClient);
         this.steamNewsWebApiClient = new SteamNewsWebApiClient(steamHttpClient);
         this.steamGameServersServiceApiClient = new SteamGameServersServiceApiClient(steamHttpClient);
+        this.steamEconServiceWebApiClient = new SteamEconServiceWebApiClient(steamHttpClient);
     }
 
     /**
@@ -140,5 +142,11 @@ public class SteamWebApiClient {
         return steamGameServersServiceApiClient;
     }
 
-
+    /**
+     * Gets the {@link SteamEconServiceWebApiClient}
+     * @return the {@link SteamEconServiceWebApiClient}
+     */
+    public SteamEconServiceWebApiClient getSteamEconServiceWebApiClient() {
+        return steamEconServiceWebApiClient;
+    }
 }
