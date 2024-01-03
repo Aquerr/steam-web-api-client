@@ -87,13 +87,25 @@ class SteamEconServiceWebApiClientTest {
             assertThat(tradeOffer.getExpirationTimeSeconds()).isEqualTo(1705429814);
             assertThat(tradeOffer.getState()).isEqualTo(TradeOfferResponse.TradeOfferWrapper.TradeOffer.State.ACTIVE);
 
-            assertThat(tradeOffer.getItems()).hasSize(1);
-            assertThat(tradeOffer.getItems().get(0)).satisfies(item -> {
+            assertThat(tradeOffer.getGivenItems()).hasSize(1);
+            assertThat(tradeOffer.getGivenItems().get(0)).satisfies(item -> {
                 assertThat(item.getAppId()).isEqualTo(730);
                 assertThat(item.getContextId()).isEqualTo("2");
                 assertThat(item.getAssetId()).isEqualTo("35001471190");
                 assertThat(item.getClassId()).isEqualTo("3220810370");
                 assertThat(item.getInstanceId()).isEqualTo("188530130");
+                assertThat(item.getAmount()).isEqualTo("1");
+                assertThat(item.isMissing()).isEqualTo(false);
+                assertThat(item.getEstUSD()).isEqualTo("25");
+            });
+
+            assertThat(tradeOffer.getReceivedItems()).hasSize(1);
+            assertThat(tradeOffer.getReceivedItems().get(0)).satisfies(item -> {
+                assertThat(item.getAppId()).isEqualTo(730);
+                assertThat(item.getContextId()).isEqualTo("2");
+                assertThat(item.getAssetId()).isEqualTo("35001471193");
+                assertThat(item.getClassId()).isEqualTo("3220810373");
+                assertThat(item.getInstanceId()).isEqualTo("188530133");
                 assertThat(item.getAmount()).isEqualTo("1");
                 assertThat(item.isMissing()).isEqualTo(false);
                 assertThat(item.getEstUSD()).isEqualTo("25");

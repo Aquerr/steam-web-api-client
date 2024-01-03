@@ -57,10 +57,16 @@ public class TradeOfferResponse implements SteamWebApiResponse {
             private State state;
 
             /**
+             * Trade items to be received.
+             */
+            @JsonProperty("items_to_receive")
+            private List<Item> receivedItems = new ArrayList<>();
+
+            /**
              * Trade items to be given.
              */
             @JsonProperty("items_to_give")
-            private List<Item> items = new ArrayList<>();
+            private List<Item> givenItems = new ArrayList<>();
 
             /**
              * Is offer created by You.
