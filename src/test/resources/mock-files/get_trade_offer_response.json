@@ -18,6 +18,18 @@
           "est_usd": "25"
         }
       ],
+      "items_to_receive": [
+        {
+          "appid": 730,
+          "contextid": "2",
+          "assetid": "35001471193",
+          "classid": "3220810373",
+          "instanceid": "188530133",
+          "amount": "1",
+          "missing": false,
+          "est_usd": "25"
+        }
+      ],
       "is_our_offer": true,
       "time_created": 1704220214,
       "time_updated": 1704220226,
