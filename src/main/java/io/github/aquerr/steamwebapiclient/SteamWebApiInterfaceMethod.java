@@ -35,7 +35,8 @@ enum SteamWebApiInterfaceMethod
 
     I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory"),
     I_ECON_SERVICE_GET_TRADE_OFFERS("IEconService", "GetTradeOffers"),
-    I_ECON_SERVICE_GET_TRADE_OFFER("IEconService", "GetTradeOffer")
+    I_ECON_SERVICE_GET_TRADE_OFFER("IEconService", "GetTradeOffer"),
+    I_ECON_SERVICE_GET_TRADE_OFFERS_SUMMARY("IEconService", "GetTradeOffersSummary")
     ;
 
     private final String interfaceName;

@@ -1,0 +1,14 @@
+{
+  "response": {
+    "pending_received_count": 0,
+    "new_received_count": 0,
+    "updated_received_count": 0,
+    "historical_received_count": 2,
+    "pending_sent_count": 1,
+    "newly_accepted_sent_count": 0,
+    "updated_sent_count": 0,
+    "historical_sent_count": 2,
+    "escrow_received_count": 0,
+    "escrow_sent_count": 0
+  }
+}

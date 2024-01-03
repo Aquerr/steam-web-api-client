@@ -6,9 +6,11 @@ import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.TradeHistoryRequest;
 import io.github.aquerr.steamwebapiclient.request.TradeOfferRequest;
 import io.github.aquerr.steamwebapiclient.request.TradeOffersRequest;
+import io.github.aquerr.steamwebapiclient.request.TradeOffersSummaryRequest;
 import io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse;
 import io.github.aquerr.steamwebapiclient.response.TradeOfferResponse;
 import io.github.aquerr.steamwebapiclient.response.TradeOffersResponse;
+import io.github.aquerr.steamwebapiclient.response.TradeOffersSummaryResponse;
 import io.github.aquerr.steamwebapiclient.response.shared.TradeOffer;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
@@ -220,6 +222,32 @@ class SteamEconServiceWebApiClientTest {
             assertThat(sentOffer.getEResult()).isEqualTo(1);
 
             assertThat(resp.getAssetInformation()).hasSize(2);
+        });
+    }
+
+    @Test
+    void getTradeOffersSummaryShouldReturnTradeOffersSummary() {
+        // given
+        stubFor(get(new UrlPathPattern(equalTo("/IEconService/GetTradeOffersSummary/v1"), false))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_trade_offers_summary_response.json"))));
+
+        // when
+        TradeOffersSummaryResponse response = client.getTradeOffersSummary(TradeOffersSummaryRequest.builder()
+                .timeLastVisitSeconds(100000)
+                .build());
+
+        // then
+        assertThat(response.getResponse()).satisfies(resp -> {
+            assertThat(resp.getPendingReceivedCount()).isEqualTo(0);
+            assertThat(resp.getNewReceivedCount()).isEqualTo(0);
+            assertThat(resp.getUpdatedReceivedCount()).isEqualTo(0);
+            assertThat(resp.getHistoricalReceivedCount()).isEqualTo(2);
+            assertThat(resp.getPendingSentCount()).isEqualTo(1);
+            assertThat(resp.getNewlyAcceptedSentCount()).isEqualTo(0);
+            assertThat(resp.getUpdatedSentCount()).isEqualTo(0);
+            assertThat(resp.getHistoricalSentCount()).isEqualTo(2);
+            assertThat(resp.getEscrowReceivedCount()).isEqualTo(0);
+            assertThat(resp.getEscrowSentCount()).isEqualTo(0);
         });
     }
 }
