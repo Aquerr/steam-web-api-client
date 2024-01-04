@@ -5,11 +5,15 @@ import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
 import io.github.aquerr.steamwebapiclient.request.CreateAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.DeleteAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.ResetLoginTokenRequest;
+import io.github.aquerr.steamwebapiclient.request.ServerIPsBySteamIdRequest;
+import io.github.aquerr.steamwebapiclient.request.ServerSteamIDsByIPRequest;
 import io.github.aquerr.steamwebapiclient.request.SetMemoRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
 import io.github.aquerr.steamwebapiclient.response.CreateAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.DeleteAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.ResetLoginTokenResponse;
+import io.github.aquerr.steamwebapiclient.response.ServerIPsBySteamIdResponse;
+import io.github.aquerr.steamwebapiclient.response.ServerSteamIDsByIPResponse;
 import io.github.aquerr.steamwebapiclient.response.SetMemoResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -119,6 +123,46 @@ public class SteamGameServersServiceApiClient {
                 API_VERSION_1,
                 request,
                 ResetLoginTokenResponse.class
+        );
+    }
+
+    /**
+     * Finds servers ips using the given steam ids.
+     *
+     * @return the response containing the list of server ips with their steam identifiers.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
+     */
+    public ServerIPsBySteamIdResponse getServerIPsBySteamId(ServerIPsBySteamIdRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_GAME_SERVERS_SERVICE_GET_SERVER_IPS_BY_STEAM_ID,
+                API_VERSION_1,
+                request,
+                ServerIPsBySteamIdResponse.class
+        );
+    }
+
+    /**
+     * Finds servers steam ids using the given server ips.
+     *
+     * @return the response containing the list of server steam ids.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
+     */
+    public ServerSteamIDsByIPResponse getServerSteamIdsByIP(ServerSteamIDsByIPRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_GAME_SERVERS_SERVICE_GET_SERVER_STEAM_IDS_BY_IP,
+                API_VERSION_1,
+                request,
+                ServerSteamIDsByIPResponse.class
         );
     }
 }

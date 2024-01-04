@@ -19,6 +19,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -258,6 +260,9 @@ class SteamHttpClient {
             Object value = field.get(steamWebApiRequest);
             field.setAccessible(false);
             if (value != null) {
+                if (value instanceof Collection<?> collection) {
+                    return collectionToString(collection);
+                }
                 return String.valueOf(value);
             }
             else return null;
@@ -265,6 +270,15 @@ class SteamHttpClient {
         catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String collectionToString(Collection<?> collection) {
+        if (collection.isEmpty()) {
+            return null;
+        }
+        return Arrays.stream(collection.toArray())
+                .reduce("", (base, element) -> base + "," + element)
+                .toString().substring(1);
     }
 
     private String buildUrl(final SteamWebApiInterfaceMethod apiInterfaceMethod, final String version) {

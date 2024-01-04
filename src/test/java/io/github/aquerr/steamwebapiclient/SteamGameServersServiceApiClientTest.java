@@ -7,17 +7,22 @@ import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
 import io.github.aquerr.steamwebapiclient.request.CreateAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.DeleteAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.ResetLoginTokenRequest;
+import io.github.aquerr.steamwebapiclient.request.ServerIPsBySteamIdRequest;
+import io.github.aquerr.steamwebapiclient.request.ServerSteamIDsByIPRequest;
 import io.github.aquerr.steamwebapiclient.request.SetMemoRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
 import io.github.aquerr.steamwebapiclient.response.CreateAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.DeleteAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.ResetLoginTokenResponse;
+import io.github.aquerr.steamwebapiclient.response.ServerIPsBySteamIdResponse;
+import io.github.aquerr.steamwebapiclient.response.ServerSteamIDsByIPResponse;
 import io.github.aquerr.steamwebapiclient.response.SetMemoResponse;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -148,5 +153,49 @@ class SteamGameServersServiceApiClientTest {
         // then
         assertThat(response.getResponse()).isNotNull();
         assertThat(response.getResponse().getLoginToken()).isEqualTo("DXC2CE2WA8CB0BA5F3B29A5F1E622D21");
+    }
+
+    @Test
+    void shouldGetServerIPsBySteamId() throws ClientException {
+        // given
+        stubFor(get(new UrlPathPattern(equalTo("/IGameServersService/GetServerIPsBySteamID/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "server_steamids", equalTo("35562374938658193,35562374938658194")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_server_ips_by_steam_ids_response.json"))));
+
+        // when
+        ServerIPsBySteamIdResponse response = client.getServerIPsBySteamId(ServerIPsBySteamIdRequest.builder()
+                .serverSteamIds(List.of("35562374938658193", "35562374938658194"))
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+        assertThat(response.getResponse().getServers()).hasSize(1);
+        assertThat(response.getResponse().getServers().get(0).getSteamId()).isEqualTo("35562374938658194");
+        assertThat(response.getResponse().getServers().get(0).getIpAddress()).isEqualTo("0.0.0.0");
+    }
+
+    @Test
+    void shouldGetServerSteamIdsByIP() throws ClientException {
+        // given
+        stubFor(get(new UrlPathPattern(equalTo("/IGameServersService/GetServerSteamIDsByIP/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "server_ips", equalTo("0.0.0.0,127.0.0.1")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_server_steam_ids_by_server_ips_response.json"))));
+
+        // when
+        ServerSteamIDsByIPResponse response = client.getServerSteamIdsByIP(ServerSteamIDsByIPRequest.builder()
+                .serverIps(List.of("0.0.0.0", "127.0.0.1"))
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+        assertThat(response.getResponse().getServers()).hasSize(1);
+        assertThat(response.getResponse().getServers().get(0).getSteamId()).isEqualTo("35562374938658194");
+        assertThat(response.getResponse().getServers().get(0).getIpAddress()).isEqualTo("0.0.0.0");
     }
 }
