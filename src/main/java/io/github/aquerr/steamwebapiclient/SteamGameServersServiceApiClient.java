@@ -2,15 +2,19 @@ package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
+import io.github.aquerr.steamwebapiclient.request.AccountPublicInfoRequest;
 import io.github.aquerr.steamwebapiclient.request.CreateAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.DeleteAccountRequest;
+import io.github.aquerr.steamwebapiclient.request.QueryLoginTokenRequest;
 import io.github.aquerr.steamwebapiclient.request.ResetLoginTokenRequest;
 import io.github.aquerr.steamwebapiclient.request.ServerIPsBySteamIdRequest;
 import io.github.aquerr.steamwebapiclient.request.ServerSteamIDsByIPRequest;
 import io.github.aquerr.steamwebapiclient.request.SetMemoRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
+import io.github.aquerr.steamwebapiclient.response.AccountPublicInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.CreateAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.DeleteAccountResponse;
+import io.github.aquerr.steamwebapiclient.response.QueryLoginTokenResponse;
 import io.github.aquerr.steamwebapiclient.response.ResetLoginTokenResponse;
 import io.github.aquerr.steamwebapiclient.response.ServerIPsBySteamIdResponse;
 import io.github.aquerr.steamwebapiclient.response.ServerSteamIDsByIPResponse;
@@ -123,6 +127,46 @@ public class SteamGameServersServiceApiClient {
                 API_VERSION_1,
                 request,
                 ResetLoginTokenResponse.class
+        );
+    }
+
+    /**
+     * Gets public info of GSLT (Game Server Login Token) @see <a href="https://steamcommunity.com/dev/managegameservers">Game Server Login Tokens</a>
+     *
+     * @return the response.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
+     */
+    public AccountPublicInfoResponse getAccountPublicInfo(AccountPublicInfoRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_GAME_SERVERS_SERVICE_GET_ACCOUNT_PUBLIC_INFO,
+                API_VERSION_1,
+                request,
+                AccountPublicInfoResponse.class
+        );
+    }
+
+    /**
+     * Queries the status of the specified GSLT (Game Server Login Token), which must be owned by you. @see <a href="https://steamcommunity.com/dev/managegameservers">Game Server Login Tokens</a>
+     *
+     * @return the response.
+     *
+     * @throws ClientException if:
+     * - request could not be sent due to an error
+     * - response has not been received
+     * - response could not be parsed
+     * - any other error occurs
+     */
+    public QueryLoginTokenResponse queryLoginToken(QueryLoginTokenRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_GAME_SERVERS_SERVICE_QUERY_LOGIN_TOKEN,
+                API_VERSION_1,
+                request,
+                QueryLoginTokenResponse.class
         );
     }
 

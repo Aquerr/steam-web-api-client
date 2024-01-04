@@ -4,15 +4,19 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.request.AccountListRequest;
+import io.github.aquerr.steamwebapiclient.request.AccountPublicInfoRequest;
 import io.github.aquerr.steamwebapiclient.request.CreateAccountRequest;
 import io.github.aquerr.steamwebapiclient.request.DeleteAccountRequest;
+import io.github.aquerr.steamwebapiclient.request.QueryLoginTokenRequest;
 import io.github.aquerr.steamwebapiclient.request.ResetLoginTokenRequest;
 import io.github.aquerr.steamwebapiclient.request.ServerIPsBySteamIdRequest;
 import io.github.aquerr.steamwebapiclient.request.ServerSteamIDsByIPRequest;
 import io.github.aquerr.steamwebapiclient.request.SetMemoRequest;
 import io.github.aquerr.steamwebapiclient.response.AccountListResponse;
+import io.github.aquerr.steamwebapiclient.response.AccountPublicInfoResponse;
 import io.github.aquerr.steamwebapiclient.response.CreateAccountResponse;
 import io.github.aquerr.steamwebapiclient.response.DeleteAccountResponse;
+import io.github.aquerr.steamwebapiclient.response.QueryLoginTokenResponse;
 import io.github.aquerr.steamwebapiclient.response.ResetLoginTokenResponse;
 import io.github.aquerr.steamwebapiclient.response.ServerIPsBySteamIdResponse;
 import io.github.aquerr.steamwebapiclient.response.ServerSteamIDsByIPResponse;
@@ -153,6 +157,49 @@ class SteamGameServersServiceApiClientTest {
         // then
         assertThat(response.getResponse()).isNotNull();
         assertThat(response.getResponse().getLoginToken()).isEqualTo("DXC2CE2WA8CB0BA5F3B29A5F1E622D21");
+    }
+
+    @Test
+    void shouldGetAccountPublicInfo() throws ClientException {
+        // given
+        stubFor(get(new UrlPathPattern(equalTo("/IGameServersService/GetAccountPublicInfo/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "steamid", equalTo("35562374938658193")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_account_public_info_response.json"))));
+
+        // when
+        AccountPublicInfoResponse response = client.getAccountPublicInfo(AccountPublicInfoRequest.builder()
+                .steamId("35562374938658193")
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+        assertThat(response.getResponse().getAppId()).isEqualTo(730);
+        assertThat(response.getResponse().getSteamId()).isEqualTo("35562374938658193");
+    }
+
+    @Test
+    void shouldQueryLoginToken() throws ClientException {
+        // given
+        stubFor(get(new UrlPathPattern(equalTo("/IGameServersService/QueryLoginToken/v1"), false))
+                .withQueryParams(Map.of(
+                        "key", equalTo(API_KEY),
+                        "login_token", equalTo("DXC2CE2WA8CB0BA5F3B29A5F1E622D21")
+                ))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_query_login_token_response.json"))));
+
+        // when
+        QueryLoginTokenResponse response = client.queryLoginToken(QueryLoginTokenRequest.builder()
+                .loginToken("DXC2CE2WA8CB0BA5F3B29A5F1E622D21")
+                .build());
+
+        // then
+        assertThat(response.getResponse()).isNotNull();
+        assertThat(response.getResponse().isBanned()).isFalse();
+        assertThat(response.getResponse().getExpires()).isEqualTo(0);
+        assertThat(response.getResponse().getSteamId()).isEqualTo("35562374938658193");
     }
 
     @Test

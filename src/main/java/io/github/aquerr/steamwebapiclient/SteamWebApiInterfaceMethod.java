@@ -35,6 +35,9 @@ enum SteamWebApiInterfaceMethod
     I_GAME_SERVERS_SERVICE_DELETE_ACCOUNT("IGameServersService", "DeleteAccount"),
     I_GAME_SERVERS_SERVICE_SET_MEMO("IGameServersService", "SetMemo"),
     I_GAME_SERVERS_SERVICE_RESET_LOGIN_TOKEN("IGameServersService", "ResetLoginToken"),
+    I_GAME_SERVERS_SERVICE_GET_ACCOUNT_PUBLIC_INFO("IGameServersService", "GetAccountPublicInfo"),
+    I_GAME_SERVERS_SERVICE_QUERY_LOGIN_TOKEN("IGameServersService", "QueryLoginToken"),
+
     I_GAME_SERVERS_SERVICE_GET_SERVER_IPS_BY_STEAM_ID("IGameServersService", "GetServerIPsBySteamID"),
     I_GAME_SERVERS_SERVICE_GET_SERVER_STEAM_IDS_BY_IP("IGameServersService", "GetServerSteamIDsByIP"),
 
