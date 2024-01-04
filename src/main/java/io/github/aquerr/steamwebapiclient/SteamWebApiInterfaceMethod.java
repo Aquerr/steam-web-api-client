@@ -32,6 +32,14 @@ enum SteamWebApiInterfaceMethod
     I_STEAM_NEWS_GET_NEWS_FOR_APP("ISteamNews", "GetNewsForApp"),
     I_GAME_SERVERS_SERVICE_GET_ACCOUNT_LIST("IGameServersService", "GetAccountList"),
     I_GAME_SERVERS_SERVICE_CREATE_ACCOUNT("IGameServersService", "CreateAccount"),
+    I_GAME_SERVERS_SERVICE_DELETE_ACCOUNT("IGameServersService", "DeleteAccount"),
+    I_GAME_SERVERS_SERVICE_SET_MEMO("IGameServersService", "SetMemo"),
+    I_GAME_SERVERS_SERVICE_RESET_LOGIN_TOKEN("IGameServersService", "ResetLoginToken"),
+    I_GAME_SERVERS_SERVICE_GET_ACCOUNT_PUBLIC_INFO("IGameServersService", "GetAccountPublicInfo"),
+    I_GAME_SERVERS_SERVICE_QUERY_LOGIN_TOKEN("IGameServersService", "QueryLoginToken"),
+
+    I_GAME_SERVERS_SERVICE_GET_SERVER_IPS_BY_STEAM_ID("IGameServersService", "GetServerIPsBySteamID"),
+    I_GAME_SERVERS_SERVICE_GET_SERVER_STEAM_IDS_BY_IP("IGameServersService", "GetServerSteamIDsByIP"),
 
     I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory"),
     I_ECON_SERVICE_GET_TRADE_OFFERS("IEconService", "GetTradeOffers"),

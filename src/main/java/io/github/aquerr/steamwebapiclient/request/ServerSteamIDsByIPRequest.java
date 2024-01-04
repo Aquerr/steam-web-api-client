@@ -1,21 +1,21 @@
 package io.github.aquerr.steamwebapiclient.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
- * The request representing <a href="https://partner.steamgames.com/doc/webapi/IGameServersService#CreateAccount">https://partner.steamgames.com/doc/webapi/IGameServersService#CreateAccount</a>
+ * The request representing <a href="https://partner.steamgames.com/doc/webapi/IGameServersService#GetServerSteamIDsByIP">https://partner.steamgames.com/doc/webapi/IGameServersService#GetServerSteamIDsByIP</a>
  */
 @Builder
 @Getter
 @Setter
 @ToString
-public class CreateAccountRequest implements SteamWebApiRestrictedRequest {
+public class ServerSteamIDsByIPRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * Steamworks Web API user authentication key.
@@ -24,28 +24,19 @@ public class CreateAccountRequest implements SteamWebApiRestrictedRequest {
      */
     @SteamRequestQueryParam("key")
     @Builder.Default
-    @JsonIgnore
     private String key = "";
 
     /**
-     * The id of the app that the GSLT (Game Server Login Token) should be created for.
+     * The ips of servers.
      */
-    @JsonProperty("appid")
-    private int appId;
+    @SteamRequestQueryParam("server_ips")
+    private List<String> serverIps;
 
-    /**
-     * The memo/description for the GSLT (Game Server Login Token).
-     */
-    @JsonProperty("memo")
-    private String memo;
-
-    @JsonIgnore
     @Override
     public void setApiKey(String apiKey) {
         this.key = apiKey;
     }
 
-    @JsonIgnore
     @Override
     public String getApiKey() {
         return this.key;
