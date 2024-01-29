@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_11.majorVersion))
 
 java {
     withSourcesJar()
