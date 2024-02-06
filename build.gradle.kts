@@ -7,7 +7,7 @@ plugins {
 
 group = "io.github.aquerr"
 description = "Simple Java Steam Web API client."
-version = "1.1.0-SNAPSHOT"
+version = "1.2.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -21,7 +21,7 @@ java {
 }
 
 dependencies {
-    api("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+    api("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 
     testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")

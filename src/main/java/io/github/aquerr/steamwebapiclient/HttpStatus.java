@@ -1,9 +1,11 @@
 package io.github.aquerr.steamwebapiclient;
 
+import java.util.Arrays;
+
 enum HttpStatus {
     OK(200),
     BAD_REQUEST(400),
-    UNAUTHROIZED(401),
+    UNAUTHORIZED(401),
     FORBIDDEN(403),
     NOT_FOUND(404),
     METHOD_NOT_ALLOWED(405),
@@ -19,5 +21,13 @@ enum HttpStatus {
 
     public int getCode() {
         return code;
+    }
+
+    public static HttpStatus findByCode(int code)
+    {
+        return Arrays.stream(values())
+                .filter(httpStatus -> httpStatus.getCode() == code)
+                .findFirst()
+                .orElse(null);
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
+import io.github.aquerr.steamwebapiclient.exception.HttpClientException;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A wrapper around Java {@link HttpClient} to perform Steam API calls.
@@ -120,7 +122,7 @@ class SteamHttpClient {
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
             } else {
-                throw new ClientException(response.body());
+                throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
             throw wrapInClientException(exception);
@@ -153,16 +155,24 @@ class SteamHttpClient {
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
             } else {
-                throw new ClientException(response.body());
+                throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
             throw wrapInClientException(exception);
         }
     }
 
+    private String prepareHttpErrorMessage(HttpResponse<String> httpResponse)
+    {
+        String httpStatus = Optional.ofNullable(HttpStatus.findByCode(httpResponse.statusCode()))
+                .orElse(HttpStatus.BAD_REQUEST).name();
+        return httpResponse.statusCode() + " "
+                + httpStatus + " Response body: " + httpResponse.body();
+    }
+
     private ClientException wrapInClientException(Exception exception) {
-        if (exception instanceof ClientException clientException)
-            return clientException;
+        if (exception instanceof HttpClientException)
+            return (HttpClientException)exception;
         else return new ClientException(exception);
     }
 
@@ -194,7 +204,7 @@ class SteamHttpClient {
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
             } else {
-                throw new ClientException(response.body());
+                throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
             throw wrapInClientException(exception);
@@ -202,8 +212,9 @@ class SteamHttpClient {
     }
 
     private void populateApiKeyIfRestrictedRequest(SteamWebApiRequest steamWebApiRequest) {
-        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest steamWebApiRestrictedRequest) {
-            steamWebApiRestrictedRequest.setApiKey(apiKey);
+        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest) {
+            SteamWebApiRestrictedRequest request = (SteamWebApiRestrictedRequest) steamWebApiRequest;
+            request.setApiKey(apiKey);
         }
     }
 
@@ -260,7 +271,8 @@ class SteamHttpClient {
             Object value = field.get(steamWebApiRequest);
             field.setAccessible(false);
             if (value != null) {
-                if (value instanceof Collection<?> collection) {
+                if (value instanceof Collection<?>) {
+                    Collection<?> collection = (Collection<?>) value;
                     return collectionToString(collection);
                 }
                 return String.valueOf(value);
