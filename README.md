@@ -13,7 +13,7 @@ This library provides a simple way to interact with Steam Web Api through Java.
 
 # Prerequisites
 
-* Java 17
+* Java 11
 * [Jackson (databind)](https://github.com/FasterXML/jackson-databind)
 * [Steam Web Api Access Token](https://steamcommunity.com/dev) (required for most endpoints)
 
