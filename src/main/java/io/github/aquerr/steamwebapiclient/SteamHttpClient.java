@@ -1,7 +1,6 @@
 package io.github.aquerr.steamwebapiclient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
@@ -19,7 +18,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,43 +35,6 @@ class SteamHttpClient {
     private final HttpClient httpClient;
 
     private final ObjectMapper objectMapper;
-
-    /**
-     * Basic constructor for {@link SteamHttpClient}.
-     * Requires baseUrl and apiKey.
-     *
-     * @param baseUrl the base url.
-     * @param apiKey the api key, can be null.
-     */
-    SteamHttpClient(String baseUrl, String apiKey) {
-        this(baseUrl, apiKey, defaultHttpClient(), defaultObjectMapper());
-    }
-
-    /**
-     * Constructs {@link SteamHttpClient}.
-     * Requires baseUrl and apiKey.
-     * Allows passing custom {@link ObjectMapper} that will be used for serialization and deserialization of requests and responses.
-     *
-     * @param baseUrl the base url.
-     * @param apiKey the api key, can be null.
-     * @param objectMapper the object mapper.
-     */
-    SteamHttpClient(String baseUrl, String apiKey, ObjectMapper objectMapper) {
-        this(baseUrl, apiKey, defaultHttpClient(), objectMapper);
-    }
-
-    /**
-     * Constructs {@link SteamHttpClient}.
-     * Requires baseUrl and apiKey.
-     * Allows passing custom {@link HttpClient} that will be used for contacting the Steam Web Api.
-     *
-     * @param baseUrl the base url.
-     * @param apiKey the api key, can be null.
-     * @param httpClient the http client.
-     */
-    SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient) {
-        this(baseUrl, apiKey, httpClient, defaultObjectMapper());
-    }
 
     /**
      * Constructs {@link SteamHttpClient}.
@@ -303,18 +264,5 @@ class SteamHttpClient {
         urlBuilder.append("/");
         urlBuilder.append(version);
         return urlBuilder.toString();
-    }
-
-    private static HttpClient defaultHttpClient() {
-        return HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
-                .build();
-    }
-
-    private static ObjectMapper defaultObjectMapper() {
-        return new ObjectMapper()
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
-                .findAndRegisterModules();
     }
 }

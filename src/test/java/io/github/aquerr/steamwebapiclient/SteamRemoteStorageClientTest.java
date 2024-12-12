@@ -31,7 +31,7 @@ class SteamRemoteStorageClientTest {
 
     private static final String API_KEY = "ApiKey";
 
-    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY);
+    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, SteamWebApiClient.defaultHttpClient(), SteamWebApiClient.defaultObjectMapper());
 
     private SteamRemoteStorageClient steamRemoteStorageClient;
 

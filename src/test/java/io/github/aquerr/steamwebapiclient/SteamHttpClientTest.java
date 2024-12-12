@@ -36,7 +36,7 @@ class SteamHttpClientTest
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .findAndRegisterModules();
 
-    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, objectMapper);
+    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, SteamWebApiClient.defaultHttpClient(), objectMapper);
 
     @Test
     void getShouldThrowClientExceptionWhenApiInterfaceMethodIsNull() {

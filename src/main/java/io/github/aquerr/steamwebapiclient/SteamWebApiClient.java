@@ -1,8 +1,10 @@
 package io.github.aquerr.steamwebapiclient;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpClient;
+import java.time.Duration;
 
 /**
  * Main entry point of the API.
@@ -22,62 +24,8 @@ public class SteamWebApiClient {
     private final SteamGameServersServiceApiClient steamGameServersServiceApiClient;
     private final SteamEconServiceWebApiClient steamEconServiceWebApiClient;
 
-    /**
-     * Creates an instance of {@link SteamWebApiClient} without API token.
-     *
-     * Note: Such client will be able to use only those endpoints that does not require Steam Web API token.
-     * To fully use the client, consider using another constructor and provide Steam Web API token.
-     */
-    public SteamWebApiClient() {
-        this(new SteamHttpClient(BASE_WEB_API_URI, null));
-    }
-
-    /**
-     * Creates an instance of {@link SteamWebApiClient}.
-     *
-     * Note: Api token is not required for the client to function.
-     *       However, it is needed by most of the api calls,
-     *       therefore execution of such will result in an exception or an empty result.
-     *
-     * @param apiKey the steam api key, can be null.
-     */
-    public SteamWebApiClient(String apiKey) {
-        this(new SteamHttpClient(BASE_WEB_API_URI, apiKey));
-    }
-
-    /**
-     * Constructs {@link SteamWebApiClient}.
-     * Allows passing custom {@link HttpClient} that will be used for contacting the Steam Web Api.
-     *
-     * @param apiKey the api key, optional.
-     * @param httpClient the http client that will be used for contacting the Steam Web Api.
-     */
-    public SteamWebApiClient(String apiKey, HttpClient httpClient) {
-        this(new SteamHttpClient(BASE_WEB_API_URI, apiKey, httpClient));
-    }
-
-    /**
-     * Constructs {@link SteamWebApiClient}.
-     * Allows passing custom {@link ObjectMapper} that will be used for serialization and deserialization of requests and responses.
-     *
-     * @param apiKey the api key, optional.
-     * @param objectMapper custom object mapper that will be used serialization and deserialization of requests and responses.
-     */
-    public SteamWebApiClient(String apiKey, ObjectMapper objectMapper) {
-        this(new SteamHttpClient(BASE_WEB_API_URI, apiKey, objectMapper));
-    }
-
-    /**
-     * Constructs {@link SteamWebApiClient}.
-     * Allows passing custom {@link HttpClient} and {@link ObjectMapper} that will be used for
-     * contacting the Steam Web Api and serialization and deserialization of requests and responses.
-     *
-     * @param apiKey the api key, optional.
-     * @param httpClient the http client that will be used for contacting the Steam Web Api.
-     * @param objectMapper custom object mapper that will be used serialization and deserialization of requests and responses.
-     */
-    public SteamWebApiClient(String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
-        this(new SteamHttpClient(BASE_WEB_API_URI, apiKey, httpClient, objectMapper));
+    private SteamWebApiClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
+        this(new SteamHttpClient(baseUrl, apiKey, httpClient, objectMapper));
     }
 
     private SteamWebApiClient(SteamHttpClient steamHttpClient) {
@@ -148,5 +96,99 @@ public class SteamWebApiClient {
      */
     public SteamEconServiceWebApiClient getSteamEconServiceWebApiClient() {
         return steamEconServiceWebApiClient;
+    }
+
+    /**
+     * Creates new builder for SteamWebApiClient.
+     * @return the builder.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private String baseUrl = BASE_WEB_API_URI;
+        private String apiKey;
+        private HttpClient httpClient = defaultHttpClient();
+        private ObjectMapper objectMapper = defaultObjectMapper();
+
+        /**
+         * Optionally sets the base url to use for contacting steam web api.
+         *
+         * NOTE: You do not need to use this method as it uses steam web api url by default.
+         * This method is mainly available to allow stubbing the client in tests.
+         *
+         * @param baseUrl the base url.
+         * @return the builder.
+         */
+        public Builder baseUrl(String baseUrl) {
+            this.baseUrl = baseUrl;
+            return this;
+        }
+
+        /**
+         * Sets Steam Web API Key
+         *
+         * Note: Api token is not required for the client to function.
+         *       However, it is needed by most of the api calls,
+         *       therefore, if left empty, invocation of such APIs will result in an exception or an empty result.
+         *
+         * @param apiKey the Steam Web API Key
+         * @return the builder.
+         */
+        public Builder apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        /**
+         * Optionally sets the {@link HttpClient} that will be used for contacting the Steam Web Api.
+         *
+         * Note: Default {@link HttpClient} is set to timeout after 5 seconds.
+         * You can use this builder method to use your own {@link HttpClient}
+         *
+         * @param httpClient the {@link HttpClient}.
+         * @return the builder.
+         */
+        public Builder httpClient(HttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
+        /**
+         * Optionally sets custom {@link ObjectMapper} that will be used serialization and deserialization of requests and responses.
+         *
+         * Note: Default {@link ObjectMapper} is set to fail on unknown properties and read unknown enum values using default value.
+         * You can use this builder method to use your own {@link ObjectMapper}
+         *
+         * @param objectMapper the {@link ObjectMapper}.
+         * @return the builder.
+         */
+        public Builder objectMapper(ObjectMapper objectMapper) {
+            this.objectMapper = objectMapper;
+            return this;
+        }
+
+        /**
+         * Builds new immutable SteamWebApiClient
+         * @return the {@link SteamWebApiClient}
+         */
+        public SteamWebApiClient build() {
+            return new SteamWebApiClient(baseUrl, apiKey, httpClient, objectMapper);
+        }
+    }
+
+    protected static HttpClient defaultHttpClient() {
+        return HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
+    }
+
+    protected static ObjectMapper defaultObjectMapper() {
+        return new ObjectMapper()
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
+                .findAndRegisterModules();
     }
 }

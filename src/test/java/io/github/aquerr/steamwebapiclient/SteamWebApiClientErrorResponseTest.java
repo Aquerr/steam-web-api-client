@@ -21,7 +21,7 @@ import static org.assertj.core.api.BDDAssertions.catchThrowable;
 @ExtendWith(MockitoExtension.class)
 class SteamWebApiClientErrorResponseTest
 {
-    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", null);
+    private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", null, SteamWebApiClient.defaultHttpClient(), SteamWebApiClient.defaultObjectMapper());
 
     private final SteamEconServiceWebApiClient client = new SteamEconServiceWebApiClient(this.steamHttpClient);
 

@@ -72,7 +72,7 @@ class SteamPublishedFileWebApiClientTest
                 .withQueryParams(TestHttpUtils.toQueryParams(request))
                 .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_workshop_query_response.json"))));
 
-        SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey);
+        SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey, SteamWebApiClient.defaultHttpClient(), SteamWebApiClient.defaultObjectMapper());
         SteamPublishedFileWebApiClient steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);
 
         // when
