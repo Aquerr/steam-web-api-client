@@ -85,14 +85,14 @@ dependencies {
 
 ```
 String steamApiKey = "123mykey123"; // Your Steam Web Api Key
-SteamWebApiClient steamWebApiClient = new SteamWebApiClient(steamApiKey);
+SteamWebApiClient steamWebApiClient = SteamWebApiClient.builder().apiKey(steamApiKey).build();
 
 // As because api key is not required for all endpoints, this is also valid.
 // Remember that endpoints that require api key will not work with such setup.
-SteamWebApiClient steamWebApiClient = new SteamWebApiClient();
+SteamWebApiClient steamWebApiClient = SteamWebApiClient.builder().build();
 ```
 
-#### Configuring the underlying HttpClient and ObjectMapper
+#### Using custom HttpClient and/or ObjectMapper
 ```
 // Default HttpClient used by the library has timeout set to 5 seconds.
 // Let's increase that timeout.
@@ -105,7 +105,10 @@ ObjectMapper objectMapper = new ObjectMapper()
         .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 String steamApiKey = "123mykey123"; // Your Steam Web Api Key
-SteamWebApiClient steamWebApiClient = new SteamWebApiClient(steamApiKey, httpClient, objectMapper);
+SteamWebApiClient steamWebApiClient = SteamWebApiClient.builder().apiKey(steamApiKey)
+    .httpClient(httpClient)
+    .objectMapper(objectMapper)
+    .build();
 ```
 
 #### Example workshop search
