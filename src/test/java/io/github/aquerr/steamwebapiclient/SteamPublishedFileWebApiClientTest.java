@@ -84,7 +84,27 @@ class SteamPublishedFileWebApiClientTest
         assertWith(workShopQueryResponse.getResponse().getPublishedFileDetails().get(0), (publishedFileDetails -> {
             assertThat(publishedFileDetails.getPublishedFileId()).isEqualTo(String.valueOf(PUBLISHED_FILE_ID));
             assertThat(publishedFileDetails.getTitle()).isEqualTo("Enhanced Movement");
+            assertThat(publishedFileDetails.getChildren()).containsExactly(prepareChildItem(450814997, 1, 0));
+            assertThat(publishedFileDetails.getVoteData()).isEqualTo(prepareVoteData(0.822674393653869629, 233, 11));
         }));
+    }
+
+    private WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData prepareVoteData(double score, int voteUp, int voteDown)
+    {
+        WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData voteData = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData();
+        voteData.setScore(score);
+        voteData.setVotesUp(voteUp);
+        voteData.setVotesDown(voteDown);
+        return voteData;
+    }
+
+    private WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem prepareChildItem(int publishedFileId, int sortOrder, int fileType)
+    {
+        WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem childItem = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem();
+        childItem.setPublishedFileId(String.valueOf(publishedFileId));
+        childItem.setOrder(sortOrder);
+        childItem.setFileType(fileType);
+        return childItem;
     }
 
     private WorkShopQueryResponse prepareWorkShopQueryResponse(List<Long> publishedFileIds) {

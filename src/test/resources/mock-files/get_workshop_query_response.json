@@ -43,7 +43,19 @@
         "lifetime_playtime_sessions": "0",
         "views": 739094,
         "num_children": 0,
-        "num_reports": 0
+        "num_reports": 0,
+        "children": [
+          {
+            "publishedfileid": "450814997",
+            "sortorder": 1,
+            "file_type": 0
+          }
+        ],
+        "vote_data": {
+          "score": 0.822674393653869629,
+          "votes_up": 233,
+          "votes_down": 11
+        }
       }
     ],
     "next_cursor": "AoMITaJItVfyvgZ1nL33CQ=="

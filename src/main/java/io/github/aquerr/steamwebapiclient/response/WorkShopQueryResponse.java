@@ -106,10 +106,16 @@ public class WorkShopQueryResponse implements SteamWebApiResponse {
             private int favorited;
 
             /**
-             * The file description.
+             * The (long) file description.
              */
             @JsonProperty("file_description")
             private String fileDescription;
+
+            /**
+             *
+             */
+            @JsonProperty("short_description")
+            private String shortDescription;
 
             /**
              * The file size in kilobytes.
@@ -277,6 +283,18 @@ public class WorkShopQueryResponse implements SteamWebApiResponse {
             private List<Tag> tags;
 
             /**
+             * The list of children (or required items to use this one).
+             */
+            @JsonProperty("children")
+            private List<ChildItem> children;
+
+            /**
+             * The vote/rating data
+             */
+            @JsonProperty("vote_data")
+            private VoteData voteData;
+
+            /**
              * The time when the item got created in seconds since epoch time.
              */
             @JsonProperty("time_created")
@@ -354,6 +372,50 @@ public class WorkShopQueryResponse implements SteamWebApiResponse {
                  */
                 @JsonProperty("tag")
                 private String tag;
+            }
+
+            @Data
+            public static class ChildItem
+            {
+                /**
+                 * The id of published file.
+                 */
+                @JsonProperty("publishedfileid")
+                private String publishedFileId;
+
+                /**
+                 * The order of item within the collection.
+                 */
+                @JsonProperty("sortorder")
+                private int order;
+
+                /**
+                 * The type of item/file.
+                 */
+                @JsonProperty("file_type")
+                private int fileType;
+            }
+
+            @Data
+            public static class VoteData
+            {
+                /**
+                 * The score.
+                 */
+                @JsonProperty("score")
+                private double score;
+
+                /**
+                 * The number of likes
+                 */
+                @JsonProperty("votes_up")
+                private int votesUp;
+
+                /**
+                 * The number of dislikes
+                 */
+                @JsonProperty("votes_down")
+                private int votesDown;
             }
         }
     }
