@@ -59,7 +59,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
     private int creatorAppId;
 
     /**
-     * App that consumes the files.
+     * App that consumes/uses the files.
      */
     @SteamRequestQueryParam("appid")
     private int appId;

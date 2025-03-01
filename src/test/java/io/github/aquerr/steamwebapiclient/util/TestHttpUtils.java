@@ -2,10 +2,12 @@ package io.github.aquerr.steamwebapiclient.util;
 
 import com.github.tomakehurst.wiremock.matching.EqualToPattern;
 import com.github.tomakehurst.wiremock.matching.StringValuePattern;
+import io.github.aquerr.steamwebapiclient.annotation.QueryParamCollectionBehaviour;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,20 +20,60 @@ public class TestHttpUtils
             if (!field.isAnnotationPresent(SteamRequestQueryParam.class)) {
                 continue;
             }
+            insertParam(params, steamWebApiRequest, field);
+        }
+        return params;
+    }
 
-            String name = getSteamRequestParamNameFromField(field);
+    private static void insertParam(Map<String, StringValuePattern> params,
+                             SteamWebApiRequest steamWebApiRequest,
+                             Field field)
+    {
+        SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
+        String name = getSteamRequestParamNameFromField(steamRequestQueryParam, field);
+
+        // Handle lists
+        if (Collection.class.isAssignableFrom(field.getType()) && steamRequestQueryParam.collectionBehaviour() == QueryParamCollectionBehaviour.MULTIPLE_PARAMETERS) {
+            Collection<?> collection = getFieldValueAsCollection(steamWebApiRequest, field);
+            if (collection != null) {
+                int index = 0;
+                for (Object object : collection) {
+                    String paramName = name + "[" + index + "]";
+                    index++;
+                    params.put(paramName, new EqualToPattern(String.valueOf(object)));
+                }
+            }
+        } else {
             String fieldValue = getFieldValueAsString(steamWebApiRequest, field);
             if (fieldValue != null) {
                 params.put(name, new EqualToPattern(fieldValue));
             }
         }
-        return params;
     }
 
-    private static String getSteamRequestParamNameFromField(Field field) {
+    private static Collection<?> getFieldValueAsCollection(SteamWebApiRequest steamWebApiRequest, Field field) {
         try {
-            SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
-            if (steamRequestQueryParam.value() != null && !steamRequestQueryParam.value().trim().equals("")) {
+            boolean canAccess = field.canAccess(steamWebApiRequest);
+            if (!canAccess) {
+                field.setAccessible(true);
+            }
+            Object value = field.get(steamWebApiRequest);
+            field.setAccessible(canAccess);
+            if (value != null) {
+                if (value instanceof Collection<?>) {
+                    return (Collection<?>) value;
+                }
+            }
+            return null;
+        }
+        catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String getSteamRequestParamNameFromField(SteamRequestQueryParam steamRequestQueryParam, Field field) {
+        try {
+            if (steamRequestQueryParam.value() != null && !steamRequestQueryParam.value().trim().isEmpty()) {
                 return steamRequestQueryParam.value();
             }
             return field.getName();

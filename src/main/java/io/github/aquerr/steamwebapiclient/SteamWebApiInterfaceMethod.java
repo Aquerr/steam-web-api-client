@@ -16,6 +16,7 @@ enum SteamWebApiInterfaceMethod
     I_PUBLISHED_FILE_SERVICE_UPDATE_BAN_STATUS("IPublishedFileService", "UpdateBanStatus"),
     I_PUBLISHED_FILE_SERVICE_UPDATE_INCOMPATIBLE_STATUS("IPublishedFileService", "UpdateIncompatibleStatus"),
     I_PUBLISHED_FILE_SERVICE_UPDATE_TAGS("IPublishedFileService", "UpdateTags"),
+    I_PUBLISHED_FILE_SERVICE_GET_DETAILS("IPublishedFileService", "GetDetails"),
 
     I_STEAM_REMOTE_STORAGE_GET_PUBLISHED_FILE_DETAILS("ISteamRemoteStorage", "GetPublishedFileDetails"),
     I_STEAM_REMOTE_STORAGE_GET_COLLECTION_DETAILS("ISteamRemoteStorage", "GetCollectionDetails"),
@@ -44,13 +45,13 @@ enum SteamWebApiInterfaceMethod
     I_ECON_SERVICE_GET_TRADE_HISTORY("IEconService", "GetTradeHistory"),
     I_ECON_SERVICE_GET_TRADE_OFFERS("IEconService", "GetTradeOffers"),
     I_ECON_SERVICE_GET_TRADE_OFFER("IEconService", "GetTradeOffer"),
-    I_ECON_SERVICE_GET_TRADE_OFFERS_SUMMARY("IEconService", "GetTradeOffersSummary")
-    ;
+    I_ECON_SERVICE_GET_TRADE_OFFERS_SUMMARY("IEconService", "GetTradeOffersSummary");
 
     private final String interfaceName;
     private final String methodName;
 
-    SteamWebApiInterfaceMethod(String interfaceName, String methodName) {
+    SteamWebApiInterfaceMethod(String interfaceName, String methodName)
+    {
         this.interfaceName = interfaceName;
         this.methodName = methodName;
     }

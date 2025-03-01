@@ -1,5 +1,6 @@
 package io.github.aquerr.steamwebapiclient.response;
 
+import io.github.aquerr.steamwebapiclient.response.shared.PublishedFileDetails;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -40,9 +41,9 @@ class WorkShopQueryResponseTest
         WorkShopQueryResponse workShopQueryResponse = new WorkShopQueryResponse();
         WorkShopQueryResponse.QueryFilesResponse queryFilesResponse = new WorkShopQueryResponse.QueryFilesResponse();
         workShopQueryResponse.setResponse(queryFilesResponse);
-        List<WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails> publishedFileDetailsList = new ArrayList<>();
+        List<PublishedFileDetails> publishedFileDetailsList = new ArrayList<>();
         queryFilesResponse.setPublishedFileDetails(publishedFileDetailsList);
-        WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails publishedFileDetails = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails();
+        PublishedFileDetails publishedFileDetails = new PublishedFileDetails();
         publishedFileDetails.setCreatedTimeSeconds(CREATED_TIME_SECONDS);
         publishedFileDetails.setUpdatedTimeSeconds(UPDATED_TIME_SECONDS);
         publishedFileDetailsList.add(publishedFileDetails);

@@ -7,6 +7,7 @@ import io.github.aquerr.steamwebapiclient.request.CollectionDetailsRequest;
 import io.github.aquerr.steamwebapiclient.request.PublishedFileDetailsRequest;
 import io.github.aquerr.steamwebapiclient.response.CollectionDetailsResponse;
 import io.github.aquerr.steamwebapiclient.response.PublishedFileDetailsResponse;
+import io.github.aquerr.steamwebapiclient.response.shared.PublishedFileDetails;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,15 +60,15 @@ class SteamRemoteStorageClientTest {
 
             assertThat(resp.getResponse().getPublishedFileDetails().get(0)).satisfies(firstDetails -> {
                 assertThat(firstDetails.getPublishedFileId()).isEqualTo(String.valueOf(3122668835L));
-                assertThat(firstDetails.getCreator()).isEqualTo(76561199405322406L);
+                assertThat(firstDetails.getCreator()).isEqualTo("76561199405322406");
             });
 
             assertThat(resp.getResponse().getPublishedFileDetails().get(1)).satisfies(secondDetails -> {
                 assertThat(secondDetails.getPublishedFileId()).isEqualTo(String.valueOf(210267782L));
                 assertThat(secondDetails.getTags()).contains(
-                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Addon"),
-                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Weapon"),
-                        new PublishedFileDetailsResponse.QueryFilesResponse.PublishedFileDetails.Tag("Fun")
+                        new PublishedFileDetails.Tag(null, "Addon"),
+                        new PublishedFileDetails.Tag(null, "Weapon"),
+                        new PublishedFileDetails.Tag(null, "Fun")
                 );
             });
         });

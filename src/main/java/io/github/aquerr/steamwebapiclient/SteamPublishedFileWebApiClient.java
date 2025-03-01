@@ -1,7 +1,9 @@
 package io.github.aquerr.steamwebapiclient;
 
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
+import io.github.aquerr.steamwebapiclient.request.GetDetailsRequest;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
+import io.github.aquerr.steamwebapiclient.response.FileDetailsResponse;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
 
 import static io.github.aquerr.steamwebapiclient.SteamWebApiClient.API_VERSION_1;
@@ -36,6 +38,18 @@ public class SteamPublishedFileWebApiClient
                 API_VERSION_1,
                 request,
                 WorkShopQueryResponse.class
+        );
+    }
+
+    /**
+     * Gets information about a set of published files
+     */
+    public FileDetailsResponse getDetails(GetDetailsRequest request) throws ClientException {
+        return this.steamHttpClient.get(
+                SteamWebApiInterfaceMethod.I_PUBLISHED_FILE_SERVICE_GET_DETAILS,
+                API_VERSION_1,
+                request,
+                FileDetailsResponse.class
         );
     }
 }

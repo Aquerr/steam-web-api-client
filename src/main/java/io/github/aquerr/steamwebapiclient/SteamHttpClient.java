@@ -3,6 +3,7 @@ package io.github.aquerr.steamwebapiclient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.github.aquerr.steamwebapiclient.annotation.QueryParamCollectionBehaviour;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
 import io.github.aquerr.steamwebapiclient.exception.HttpClientException;
@@ -203,20 +204,40 @@ class SteamHttpClient {
             if (!field.isAnnotationPresent(SteamRequestQueryParam.class)) {
                 continue;
             }
+            insertParam(params, steamWebApiRequest, field);
+        }
+        return params;
+    }
 
-            String name = getSteamRequestParamNameFromField(field);
+    private void insertParam(Map<String, String> params,
+                             SteamWebApiRequest steamWebApiRequest,
+                             Field field)
+    {
+        SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
+        String name = getSteamRequestParamNameFromField(steamRequestQueryParam, field);
+
+        // Handle lists
+        if (Collection.class.isAssignableFrom(field.getType()) && steamRequestQueryParam.collectionBehaviour() == QueryParamCollectionBehaviour.MULTIPLE_PARAMETERS) {
+            Collection<?> collection = getFieldValueAsCollection(steamWebApiRequest, field);
+            if (collection != null) {
+                int index = 0;
+                for (Object object : collection) {
+                    String paramName = name + "[" + index + "]";
+                    index++;
+                    params.put(paramName, URLEncoder.encode(String.valueOf(object), StandardCharsets.UTF_8));
+                }
+            }
+        } else {
             String fieldValue = getFieldValueAsString(steamWebApiRequest, field);
             if (fieldValue != null) {
                 params.put(name, URLEncoder.encode(fieldValue, StandardCharsets.UTF_8));
             }
         }
-        return params;
     }
 
-    private String getSteamRequestParamNameFromField(Field field) {
+    private String getSteamRequestParamNameFromField(SteamRequestQueryParam steamRequestQueryParam, Field field) {
         try {
-            SteamRequestQueryParam steamRequestQueryParam = field.getAnnotation(SteamRequestQueryParam.class);
-            if (steamRequestQueryParam.value() != null && !steamRequestQueryParam.value().trim().equals("")) {
+            if (steamRequestQueryParam.value() != null && !steamRequestQueryParam.value().trim().isEmpty()) {
                 return steamRequestQueryParam.value();
             }
             return field.getName();
@@ -226,11 +247,34 @@ class SteamHttpClient {
         }
     }
 
+    private Collection<?> getFieldValueAsCollection(SteamWebApiRequest steamWebApiRequest, Field field) {
+        try {
+            boolean canAccess = field.canAccess(steamWebApiRequest);
+            if (!canAccess) {
+                field.setAccessible(true);
+            }
+            Object value = field.get(steamWebApiRequest);
+            field.setAccessible(canAccess);
+            if (value != null) {
+                if (value instanceof Collection<?>) {
+                    return (Collection<?>) value;
+                }
+            }
+            return null;
+        }
+        catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getFieldValueAsString(SteamWebApiRequest steamWebApiRequest, Field field) {
         try {
-            field.setAccessible(true);
+            boolean canAccess = field.canAccess(steamWebApiRequest);
+            if (!canAccess) {
+                field.setAccessible(true);
+            }
             Object value = field.get(steamWebApiRequest);
-            field.setAccessible(false);
+            field.setAccessible(canAccess);
             if (value != null) {
                 if (value instanceof Collection<?>) {
                     Collection<?> collection = (Collection<?>) value;

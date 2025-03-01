@@ -1,0 +1,519 @@
+{
+  "response": {
+    "publishedfiledetails": [
+      {
+        "result": 1,
+        "publishedfileid": "333310405",
+        "creator": "76561197991798145",
+        "creator_appid": 107410,
+        "consumer_appid": 107410,
+        "consumer_shortcutid": 0,
+        "filename": "",
+        "file_size": "129040319",
+        "preview_file_size": "826723",
+        "preview_url": "https://images.steamusercontent.com/ugc/56961846976116077/C3EF597E5AED9B2C8A1A9F0F6E68653C3AAE6FFD/",
+        "url": "",
+        "hcontent_file": "5315815065702555871",
+        "hcontent_preview": "56961846976116077",
+        "title": "Mount Laguna",
+        "short_description": "Test Desc",
+        "time_created": 1739673161,
+        "time_updated": 1740536577,
+        "visibility": 0,
+        "flags": 5632,
+        "workshop_file": false,
+        "workshop_accepted": false,
+        "show_subscribe_all": false,
+        "num_comments_public": 12,
+        "banned": false,
+        "ban_reason": "",
+        "banner": "76561197960265728",
+        "can_be_deleted": true,
+        "app_name": "Arma 3",
+        "file_type": 0,
+        "can_subscribe": true,
+        "subscriptions": 1955,
+        "favorited": 618,
+        "followers": 0,
+        "lifetime_subscriptions": 2141,
+        "lifetime_favorited": 625,
+        "lifetime_followers": 0,
+        "lifetime_playtime": "0",
+        "lifetime_playtime_sessions": "0",
+        "views": 14393,
+        "num_children": 1,
+        "num_reports": 0,
+        "previews": [
+          {
+            "previewid": "39797599",
+            "sortorder": 0,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094515/9F329B8A3827459D42A2C7C6799BCBB9D0277CB3/",
+            "size": 994184,
+            "filename": "20250225205201_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797584",
+            "sortorder": 1,
+            "url": "https://images.steamusercontent.com/ugc/56961846976093877/BA63D272B6F440BECD4AF6B71C0D07741364EA24/",
+            "size": 609861,
+            "filename": "20250225205303_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797589",
+            "sortorder": 2,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094038/3C61C32E889F9C25DEB6AAFA67A0956CBBAA4190/",
+            "size": 774520,
+            "filename": "20250225204940_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797597",
+            "sortorder": 3,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094397/A50003689D5FA2FB97A8C2149EDFC0812A9B5CB6/",
+            "size": 691538,
+            "filename": "20250225205142_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797585",
+            "sortorder": 4,
+            "url": "https://images.steamusercontent.com/ugc/56961846976093950/409EA06B19043D14C9C167848D9E8D1760EB3160/",
+            "size": 993501,
+            "filename": "20250225204921_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797591",
+            "sortorder": 5,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094124/3A3AFCE155B3FACC153D9B910B87B86FA68DAD5E/",
+            "size": 727684,
+            "filename": "20250225205008_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797595",
+            "sortorder": 6,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094300/777A436EE654603A78455295BB7DE8665F78FC2C/",
+            "size": 778952,
+            "filename": "20250225205059_1.jpg",
+            "preview_type": 0
+          },
+          {
+            "previewid": "39797594",
+            "sortorder": 7,
+            "url": "https://images.steamusercontent.com/ugc/56961846976094216/AD2AA757F4965B1CB5D2901968922D434A573D72/",
+            "size": 854721,
+            "filename": "20250225205043_1.jpg",
+            "preview_type": 0
+          }
+        ],
+        "tags": [
+          {
+            "tag": "Terrain",
+            "display_name": "Terrain"
+          },
+          {
+            "tag": "Mod",
+            "display_name": "Mod"
+          }
+        ],
+        "children": [
+          {
+            "publishedfileid": "3336740643",
+            "sortorder": 1,
+            "file_type": 0
+          }
+        ],
+        "kvtags": [
+          {
+            "key": "bis_platform",
+            "value": "-"
+          },
+          {
+            "key": "bis_signature",
+            "value": "Bromine"
+          },
+          {
+            "key": "bis_shortHash",
+            "value": "hhGlPA=="
+          },
+          {
+            "key": "bis_longHash",
+            "value": "zhYwOgfVX829Xwk6qmh1+4m2f5E="
+          },
+          {
+            "key": "bis_displayName",
+            "value": "[Bro] Mount Laguna"
+          },
+          {
+            "key": "bis_size",
+            "value": "129040219"
+          }
+        ],
+        "vote_data": {
+          "score": 0.732984304428100586,
+          "votes_up": 90,
+          "votes_down": 1
+        },
+        "language": 0,
+        "maybe_inappropriate_sex": false,
+        "maybe_inappropriate_violence": false,
+        "revision_change_number": "16",
+        "revision": 1,
+        "reactions": [
+          {
+            "reactionid": 7,
+            "count": 1
+          },
+          {
+            "reactionid": 9,
+            "count": 1
+          },
+          {
+            "reactionid": 17,
+            "count": 1
+          }
+        ],
+        "ban_text_check_result": 5
+      },
+      {
+        "result": 1,
+        "publishedfileid": "9532492348",
+        "creator": "76561198198595822",
+        "creator_appid": 107410,
+        "consumer_appid": 107410,
+        "consumer_shortcutid": 0,
+        "filename": "",
+        "file_size": "4572277",
+        "preview_file_size": "44818",
+        "preview_url": "https://images.steamusercontent.com/ugc/1014940825593906790/E3A99D3EB1031126D7FFADCF6BBDA00FAA7FAFEC/",
+        "url": "",
+        "hcontent_file": "9113520414119052931",
+        "hcontent_preview": "1014940825593906790",
+        "title": "CBA_A3",
+        "short_description": "CBA: Community Based Addons for Arma 3 What does the name Community Base Addons mean? It is a system that: Offers a range of features for addon-makers and mission designers. Aims to have community wide acceptance and to be used as much as possible by commu",
+        "time_created": 1432827434,
+        "time_updated": 1729006502,
+        "visibility": 0,
+        "flags": 142611968,
+        "workshop_file": false,
+        "workshop_accepted": false,
+        "show_subscribe_all": false,
+        "num_comments_public": 1703,
+        "banned": false,
+        "ban_reason": "",
+        "banner": "76561197960265728",
+        "can_be_deleted": true,
+        "app_name": "Arma 3",
+        "file_type": 0,
+        "can_subscribe": true,
+        "subscriptions": 2909497,
+        "favorited": 59721,
+        "followers": 0,
+        "lifetime_subscriptions": 3901466,
+        "lifetime_favorited": 64573,
+        "lifetime_followers": 0,
+        "lifetime_playtime": "0",
+        "lifetime_playtime_sessions": "0",
+        "views": 1933798,
+        "num_children": 0,
+        "num_reports": 0,
+        "tags": [
+          {
+            "tag": "Mod",
+            "display_name": "Mod"
+          }
+        ],
+        "kvtags": [
+          {
+            "key": "bis_shortHash",
+            "value": "XL3kfQ=="
+          },
+          {
+            "key": "bis_longHash",
+            "value": "slapcsw6m96TmI4kOtXbhYh97OA="
+          },
+          {
+            "key": "bis_platform",
+            "value": "-"
+          },
+          {
+            "key": "bis_displayName",
+            "value": "Community Base Addons v3.18.1"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.2.0.170224-83331e61"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.2.1.170227-f25d7113"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.3.0.170502-feb4157a"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.3.1.170504-c1706f9a"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.4.0.170627-24e23d61"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.4.0.170627-6a1a8e7a"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.4.1.170912-77f6349d"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.5.0.171204-945b81e3"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.6.0.180131-da8cf004"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.6.1.180131-9c36355c"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.7.0.180430-b062cd5b"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.7.1.180604-52b821f0"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.8.0.180801-4965324d"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.9.0.181012-85445afa"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.9.1.181229-cc913854"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.10.0.190314-93d7cab4"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.10.1.190316-15d15f54"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.11.0.190501-91b213d1"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.11.1.190503-4a491780"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.11.2.190515-cec0e465"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.12.0.190708-15348392"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.12.1.190812-0bab13ca"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.12.2.190909-7c4e6bdd"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.13.0.191116-43ac212e"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.14.0.200207-215118a2"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.0.200404-23fa433d"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.1.200418-5fde716b"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.2.201119-e4ec856a"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.3.210310-5ee330dc"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.4.210701-ed42b583"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.5.210713-4bc61dfa"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.6.211004-0fb4db14"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.7.220517-9b22faaa"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.15.8.220912-7b031be5"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.16.0.231017"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.16.1.231025"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.17.0.240401"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.17.1.240424"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.18.0.241008"
+          },
+          {
+            "key": "bis_signature",
+            "value": "cba_3.18.1.241014"
+          },
+          {
+            "key": "bis_size",
+            "value": "4572225"
+          }
+        ],
+        "vote_data": {
+          "score": 0.963581383228302002,
+          "votes_up": 17148,
+          "votes_down": 600
+        },
+        "language": 0,
+        "maybe_inappropriate_sex": false,
+        "maybe_inappropriate_violence": false,
+        "revision_change_number": "23",
+        "revision": 1,
+        "reactions": [
+          {
+            "reactionid": 7,
+            "count": 144
+          },
+          {
+            "reactionid": 17,
+            "count": 87
+          },
+          {
+            "reactionid": 6,
+            "count": 74
+          },
+          {
+            "reactionid": 8,
+            "count": 48
+          },
+          {
+            "reactionid": 13,
+            "count": 34
+          },
+          {
+            "reactionid": 12,
+            "count": 28
+          },
+          {
+            "reactionid": 9,
+            "count": 23
+          },
+          {
+            "reactionid": 11,
+            "count": 22
+          },
+          {
+            "reactionid": 18,
+            "count": 20
+          },
+          {
+            "reactionid": 16,
+            "count": 17
+          },
+          {
+            "reactionid": 14,
+            "count": 15
+          },
+          {
+            "reactionid": 4,
+            "count": 14
+          },
+          {
+            "reactionid": 21,
+            "count": 12
+          },
+          {
+            "reactionid": 22,
+            "count": 10
+          },
+          {
+            "reactionid": 15,
+            "count": 9
+          },
+          {
+            "reactionid": 20,
+            "count": 9
+          },
+          {
+            "reactionid": 1,
+            "count": 4
+          },
+          {
+            "reactionid": 2,
+            "count": 4
+          },
+          {
+            "reactionid": 19,
+            "count": 4
+          },
+          {
+            "reactionid": 23,
+            "count": 4
+          },
+          {
+            "reactionid": 3,
+            "count": 3
+          },
+          {
+            "reactionid": 5,
+            "count": 3
+          },
+          {
+            "reactionid": 10,
+            "count": 3
+          }
+        ],
+        "ban_text_check_result": 5
+      }
+    ]
+  }
+}

@@ -18,4 +18,6 @@ public @interface SteamRequestQueryParam
      * Empty string will result in field name being used as query param name.
      */
     String value() default  "";
+
+    QueryParamCollectionBehaviour collectionBehaviour() default QueryParamCollectionBehaviour.COMMA_SEPARATED_STRING;
 }

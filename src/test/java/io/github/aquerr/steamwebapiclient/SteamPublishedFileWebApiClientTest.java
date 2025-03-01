@@ -3,8 +3,11 @@ package io.github.aquerr.steamwebapiclient;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
+import io.github.aquerr.steamwebapiclient.request.GetDetailsRequest;
 import io.github.aquerr.steamwebapiclient.request.WorkShopQueryFilesRequest;
+import io.github.aquerr.steamwebapiclient.response.FileDetailsResponse;
 import io.github.aquerr.steamwebapiclient.response.WorkShopQueryResponse;
+import io.github.aquerr.steamwebapiclient.response.shared.PublishedFileDetails;
 import io.github.aquerr.steamwebapiclient.util.TestHttpUtils;
 import io.github.aquerr.steamwebapiclient.util.TestResourceUtils;
 import org.junit.jupiter.api.Test;
@@ -84,23 +87,69 @@ class SteamPublishedFileWebApiClientTest
         assertWith(workShopQueryResponse.getResponse().getPublishedFileDetails().get(0), (publishedFileDetails -> {
             assertThat(publishedFileDetails.getPublishedFileId()).isEqualTo(String.valueOf(PUBLISHED_FILE_ID));
             assertThat(publishedFileDetails.getTitle()).isEqualTo("Enhanced Movement");
-            assertThat(publishedFileDetails.getChildren()).containsExactly(prepareChildItem(450814997, 1, 0));
+            assertThat(publishedFileDetails.getChildren()).containsExactly(prepareChildItem("450814997", 1, 0));
             assertThat(publishedFileDetails.getVoteData()).isEqualTo(prepareVoteData(0.822674393653869629, 233, 11));
         }));
     }
 
-    private WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData prepareVoteData(double score, int voteUp, int voteDown)
+    @Test
+    void shouldGetPublishedFileDetailsReturnFileDetailsResponse() throws ClientException {
+        // given
+        String apiKey = "ApiKey";
+        GetDetailsRequest request = GetDetailsRequest.builder()
+                .apiKey(apiKey)
+                .appId(APP_ID)
+                .publishedFileIds(List.of(PUBLISHED_FILE_ID, PUBLISHED_FILE_ID_2))
+                .includeChildren(true)
+                .includeTags(true)
+                .includeVotes(true)
+                .includeReactions(true)
+                .includeAdditionalPreviews(true)
+                .includeReactions(true)
+                .includeMetadata(true)
+                .includeKvTags(true)
+                .includePlaytimeStats(true)
+                .build();
+
+        stubFor(get(new UrlPathPattern(equalTo("/IPublishedFileService/GetDetails/v1"), false))
+                .withQueryParams(TestHttpUtils.toQueryParams(request))
+                .willReturn(okJson(TestResourceUtils.loadMockFileContent("mock-files/get_details_response.json"))));
+
+        SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:8080", apiKey, SteamWebApiClient.defaultHttpClient(), SteamWebApiClient.defaultObjectMapper());
+        SteamPublishedFileWebApiClient steamPublishedFileWebApiClient = new SteamPublishedFileWebApiClient(steamHttpClient);
+
+        // when
+        FileDetailsResponse response = steamPublishedFileWebApiClient.getDetails(request);
+
+        // then
+        assertThat(response).isNotNull();
+        assertThat(response.getResponse().getPublishedFileDetails()).hasSize(2);
+        assertWith(response.getResponse().getPublishedFileDetails().get(0), (publishedFileDetails -> {
+            assertThat(publishedFileDetails.getPublishedFileId()).isEqualTo(String.valueOf(PUBLISHED_FILE_ID));
+            assertThat(publishedFileDetails.getTitle()).isEqualTo("Mount Laguna");
+            assertThat(publishedFileDetails.getChildren()).containsExactly(prepareChildItem("3336740643", 1, 0));
+            assertThat(publishedFileDetails.getVoteData()).isEqualTo(prepareVoteData(0.732984304428100586, 90, 1));
+        }));
+        assertWith(response.getResponse().getPublishedFileDetails().get(1), (publishedFileDetails -> {
+            assertThat(publishedFileDetails.getPublishedFileId()).isEqualTo(String.valueOf(PUBLISHED_FILE_ID_2));
+            assertThat(publishedFileDetails.getTitle()).isEqualTo("CBA_A3");
+            assertThat(publishedFileDetails.getKeyValueTags().get(0).getKey()).isEqualTo("bis_shortHash");
+            assertThat(publishedFileDetails.getReactions().get(0).getReactionId()).isEqualTo(7);
+        }));
+    }
+
+    private PublishedFileDetails.VoteData prepareVoteData(double score, int voteUp, int voteDown)
     {
-        WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData voteData = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.VoteData();
+        PublishedFileDetails.VoteData voteData = new PublishedFileDetails.VoteData();
         voteData.setScore(score);
         voteData.setVotesUp(voteUp);
         voteData.setVotesDown(voteDown);
         return voteData;
     }
 
-    private WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem prepareChildItem(int publishedFileId, int sortOrder, int fileType)
+    private PublishedFileDetails.ChildItem prepareChildItem(String publishedFileId, int sortOrder, int fileType)
     {
-        WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem childItem = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails.ChildItem();
+        PublishedFileDetails.ChildItem childItem = new PublishedFileDetails.ChildItem();
         childItem.setPublishedFileId(String.valueOf(publishedFileId));
         childItem.setOrder(sortOrder);
         childItem.setFileType(fileType);
@@ -111,11 +160,11 @@ class SteamPublishedFileWebApiClientTest
         WorkShopQueryResponse workShopQueryResponse = new WorkShopQueryResponse();
         WorkShopQueryResponse.QueryFilesResponse queryFilesResponse = new WorkShopQueryResponse.QueryFilesResponse();
         workShopQueryResponse.setResponse(queryFilesResponse);
-        List<WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails> publishedFileDetailsList = new ArrayList<>();
+        List<PublishedFileDetails> publishedFileDetailsList = new ArrayList<>();
         queryFilesResponse.setPublishedFileDetails(publishedFileDetailsList);
 
         publishedFileIds.forEach(id -> {
-            WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails publishedFileDetails = new WorkShopQueryResponse.QueryFilesResponse.PublishedFileDetails();
+            PublishedFileDetails publishedFileDetails = new PublishedFileDetails();
             publishedFileDetails.setPublishedFileId(String.valueOf(id));
             publishedFileDetailsList.add(publishedFileDetails);
         });
