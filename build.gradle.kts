@@ -1,13 +1,13 @@
 plugins {
     `java-library`
-    id("io.freefair.lombok") version "8.0.1"
+    id("io.freefair.lombok") version "8.14"
     `maven-publish`
     id("signing")
 }
 
 group = "io.github.aquerr"
 description = "Simple Java Steam Web API client."
-version = "1.5.0-SNAPSHOT"
+version = "1.6.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -21,14 +21,15 @@ java {
 }
 
 dependencies {
-    api("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    api("com.fasterxml.jackson.core:jackson-databind:2.19.1")
 
-    testImplementation(platform("org.junit:junit-bom:5.9.3"))
+    testImplementation(platform("org.junit:junit-bom:5.13.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:5.4.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.4.0")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.mockito:mockito-core:5.18.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("org.wiremock:wiremock:3.13.1")
 }
 
 tasks.test {

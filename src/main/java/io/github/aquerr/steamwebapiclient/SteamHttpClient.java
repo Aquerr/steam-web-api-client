@@ -174,9 +174,11 @@ class SteamHttpClient {
     }
 
     private void populateApiKeyIfRestrictedRequest(SteamWebApiRequest steamWebApiRequest) {
-        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest) {
+        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest && apiKey != null) {
             SteamWebApiRestrictedRequest request = (SteamWebApiRestrictedRequest) steamWebApiRequest;
-            request.setApiKey(apiKey);
+            if ((request.getApiKey() == null || request.getApiKey().isEmpty())) {
+                request.setApiKey(apiKey);
+            }
         }
     }
 

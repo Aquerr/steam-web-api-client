@@ -3,7 +3,6 @@ package io.github.aquerr.steamwebapiclient.request;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -19,7 +18,6 @@ public class NewsForAppRequest implements SteamWebApiRequest {
     /**
      * AppID to retrieve news for. Field required.
      */
-    @NonNull
     @SteamRequestQueryParam("appid")
     private int appId;
 
