@@ -1,19 +1,19 @@
 plugins {
     `java-library`
-    id("io.freefair.lombok") version "8.14"
+    id("io.freefair.lombok") version "9.2.0"
     `maven-publish`
     id("signing")
 }
 
 group = "io.github.aquerr"
 description = "Simple Java Steam Web API client."
-version = "1.6.0-SNAPSHOT"
+version = "2.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_11.majorVersion))
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
 
 java {
     withSourcesJar()
@@ -21,15 +21,15 @@ java {
 }
 
 dependencies {
-    api("com.fasterxml.jackson.core:jackson-databind:2.19.1")
+    api("tools.jackson.core:jackson-databind:3.0.4")
 
-    testImplementation(platform("org.junit:junit-bom:5.13.2"))
+    testImplementation(platform("org.junit:junit-bom:6.0.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.mockito:mockito-core:5.18.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
-    testImplementation("org.assertj:assertj-core:3.27.3")
-    testImplementation("org.wiremock:wiremock:3.13.1")
+    testImplementation("org.mockito:mockito-core:5.21.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.21.0")
+    testImplementation("org.assertj:assertj-core:3.27.7")
+    testImplementation("org.wiremock:wiremock:3.13.2")
 }
 
 tasks.test {

@@ -1,6 +1,5 @@
 package io.github.aquerr.steamwebapiclient.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import lombok.Builder;
 import lombok.Getter;

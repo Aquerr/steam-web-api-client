@@ -1,7 +1,5 @@
 package io.github.aquerr.steamwebapiclient;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import com.github.tomakehurst.wiremock.matching.EqualToPattern;
 import com.github.tomakehurst.wiremock.matching.UrlPathPattern;
@@ -15,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.List;
 
@@ -32,9 +33,10 @@ class SteamHttpClientTest
     private static final String API_KEY = "ApiKey";
 
     @Spy
-    private ObjectMapper objectMapper = new ObjectMapper()
+    private ObjectMapper objectMapper = JsonMapper.builder()
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .findAndRegisterModules();
+            .findAndAddModules()
+            .build();
 
     private final SteamHttpClient steamHttpClient = new SteamHttpClient("http://localhost:4444", API_KEY, SteamWebApiClient.defaultHttpClient(), objectMapper);
 

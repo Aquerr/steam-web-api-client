@@ -22,7 +22,7 @@ public class UrlEncodedForm
     private final Map<String, String> parameters;
 
     /**
-     * Constructs an url encoded form from request attributes marked with @JsonProperty
+     * Constructs a url encoded form from request attributes marked with @JsonProperty
      * @param request the request
      * @return UrlEncodedForm
      */
@@ -45,7 +45,7 @@ public class UrlEncodedForm
         final StringBuilder stringBuilder = new StringBuilder();
         for (final Map.Entry<String, String > entry : parameters.entrySet()) {
 
-            if (stringBuilder.length() > 0) {
+            if (!stringBuilder.isEmpty()) {
                 stringBuilder.append("&");
             }
             stringBuilder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));

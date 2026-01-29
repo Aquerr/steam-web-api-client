@@ -1,8 +1,5 @@
 package io.github.aquerr.steamwebapiclient;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.aquerr.steamwebapiclient.annotation.QueryParamCollectionBehaviour;
 import io.github.aquerr.steamwebapiclient.annotation.SteamRequestQueryParam;
 import io.github.aquerr.steamwebapiclient.exception.ClientException;
@@ -11,6 +8,9 @@ import io.github.aquerr.steamwebapiclient.request.SteamWebApiRequest;
 import io.github.aquerr.steamwebapiclient.request.SteamWebApiRestrictedRequest;
 import io.github.aquerr.steamwebapiclient.response.SteamWebApiResponse;
 import io.github.aquerr.steamwebapiclient.util.UrlEncodedForm;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 import java.lang.reflect.Field;
 import java.net.URI;
@@ -52,7 +52,7 @@ class SteamHttpClient {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
         this.httpClient = httpClient;
-        this.objectMapper = objectMapper.copy();
+        this.objectMapper = objectMapper.rebuild().build();
     }
 
     public <T extends SteamWebApiResponse> T get(
@@ -138,7 +138,7 @@ class SteamHttpClient {
         else return new ClientException(exception);
     }
 
-    private <T extends SteamWebApiResponse> T parseResponse(HttpResponse<String> response, Class<T> responseClass) throws JsonProcessingException {
+    private <T extends SteamWebApiResponse> T parseResponse(HttpResponse<String> response, Class<T> responseClass) throws JacksonException {
         ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
         SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
         return (T)steamWebApiResponse;

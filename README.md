@@ -13,8 +13,8 @@ This library provides a simple way to interact with Steam Web Api through Java.
 
 # Prerequisites
 
-* Java 11
-* [Jackson (databind)](https://github.com/FasterXML/jackson-databind)
+* Java 17
+* [Jackson (databind)](https://github.com/FasterXML/jackson-databind) (>3.x.x)
 * [Steam Web Api Access Token](https://steamcommunity.com/dev) (required for most endpoints)
 
 ## Usage
@@ -101,8 +101,9 @@ HttpClient httpClient = HttpClient.newBuilder()
         .build();
 
 // Default ObjectMapper does not fail on unknown properties, so let's change it to fail!
-ObjectMapper objectMapper = new ObjectMapper()
-        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+ObjectMapper objectMapper = JsonMapper.builder()
+        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        .build();
 
 String steamApiKey = "123mykey123"; // Your Steam Web Api Key
 SteamWebApiClient steamWebApiClient = SteamWebApiClient.builder().apiKey(steamApiKey)
