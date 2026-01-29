@@ -24,12 +24,11 @@ public class SteamRemoteStorageClient {
      *
      * @param request the request as {@link PublishedFileDetailsRequest}
      * @return the response as {@link PublishedFileDetailsResponse}
-     *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public PublishedFileDetailsResponse getPublishedFileDetails(PublishedFileDetailsRequest request) throws ClientException {
 
@@ -52,12 +51,11 @@ public class SteamRemoteStorageClient {
      *
      * @param request the request as {@link CollectionDetailsRequest}
      * @return the response as {@link CollectionDetailsResponse}
-     *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public CollectionDetailsResponse getCollectionDetails(CollectionDetailsRequest request) throws ClientException {
 

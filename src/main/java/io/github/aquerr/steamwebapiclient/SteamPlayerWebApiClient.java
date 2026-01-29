@@ -25,13 +25,13 @@ public class SteamPlayerWebApiClient {
     private final SteamHttpClient steamHttpClient;
 
     /**
-     * 	Gets information about a player's recently played games.
+     * Gets information about a player's recently played games.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public PlayerRecentlyPlayedGamesResponse getRecentlyPlayedGames(PlayerRecentlyPlayedGamesRequest request) throws ClientException {
         return this.steamHttpClient.get(
@@ -43,13 +43,13 @@ public class SteamPlayerWebApiClient {
     }
 
     /**
-     * 	Return a list of games owned by the player.
+     * Return a list of games owned by the player.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public OwnedGamesResponse getOwnedGames(OwnedGamesRequest request) throws ClientException {
         return this.steamHttpClient.get(
@@ -61,13 +61,13 @@ public class SteamPlayerWebApiClient {
     }
 
     /**
-     * 	Returns the Steam Level of a user.
+     * Returns the Steam Level of a user.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public SteamLevelResponse getSteamLevel(SteamLevelRequest request) throws ClientException {
         return this.steamHttpClient.get(
@@ -79,13 +79,13 @@ public class SteamPlayerWebApiClient {
     }
 
     /**
-     * 	Gets badges that are owned by a specific user.
+     * Gets badges that are owned by a specific user.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public BadgesResponse getBadges(BadgesRequest request) throws ClientException {
         return this.steamHttpClient.get(
@@ -97,13 +97,13 @@ public class SteamPlayerWebApiClient {
     }
 
     /**
-     * 	Gets all the quests needed to get the specified badge, and which are completed.
+     * Gets all the quests needed to get the specified badge, and which are completed.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public CommunityBadgeProgressResponse getCommunityBadgeProgress(CommunityBadgeProgressRequest request) throws ClientException {
         return this.steamHttpClient.get(

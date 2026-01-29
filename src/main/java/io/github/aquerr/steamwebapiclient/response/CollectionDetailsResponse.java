@@ -30,10 +30,10 @@ public class CollectionDetailsResponse implements SteamWebApiResponse {
 
         /**
          * The number of successfully retrieved results for collection ids.
-         *
+         * <p>
          * E.g. If 2 collections were asked for details and both of them were found
          * and returned their details then this field will be equal to 2.
-         *
+         * <p>
          * If only one was found and returned values then this field will be equal to 1.
          */
         @JsonProperty("resultcount")
@@ -53,7 +53,7 @@ public class CollectionDetailsResponse implements SteamWebApiResponse {
 
             /**
              * The type of result.
-             *
+             * <p>
              * To get enum result use {@link CollectionDetails#getResultAsEnum()}
              *
              * @see ResultType for more info.
@@ -76,8 +76,7 @@ public class CollectionDetailsResponse implements SteamWebApiResponse {
                 return ResultType.findByCode(result);
             }
 
-            public enum ResultType
-            {
+            public enum ResultType {
                 FOUND(1),
                 NOT_FOUND(9),
                 UNKNOWN(-1);

@@ -25,12 +25,12 @@ public class AccountListRequest implements SteamWebApiRestrictedRequest {
     private String key = "";
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

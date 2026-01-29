@@ -31,18 +31,18 @@ public class CommunityBadgeProgressRequest implements SteamWebApiRestrictedReque
     private long steamId;
 
     /**
-     * 	The badge we're asking about.
+     * The badge we're asking about.
      */
     @SteamRequestQueryParam("badgeid")
     private long badgeId;
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

@@ -3,8 +3,7 @@ package io.github.aquerr.steamwebapiclient;
 /**
  * Enum representing steam web api interfaces.
  */
-enum SteamWebApiInterfaceMethod
-{
+enum SteamWebApiInterfaceMethod {
 
     I_WORKSHOP_SERVICE_SET_ITEM_PAYMENT_RULES("IWorkshopService", "SetItemPaymentRules"),
     I_WORKSHOP_SERVICE_GET_FINALIZED_CONTRIBUTORS("IWorkshopService", "GetFinalizedContributors"),

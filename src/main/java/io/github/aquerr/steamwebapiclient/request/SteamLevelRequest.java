@@ -17,7 +17,7 @@ public class SteamLevelRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * Steamworks Web API user authentication key.
-     *
+     * <p>
      * Added automatically by the {@link io.github.aquerr.steamwebapiclient.SteamWebApiClient} if not added manually.
      */
     @SteamRequestQueryParam("key")
@@ -31,12 +31,12 @@ public class SteamLevelRequest implements SteamWebApiRestrictedRequest {
     private long steamId;
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

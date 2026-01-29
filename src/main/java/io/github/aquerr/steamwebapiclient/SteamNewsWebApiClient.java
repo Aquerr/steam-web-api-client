@@ -17,13 +17,13 @@ public class SteamNewsWebApiClient {
     private final SteamHttpClient steamHttpClient;
 
     /**
-     * 	Get the news for the specified app.
+     * Get the news for the specified app.
      *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public NewsForAppResponse getNewsForApp(NewsForAppRequest request) throws ClientException {
         return this.steamHttpClient.get(

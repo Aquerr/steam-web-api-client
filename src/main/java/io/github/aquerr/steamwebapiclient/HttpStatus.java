@@ -19,15 +19,15 @@ enum HttpStatus {
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public static HttpStatus findByCode(int code)
     {
         return Arrays.stream(values())
                 .filter(httpStatus -> httpStatus.getCode() == code)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int getCode() {
+        return code;
     }
 }

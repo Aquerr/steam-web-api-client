@@ -24,12 +24,11 @@ public class SteamUtilWebApiClient {
      *
      * @param request the request as {@link ServerInfoRequest}
      * @return the response as {@link ServerInfoRequest}
-     *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public ServerInfoResponse getServerInfo(ServerInfoRequest request) throws ClientException {
         return this.steamHttpClient.get(
@@ -45,12 +44,11 @@ public class SteamUtilWebApiClient {
      *
      * @param request the request as {@link SupportedApiListRequest}
      * @return the response as {@link SupportedApiListResponse}
-     *
      * @throws ClientException if:
-     * - request could not be sent due to an error
-     * - response has not been received
-     * - response could not be parsed
-     * - any other error occurs
+     *                         - request could not be sent due to an error
+     *                         - response has not been received
+     *                         - response could not be parsed
+     *                         - any other error occurs
      */
     public SupportedApiListResponse getSupportedApiList(SupportedApiListRequest request) throws ClientException {
         return this.steamHttpClient.get(

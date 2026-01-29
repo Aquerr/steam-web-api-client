@@ -35,13 +35,13 @@ public class DeleteAccountRequest implements SteamWebApiRestrictedRequest {
 
     @JsonIgnore
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @JsonIgnore
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

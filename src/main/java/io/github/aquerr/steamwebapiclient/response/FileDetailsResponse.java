@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class FileDetailsResponse implements SteamWebApiResponse
-{
+public class FileDetailsResponse implements SteamWebApiResponse {
     /**
      * The response.
      */
@@ -17,8 +16,7 @@ public class FileDetailsResponse implements SteamWebApiResponse
     private QueryFilesResponse response;
 
     @Data
-    public static class QueryFilesResponse implements SteamWebApiResponse
-    {
+    public static class QueryFilesResponse implements SteamWebApiResponse {
         /**
          * The list of found published file details.
          */

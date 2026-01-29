@@ -336,6 +336,7 @@ public class PublishedFileDetails {
 
     /**
      * Gets the created date time as {@link ZonedDateTime} with UTC time zone.
+     *
      * @return the created date.
      */
     public ZonedDateTime getCreatedDateTime() {
@@ -344,6 +345,7 @@ public class PublishedFileDetails {
 
     /**
      * Gets the last updated date time as {@link ZonedDateTime} with UTC time zone.
+     *
      * @return the last updated date.
      */
     public ZonedDateTime getUpdatedDateTime() {
@@ -407,7 +409,7 @@ public class PublishedFileDetails {
 
         /**
          * The preview type.
-         *
+         * <p>
          * To get it as enum use {@link Preview#getPreviewTypeAsEnum()}
          *
          * @see PreviewType for more info.
@@ -486,8 +488,7 @@ public class PublishedFileDetails {
     }
 
     @Data
-    public static class ChildItem
-    {
+    public static class ChildItem {
         /**
          * The id of published file.
          */
@@ -508,8 +509,7 @@ public class PublishedFileDetails {
     }
 
     @Data
-    public static class VoteData
-    {
+    public static class VoteData {
         /**
          * The score.
          */

@@ -31,12 +31,12 @@ public class QueryLoginTokenRequest implements SteamWebApiRestrictedRequest {
     private String loginToken;
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

@@ -110,6 +110,7 @@ public class NewsForAppResponse implements SteamWebApiResponse {
 
             /**
              * Gets the creation date time as {@link ZonedDateTime} with UTC time zone.
+             *
              * @return the creation date.
              */
             public ZonedDateTime getCreationDateTime() {

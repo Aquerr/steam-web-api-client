@@ -52,8 +52,10 @@ public class BadgesResponse implements SteamWebApiResponse {
              */
             @JsonProperty("scarcity")
             private int scarcity;
+
             /**
              * Gets the completion date time as {@link ZonedDateTime} with UTC time zone.
+             *
              * @return the completion date.
              */
             public ZonedDateTime getCompletionDateTime() {

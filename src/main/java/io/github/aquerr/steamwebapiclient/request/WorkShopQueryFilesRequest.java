@@ -17,7 +17,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * Steamworks Web API user authentication key.
-     *
+     * <p>
      * Added automatically by the {@link io.github.aquerr.steamwebapiclient.SteamWebApiClient} if not added manually.
      */
     @SteamRequestQueryParam("key")
@@ -214,33 +214,17 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
     private boolean returnPlaytimeStats;
 
     @Override
-    public void setApiKey(String apiKey)
-    {
-        this.key = apiKey;
-    }
-
-    @Override
     public String getApiKey()
     {
         return this.key;
     }
 
-
-    public static class WorkShopQueryFilesRequestBuilder {
-
-        private int queryType;
-        private int fileType;
-
-        public WorkShopQueryFilesRequestBuilder queryType(PublishedFileQueryType publishedFileQueryType) {
-            this.queryType = publishedFileQueryType.getId();
-            return this;
-        }
-
-        public WorkShopQueryFilesRequestBuilder fileType(PublishedFileInfoMatchingFileType publishedFileInfoMatchingFileType) {
-            this.fileType = publishedFileInfoMatchingFileType.getId();
-            return this;
-        }
+    @Override
+    public void setApiKey(String apiKey)
+    {
+        this.key = apiKey;
     }
+
 
     public enum PublishedFileQueryType {
 
@@ -265,8 +249,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
         RANKED_BY_LIFETIME_PLAYTIME_SESSIONS(18),
         RANKED_BY_INAPPROPRIATE_CONTENT_RATING(19),
         RANKED_BY_BAN_CONTENT_CHECK(20),
-        RANKED_BY_LAST_UPDATED_DATE(21)
-        ;
+        RANKED_BY_LAST_UPDATED_DATE(21);
 
         private final int id;
 
@@ -289,7 +272,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
         /**
          * Items
          */
-        ITEMS(0 ),
+        ITEMS(0),
 
         /**
          * A collection of Workshop items.
@@ -389,8 +372,7 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
         /**
          * Managed completely by the game, not the user, and not shown on the web.
          */
-        GAME_MANAGED_ITEMS(20)
-        ;
+        GAME_MANAGED_ITEMS(20);
 
         private final int id;
 
@@ -402,6 +384,22 @@ public class WorkShopQueryFilesRequest implements SteamWebApiRestrictedRequest {
         public int getId()
         {
             return id;
+        }
+    }
+
+    public static class WorkShopQueryFilesRequestBuilder {
+
+        private int queryType;
+        private int fileType;
+
+        public WorkShopQueryFilesRequestBuilder queryType(PublishedFileQueryType publishedFileQueryType) {
+            this.queryType = publishedFileQueryType.getId();
+            return this;
+        }
+
+        public WorkShopQueryFilesRequestBuilder fileType(PublishedFileInfoMatchingFileType publishedFileInfoMatchingFileType) {
+            this.fileType = publishedFileInfoMatchingFileType.getId();
+            return this;
         }
     }
 }

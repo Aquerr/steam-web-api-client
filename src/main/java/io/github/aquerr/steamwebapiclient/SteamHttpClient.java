@@ -43,9 +43,9 @@ class SteamHttpClient {
      * Allows passing custom {@link HttpClient} and {@link ObjectMapper} that will be used for
      * contacting the Steam Web Api and serialization and deserialization of requests and responses.
      *
-     * @param baseUrl the base url.
-     * @param apiKey the api key, can be null.
-     * @param httpClient the http client.
+     * @param baseUrl      the base url.
+     * @param apiKey       the api key, can be null.
+     * @param httpClient   the http client.
      * @param objectMapper the object mapper.
      */
     SteamHttpClient(String baseUrl, String apiKey, HttpClient httpClient, ObjectMapper objectMapper) {
@@ -59,7 +59,8 @@ class SteamHttpClient {
             SteamWebApiInterfaceMethod apiInterfaceMethod,
             String version,
             SteamWebApiRequest steamWebApiRequest,
-            Class<T> responseClass) throws ClientException {
+            Class<T> responseClass) throws ClientException
+    {
 
         try {
             if (apiInterfaceMethod == null || version == null || responseClass == null) {
@@ -83,7 +84,8 @@ class SteamHttpClient {
             HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
-            } else {
+            }
+            else {
                 throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
@@ -94,7 +96,8 @@ class SteamHttpClient {
     public <T extends SteamWebApiResponse> T post(SteamWebApiInterfaceMethod apiInterfaceMethod,
                                                   String version,
                                                   SteamWebApiRequest request,
-                                                  Class<T> responseClass) throws ClientException {
+                                                  Class<T> responseClass) throws ClientException
+    {
         try {
             if (apiInterfaceMethod == null || version == null || responseClass == null || request == null) {
                 throw new IllegalArgumentException("apiInterfaceMethod, version, request and responseClass cannot be null!");
@@ -116,7 +119,8 @@ class SteamHttpClient {
             HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
-            } else {
+            }
+            else {
                 throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
@@ -134,20 +138,21 @@ class SteamHttpClient {
 
     private ClientException wrapInClientException(Exception exception) {
         if (exception instanceof HttpClientException)
-            return (HttpClientException)exception;
+            return (HttpClientException) exception;
         else return new ClientException(exception);
     }
 
     private <T extends SteamWebApiResponse> T parseResponse(HttpResponse<String> response, Class<T> responseClass) throws JacksonException {
         ObjectNode responseObjectNode = objectMapper.readValue(response.body(), ObjectNode.class);
         SteamWebApiResponse steamWebApiResponse = objectMapper.treeToValue(responseObjectNode, responseClass);
-        return (T)steamWebApiResponse;
+        return (T) steamWebApiResponse;
     }
 
     public <T extends SteamWebApiResponse> T post(SteamWebApiInterfaceMethod apiInterfaceMethod,
                                                   String version,
                                                   UrlEncodedForm urlEncodedForm,
-                                                  Class<T> responseClass) throws ClientException {
+                                                  Class<T> responseClass) throws ClientException
+    {
         try {
             if (apiInterfaceMethod == null || version == null || responseClass == null || urlEncodedForm == null) {
                 throw new IllegalArgumentException("apiInterfaceMethod, version, urlEncodedForm and responseClass cannot be null!");
@@ -165,7 +170,8 @@ class SteamHttpClient {
             HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == HttpStatus.OK.getCode()) {
                 return parseResponse(response, responseClass);
-            } else {
+            }
+            else {
                 throw new HttpClientException(prepareHttpErrorMessage(response), response.statusCode());
             }
         } catch (Exception exception) {
@@ -174,8 +180,7 @@ class SteamHttpClient {
     }
 
     private void populateApiKeyIfRestrictedRequest(SteamWebApiRequest steamWebApiRequest) {
-        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest && apiKey != null) {
-            SteamWebApiRestrictedRequest request = (SteamWebApiRestrictedRequest) steamWebApiRequest;
+        if (steamWebApiRequest instanceof SteamWebApiRestrictedRequest request && apiKey != null) {
             if ((request.getApiKey() == null || request.getApiKey().isEmpty())) {
                 request.setApiKey(apiKey);
             }
@@ -229,7 +234,8 @@ class SteamHttpClient {
                     params.put(paramName, URLEncoder.encode(String.valueOf(object), StandardCharsets.UTF_8));
                 }
             }
-        } else {
+        }
+        else {
             String fieldValue = getFieldValueAsString(steamWebApiRequest, field);
             if (fieldValue != null) {
                 params.put(name, URLEncoder.encode(fieldValue, StandardCharsets.UTF_8));
@@ -243,8 +249,7 @@ class SteamHttpClient {
                 return steamRequestQueryParam.value();
             }
             return field.getName();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -263,8 +268,7 @@ class SteamHttpClient {
                 }
             }
             return null;
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -278,15 +282,13 @@ class SteamHttpClient {
             Object value = field.get(steamWebApiRequest);
             field.setAccessible(canAccess);
             if (value != null) {
-                if (value instanceof Collection<?>) {
-                    Collection<?> collection = (Collection<?>) value;
+                if (value instanceof Collection<?> collection) {
                     return collectionToString(collection);
                 }
                 return String.valueOf(value);
             }
             else return null;
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -301,14 +303,13 @@ class SteamHttpClient {
     }
 
     private String buildUrl(final SteamWebApiInterfaceMethod apiInterfaceMethod, final String version) {
-        final StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(this.baseUrl);
-        urlBuilder.append("/");
-        urlBuilder.append(apiInterfaceMethod.getInterfaceName());
-        urlBuilder.append("/");
-        urlBuilder.append(apiInterfaceMethod.getMethodName());
-        urlBuilder.append("/");
-        urlBuilder.append(version);
-        return urlBuilder.toString();
+        String urlBuilder = this.baseUrl +
+                "/" +
+                apiInterfaceMethod.getInterfaceName() +
+                "/" +
+                apiInterfaceMethod.getMethodName() +
+                "/" +
+                version;
+        return urlBuilder;
     }
 }

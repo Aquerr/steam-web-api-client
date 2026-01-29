@@ -26,7 +26,7 @@ public class TradeHistoryRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * Represents the number of requested trades.
-     *
+     * <p>
      * If <code>getDescriptions</code> is set to false then maxTrades limit = 500.
      * Otherwise, if <code>getDescriptions</code> is true, then limit = 100.
      */
@@ -65,12 +65,12 @@ public class TradeHistoryRequest implements SteamWebApiRestrictedRequest {
 
     /**
      * If set, trades in status:
-     *
+     * <p>
      * {@link io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse.TradeHistory.Trade.Status#FAILED}
      * {@link io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse.TradeHistory.Trade.Status#ROLLBACK_FAILED}
      * {@link io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse.TradeHistory.Trade.Status#ROLLBACK_ABANDONED}
      * {@link io.github.aquerr.steamwebapiclient.response.TradeHistoryResponse.TradeHistory.Trade.Status#ESCROW_ROLLBACK}
-     *
+     * <p>
      * will be included in the response.
      */
     @SteamRequestQueryParam("include_failed")
@@ -83,12 +83,12 @@ public class TradeHistoryRequest implements SteamWebApiRestrictedRequest {
     private boolean includeTotal;
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

@@ -130,7 +130,7 @@ public class TradeHistoryResponse implements SteamWebApiResponse {
                 IN_ESCROW(10),
 
                 /**
-                 * 	A trade in escrow was rolled back
+                 * A trade in escrow was rolled back
                  */
                 ESCROW_ROLLBACK(11);
 

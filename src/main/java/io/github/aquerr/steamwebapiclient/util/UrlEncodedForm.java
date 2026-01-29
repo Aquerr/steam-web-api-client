@@ -17,22 +17,19 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
-public class UrlEncodedForm
-{
+public class UrlEncodedForm {
     private final Map<String, String> parameters;
 
     /**
      * Constructs a url encoded form from request attributes marked with @JsonProperty
+     *
      * @param request the request
      * @return UrlEncodedForm
      */
     public static UrlEncodedForm of(final SteamWebApiRequest request) {
-        try
-        {
+        try {
             return new UrlEncodedForm(retrieveParameters(request));
-        }
-        catch (IllegalAccessException e)
-        {
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -41,9 +38,26 @@ public class UrlEncodedForm
         return new UrlEncodedForm(new HashMap<>(parameters));
     }
 
+    private static Map<String, String> retrieveParameters(SteamWebApiRequest request) throws IllegalAccessException {
+
+        Map<String, String> parameters = new HashMap<>();
+        Field[] fields = request.getClass().getDeclaredFields();
+        for (final Field field : fields) {
+
+            if (field.isAnnotationPresent(JsonProperty.class)) {
+
+                field.setAccessible(true);
+                parameters.put(field.getAnnotation(JsonProperty.class).value(), String.valueOf(field.get(request)));
+                field.setAccessible(false);
+            }
+        }
+
+        return parameters;
+    }
+
     public String getAsString() {
         final StringBuilder stringBuilder = new StringBuilder();
-        for (final Map.Entry<String, String > entry : parameters.entrySet()) {
+        for (final Map.Entry<String, String> entry : parameters.entrySet()) {
 
             if (!stringBuilder.isEmpty()) {
                 stringBuilder.append("&");
@@ -63,22 +77,5 @@ public class UrlEncodedForm
     public byte[] getAsByteArray()
     {
         return getAsString().getBytes(StandardCharsets.UTF_8);
-    }
-
-    private static Map<String, String> retrieveParameters(SteamWebApiRequest request) throws IllegalAccessException {
-
-        Map<String, String> parameters = new HashMap<>();
-        Field[] fields = request.getClass().getDeclaredFields();
-        for (final Field field : fields) {
-
-            if (field.isAnnotationPresent(JsonProperty.class)) {
-
-                field.setAccessible(true);
-                parameters.put(field.getAnnotation(JsonProperty.class).value(), String.valueOf(field.get(request)));
-                field.setAccessible(false);
-            }
-        }
-
-        return parameters;
     }
 }

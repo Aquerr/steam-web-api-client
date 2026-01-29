@@ -10,14 +10,13 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SteamRequestQueryParam
-{
+public @interface SteamRequestQueryParam {
     /**
      * The name of the query param that should be used while performing the request.
-     *
+     * <p>
      * Empty string will result in field name being used as query param name.
      */
-    String value() default  "";
+    String value() default "";
 
     QueryParamCollectionBehaviour collectionBehaviour() default QueryParamCollectionBehaviour.COMMA_SEPARATED_STRING;
 }

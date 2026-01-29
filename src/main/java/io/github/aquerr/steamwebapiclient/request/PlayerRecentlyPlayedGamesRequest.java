@@ -15,33 +15,35 @@ import lombok.ToString;
 @ToString
 public class PlayerRecentlyPlayedGamesRequest implements SteamWebApiRestrictedRequest {
 
-        /**
-         * Steamworks Web API user authentication key.
-         *
-         * Added automatically by the {@link io.github.aquerr.steamwebapiclient.SteamWebApiClient} if not added manually.
-         */
-        @SteamRequestQueryParam("key")
-        @Builder.Default
-        private String key = "";
+    /**
+     * Steamworks Web API user authentication key.
+     * <p>
+     * Added automatically by the {@link io.github.aquerr.steamwebapiclient.SteamWebApiClient} if not added manually.
+     */
+    @SteamRequestQueryParam("key")
+    @Builder.Default
+    private String key = "";
 
-        /**
-         * Steam user id to be asked for data.
-         */
-        @SteamRequestQueryParam("steamid")
-        private long steamId;
+    /**
+     * Steam user id to be asked for data.
+     */
+    @SteamRequestQueryParam("steamid")
+    private long steamId;
 
-        /**
-         * Limit of results to be returned.
-         */
-        @SteamRequestQueryParam("count")
-        private int count;
+    /**
+     * Limit of results to be returned.
+     */
+    @SteamRequestQueryParam("count")
+    private int count;
+
+    @Override
+    public String getApiKey() {
+        return this.key;
+    }
 
     @Override
     public void setApiKey(String apiKey)
     {
         this.key = apiKey;
     }
-
-    @Override
-    public String getApiKey() { return this.key; }
 }

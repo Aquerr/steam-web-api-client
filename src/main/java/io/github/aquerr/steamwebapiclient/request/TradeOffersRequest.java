@@ -31,7 +31,7 @@ public class TradeOffersRequest implements SteamWebApiRestrictedRequest {
     private boolean getSentOffers;
 
     /**
-     * 	Request the list of received offers.
+     * Request the list of received offers.
      */
     @SteamRequestQueryParam("get_received_offers")
     private boolean getReceivedOffers;
@@ -67,12 +67,12 @@ public class TradeOffersRequest implements SteamWebApiRestrictedRequest {
     private int timeHistoricalCutOff;
 
     @Override
-    public void setApiKey(String apiKey) {
-        this.key = apiKey;
+    public String getApiKey() {
+        return this.key;
     }
 
     @Override
-    public String getApiKey() {
-        return this.key;
+    public void setApiKey(String apiKey) {
+        this.key = apiKey;
     }
 }

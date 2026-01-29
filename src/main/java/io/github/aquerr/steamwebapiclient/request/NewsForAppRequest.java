@@ -28,19 +28,19 @@ public class NewsForAppRequest implements SteamWebApiRequest {
     private Integer maxLength;
 
     /**
-     * 	Retrieve posts earlier than this date (unix epoch timestamp).
+     * Retrieve posts earlier than this date (unix epoch timestamp).
      */
     @SteamRequestQueryParam("enddate")
     private Long endDate;
 
     /**
-     * 	Amount of posts to retrieve (default 20).
+     * Amount of posts to retrieve (default 20).
      */
     @SteamRequestQueryParam("count")
     private Integer count;
 
     /**
-     *  Comma-seperated list of feed names to return news for.
+     * Comma-seperated list of feed names to return news for.
      */
     @SteamRequestQueryParam("feeds")
     private String feeds;

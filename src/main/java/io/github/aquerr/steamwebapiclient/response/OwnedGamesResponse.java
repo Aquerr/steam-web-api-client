@@ -67,12 +67,14 @@ public class OwnedGamesResponse implements SteamWebApiResponse {
             @JsonProperty("rtime_last_played")
             private long sinceLastPlayedTimeSeconds;
             /**
-             * 	Unknown.
+             * Unknown.
              */
             @JsonProperty("content_descriptorids")
             private List<Integer> contentDescriptorIds;
+
             /**
              * Gets the last played date time as {@link ZonedDateTime} with UTC time zone.
+             *
              * @return the last played date.
              */
             public ZonedDateTime getLastPlayedDateTime() {
