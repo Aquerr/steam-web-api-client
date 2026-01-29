@@ -1,8 +1,11 @@
+import org.jreleaser.model.Active
+
 plugins {
     `java-library`
     id("io.freefair.lombok") version "9.2.0"
     `maven-publish`
     id("signing")
+    id("org.jreleaser") version "1.22.0"
 }
 
 group = "io.github.aquerr"
@@ -80,22 +83,38 @@ publishing {
 
     repositories {
         maven {
-            name = "oss"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-
-            credentials {
-                username = project.findProperty("ossrhUsername") as String?
-                password = project.findProperty("ossrhPassword") as String?
-            }
+            url = uri(layout.buildDirectory.dir("staging-deploy"))
         }
+    }
+}
 
+jreleaser {
+    signing {
+        pgp {
+            active.set(Active.ALWAYS)
+            armored.set(true)
+        }
+    }
+    release.github.skipRelease.set(true)
+    deploy {
         maven {
-            name = "oss-snapshots"
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-
-            credentials {
-                username = project.findProperty("ossrhUsername") as String?
-                password = project.findProperty("ossrhPassword") as String?
+            mavenCentral {
+                register("release-deploy") {
+                    active.set(Active.RELEASE)
+                    url.set("https://central.sonatype.com/api/v1/publisher")
+                    stagingRepository("build/staging-deploy")
+                }
+            }
+            nexus2 {
+                register("snapshot-deploy") {
+                    active.set(Active.SNAPSHOT)
+                    snapshotUrl.set("https://central.sonatype.com/repository/maven-snapshots/")
+                    applyMavenCentralRules.set(true)
+                    snapshotSupported.set(true)
+                    closeRepository.set(true)
+                    releaseRepository.set(false)
+                    stagingRepository("build/staging-deploy")
+                }
             }
         }
     }
